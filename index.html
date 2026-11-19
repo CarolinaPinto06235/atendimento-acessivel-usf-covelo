@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Atendimento Acessível USF Covelo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Layout: cabeçalho do site da USF Covelo; a aplicação abre numa escolha de função (secretariado ou ecrã tátil) e cada função tem a sua vista */
+  --bg:#F2F6F6; --surface:#FFFFFF; --ink:#10282C; --muted:#4A5F63; --line:#D3DFE0;
+  --accent:#00707A; --accent-ink:#FFFFFF; --accent-soft:#DDEFF0;
+  --signal:#B93C0B; --signal-ink:#FFFFFF; --ok:#1E7A3A; --warn:#9A6400;
+  --stage:#E9EFEF; --shirt:#1B2A31;
+  --font:"Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif;
+  --fs:1rem; --radius:14px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0C181A; --surface:#132427; --ink:#E5EFEF; --muted:#9FB4B6; --line:#264043;
+    --accent:#45C3CB; --accent-ink:#06272B; --accent-soft:#163A3D;
+    --signal:#FF8A4C; --signal-ink:#2A0E00; --ok:#5BD07E; --warn:#F2B84B;
+    --stage:#C9D6D7; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0C181A; --surface:#132427; --ink:#E5EFEF; --muted:#9FB4B6; --line:#264043;
+  --accent:#45C3CB; --accent-ink:#06272B; --accent-soft:#163A3D;
+  --signal:#FF8A4C; --signal-ink:#2A0E00; --ok:#5BD07E; --warn:#F2B84B;
+  --stage:#C9D6D7; color-scheme:dark;
+}
+:root[data-contrast="high"]{
+  --bg:#000; --surface:#000; --ink:#FFF; --muted:#FFF; --line:#FFF;
+  --accent:#FFE600; --accent-ink:#000; --accent-soft:#222; --signal:#FF5C5C; --signal-ink:#000; --ok:#7CFF7C; --warn:#FFE600;
+  --stage:#FFFFFF; color-scheme:dark;
+}
+:root[data-size="grande"]{ --fs:1.2rem; }
+
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:var(--fs);line-height:1.5}
+h1,h2,h3{line-height:1.2;text-wrap:balance;margin:0}
+h1{font-size:2em} h2{font-size:1.45em} h3{font-size:1.15em}
+p{margin:0}
+a{color:var(--accent)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+[hidden]{display:none !important}
+.wrap{max-width:1260px;margin:0 auto;padding:0 20px}
+.muted{color:var(--muted)}
+.hint{font-size:.85em;color:var(--muted)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.stack{display:flex;flex-direction:column;gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:3px 12px;font-size:.85em;font-weight:700;background:var(--accent-soft)}
+.pill.ok{background:var(--ok);color:var(--surface)}
+.pill.warn{background:var(--warn);color:#1a1200}
+.pill.alert{background:var(--signal);color:var(--signal-ink)}
+.pill.off{background:var(--line)}
+.badge{background:var(--signal);color:var(--signal-ink);border-radius:999px;padding:0 8px;font-size:.8em;font-weight:700}
+.btn{border:0;border-radius:12px;padding:13px 16px;font-weight:700;background:var(--accent);color:var(--accent-ink);display:inline-flex;gap:8px;align-items:center;justify-content:center;text-align:center}
+.btn.ghost{background:transparent;border:2px solid var(--line);color:var(--ink)}
+.btn.signal{background:var(--signal);color:var(--signal-ink)}
+.btn.small{padding:6px 12px;font-size:.9em}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.field{width:100%;font:inherit;font-size:1.12em;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+
+/* Cabeçalho (estrutura do site) */
+header.top{background:var(--surface);border-bottom:1px solid var(--line)}
+.brandrow{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between;padding:16px 0}
+.brand{display:flex;gap:14px;align-items:center;text-decoration:none;color:var(--ink)}
+.logo{width:46px;height:46px;border-radius:12px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:700;font-size:1.25rem;flex:none}
+.brand b{display:block;font-size:1.3rem;color:var(--ink)}
+.brand .sub{color:var(--muted);font-size:.92em}
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chipbtn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:.9em}
+.chipbtn[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.live{font-size:.82em;display:inline-flex;gap:6px;align-items:center;color:var(--muted)}
+.live i{width:9px;height:9px;border-radius:50%;background:var(--muted);display:inline-block}
+.live.on i{background:var(--ok)}
+.rolechip{font-size:.85em;font-weight:700;padding:5px 12px;border-radius:999px;background:var(--accent-soft)}
+
+main{padding:24px 0 48px}
+section.view{display:none}
+section.view.active{display:block}
+
+/* Escolha de função */
+.choice{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px}
+@media (max-width:760px){.choice{grid-template-columns:1fr}}
+.choice button{display:flex;flex-direction:column;align-items:flex-start;gap:10px;text-align:left;padding:28px;border-radius:20px;border:2px solid var(--line);background:var(--surface)}
+.choice button:hover{border-color:var(--accent)}
+.choice svg{width:64px;height:64px}
+.choice b{font-size:1.5em}
+
+/* Posto: ecrã + telefone */
+.station{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:22px;align-items:start}
+@media (max-width:980px){.station{grid-template-columns:1fr}}
+.screen{background:var(--surface);border:10px solid #1C2427;border-radius:26px;min-height:660px;padding:24px;position:relative}
+.mode{display:none}
+.mode.active{display:block}
+.screenbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.welcome{display:flex;flex-direction:column;gap:22px}
+.welcome h1{font-size:2.3em}
+.entry{display:flex;gap:22px;align-items:center;text-align:left;border-radius:22px;padding:26px;width:100%}
+.entry svg{flex:none;width:96px;height:96px}
+.entry b{display:block;font-size:1.6em;line-height:1.15}
+.entry span span{display:block;margin-top:6px;font-size:1.05em}
+.entry.deaf{background:var(--accent);color:var(--accent-ink);border:0}
+.entry.phone{background:var(--bg);border:2px dashed var(--line)}
+.entry .arrow{margin-left:auto;font-size:2.4em;font-weight:700}
+
+/* LGP */
+.lgp{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:1100px){.lgp{grid-template-columns:1fr}}
+.stage{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--shirt)}
+.stagehead{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;gap:8px;flex-wrap:wrap;background:var(--surface);border-bottom:1px solid var(--line)}
+.media{position:relative;background:var(--stage)}
+svg.avatar{display:block;width:100%;height:auto}
+.media video{display:block;width:100%;max-height:430px;background:#000}
+.gloss{position:absolute;left:12px;top:12px;background:#10282C;color:#fff;font-weight:700;letter-spacing:.06em;padding:6px 12px;border-radius:8px;font-size:1.05em}
+.gloss:empty{display:none}
+.params{background:#0E1A1E;color:#9FD7DB;font-size:.88em;padding:6px 18px;min-height:1.9em}
+.subs{padding:14px 18px;min-height:96px;font-size:1.3em;font-weight:700;background:var(--shirt);color:#fff;line-height:1.35}
+.subs .w{opacity:.4;transition:opacity .15s}
+.subs .w.on{opacity:1}
+.topics{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.topic{display:flex;flex-direction:column;align-items:flex-start;gap:8px;text-align:left;padding:14px;border-radius:14px;border:2px solid var(--line);background:var(--surface);font-weight:700;font-size:1.08em;min-height:110px}
+.topic svg{width:38px;height:38px}
+.topic:hover,.topic.on{border-color:var(--accent);background:var(--accent-soft)}
+.topic.go{background:var(--signal);color:var(--signal-ink);border-color:var(--signal)}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.act{min-height:76px;font-size:1.05em}
+.act svg{width:28px;height:28px}
+.panel{display:none}
+.panel.active{display:block}
+.thread{display:flex;flex-direction:column;gap:8px;max-height:220px;overflow:auto;padding:4px 2px}
+.msg{max-width:85%;padding:10px 14px;border-radius:14px;background:var(--accent-soft);align-self:flex-start;overflow-wrap:anywhere}
+.msg.me{align-self:flex-end;background:var(--accent);color:var(--accent-ink)}
+.msg small{display:block;font-size:.75em;opacity:.8}
+.typing{font-size:.85em;color:var(--muted);min-height:1.3em}
+
+/* Teclado rápido */
+.composer{display:flex;gap:8px;margin-top:10px}
+.composer .field{font-size:1.2em}
+.sugg{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;min-height:44px}
+.sugg button{border:0;background:var(--accent-soft);border-radius:10px;padding:9px 14px;font-weight:700;font-size:1.05em}
+.phr{display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto;margin-top:8px;padding-bottom:4px}
+.phr button{flex:none;border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:8px 14px;font-size:.95em;font-weight:700}
+.kbd{display:flex;flex-direction:column;gap:6px;margin-top:8px;user-select:none}
+.kbd .kr{display:flex;gap:6px}
+.kbd button{flex:1;min-width:0;padding:14px 0;border-radius:10px;border:1px solid var(--line);background:var(--bg);font-weight:700;font-size:1.15em}
+.kbd button:active{background:var(--accent-soft)}
+.kbd button.w2{flex:1.6}
+.kbd button.w5{flex:4}
+.kbd button.go{flex:2.6}
+.kbd button.go{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.kbd button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:330px}
+.keypad button{padding:14px 0;font-size:1.35em;font-weight:700;border-radius:12px;border:1px solid var(--line);background:var(--bg)}
+.ticket{font-size:3.2em;font-weight:700;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.checkin{border:2px solid var(--signal);border-radius:14px;padding:16px;margin-top:12px}
+
+/* Voz */
+.voz{display:flex;flex-direction:column;gap:18px}
+.vstatus{display:flex;gap:12px;align-items:center;font-weight:700;font-size:1.25em}
+.dot{width:16px;height:16px;border-radius:50%;background:var(--muted);flex:none}
+.vstatus.on .dot{background:var(--ok)}
+.vstatus.wait .dot{background:var(--warn)}
+.now{font-size:1.6em;font-weight:700;line-height:1.3;background:var(--bg);border-radius:16px;padding:18px 20px;min-height:110px}
+.menu{padding:0;margin:0;display:grid;gap:10px}
+.menu li{list-style:none;display:flex;gap:14px;align-items:center;padding:12px 14px;border-radius:12px;border:2px solid var(--line);font-size:1.25em;font-weight:700}
+.menu li b{display:inline-grid;place-items:center;min-width:46px;height:46px;border-radius:10px;background:var(--shirt);color:#fff;flex:none;font-size:1em;padding:0 8px}
+.menu li.help b{background:#E8590C}
+.digits{font-size:2em;font-weight:700;letter-spacing:.15em;font-variant-numeric:tabular-nums}
+
+/* Equipamento físico */
+.hardware{display:flex;flex-direction:column;gap:16px;position:sticky;top:12px}
+.phonebox{text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px}
+.phonebox svg{width:170px;height:auto}
+.phonebox .handset{transition:transform .45s;transform-box:fill-box;transform-origin:center}
+.phonebox.off .handset{transform:translate(10px,-18px) rotate(-14deg)}
+.pad{background:#22282B;border-radius:26px;padding:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;box-shadow:inset 0 0 0 2px #3a4246}
+.pk{border:0;border-radius:14px;background:#E9ECEC;color:#111;padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:1px}
+.pk b{font-size:1.45em;line-height:1}
+.pk .br{font-size:1.25em;letter-spacing:.08em;line-height:1}
+.pk span{font-size:.7em}
+.pk.help{grid-column:1/-1;background:#E8590C;color:#fff;padding:12px 6px}
+.pk.flash{outline:4px solid var(--accent);outline-offset:2px}
+
+/* Secretariado */
+.statusbar{display:flex;gap:18px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.screenstate{display:flex;gap:14px;align-items:center}
+.screenstate .big{font-size:1.25em;font-weight:700}
+.console{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:18px;align-items:start;margin-top:18px}
+@media (max-width:980px){.console{grid-template-columns:1fr}}
+.item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.item:last-child{border-bottom:0}
+.item.new{background:linear-gradient(90deg,var(--accent-soft),transparent);border-radius:8px;padding-left:8px}
+.sel{font:inherit;padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.quick{display:flex;gap:6px;flex-wrap:wrap}
+.quick button{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:5px 12px;font-size:.88em}
+.thread.desk{max-height:340px}
+
+/* Sala de espera */
+.board{background:var(--shirt);color:#fff;border-radius:22px;padding:32px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px}
+@media (max-width:800px){.board{grid-template-columns:1fr}}
+.board .bnow{border:4px solid #45C3CB;border-radius:18px;padding:24px;text-align:center}
+.board .bnow.new{animation:blink 1s 6}
+@keyframes blink{50%{background:#45C3CB;color:#06272B}}
+.board .big{font-size:5em;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.board .where{font-size:1.8em;font-weight:700;margin-top:10px}
+.board li{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.2);font-size:1.3em;font-variant-numeric:tabular-nums}
+.board ul{padding:0;margin:8px 0 0}
+.clock{font-size:2.4em;font-weight:700;font-variant-numeric:tabular-nums}
+
+/* Sobreposições */
+.overlay{position:fixed;inset:0;background:rgba(5,20,22,.85);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
+.overlay.show{display:flex}
+.call{background:#0F1C20;color:#fff;border-radius:22px;max-width:980px;width:100%;overflow:auto;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);max-height:96vh}
+@media (max-width:800px){.call{grid-template-columns:1fr}}
+.call .vid{position:relative;background:#1B2E33;min-height:360px;display:grid;place-items:center}
+.call .tag{position:absolute;left:12px;top:12px;background:rgba(0,0,0,.65);color:#fff;padding:4px 10px;border-radius:999px;font-size:.85em;z-index:2}
+.call .selfcam{position:absolute;right:12px;bottom:12px;width:120px;height:86px;border-radius:10px;background:#2E4248;border:2px solid #45C3CB;display:grid;place-items:center;font-size:.75em;text-align:center;padding:6px}
+.call .side{padding:20px;display:flex;flex-direction:column;gap:12px}
+.call .field{background:#0B1518;color:#fff;border-color:#33494F}
+.call .keypad button{background:#1B2E33;color:#fff;border-color:#33494F}
+.ring{width:120px;height:120px;border-radius:50%;border:6px solid #45C3CB;display:grid;place-items:center;animation:pulse 1.2s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.alertbox{background:var(--signal);color:var(--signal-ink);border-radius:24px;padding:32px;max-width:620px;width:100%;text-align:center}
+.toast{position:fixed;right:16px;bottom:16px;background:var(--ink);color:var(--bg);padding:14px 18px;border-radius:12px;z-index:60;max-width:400px;display:none;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.toast.show{display:block}
+.toast b{display:block}
+@media (prefers-reduced-motion: reduce){.board .bnow.new,.ring{animation:none}}
+
+footer{background:var(--surface);border-top:1px solid var(--line);padding:22px 0;font-size:.9em}
+footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media (max-width:800px){footer .cols{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap brandrow">
+    <a class="brand" href="#escolha">
+      <span class="logo" aria-hidden="true">C</span>
+      <span><b>USF Covelo</b><span class="sub">Unidade de Saúde Familiar · Rua Faria Guimarães, 915-931 · Porto</span></span>
+    </a>
+    <div class="tools">
+      <span class="rolechip" id="rolechip" hidden></span>
+      <button class="chipbtn" id="btn-size" aria-pressed="false">A+ Texto maior</button>
+      <button class="chipbtn" id="btn-contrast" aria-pressed="false">Alto contraste</button>
+      <span class="live" id="live"><i></i><span>Só neste dispositivo</span></span>
+      <button class="chipbtn" id="btn-role" hidden>Mudar função</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ================= ESCOLHA DE FUNÇÃO ================= -->
+<section class="view" id="v-escolha" data-view="escolha">
+  <h1>Para que vai ser usado este computador?</h1>
+  <p class="muted" style="margin-top:8px;max-width:62ch">Escolha uma vez. A escolha fica guardada neste computador e pode ser mudada a qualquer momento em «Mudar função».</p>
+  <div class="choice">
+    <button id="pick-utente">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="6" width="52" height="40" rx="6" fill="none" stroke="var(--accent)" stroke-width="4"/><path d="M24 58h16M32 46v12" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"/><circle cx="32" cy="26" r="6" fill="var(--accent)"/></svg>
+      <b>Ecrã tátil dos utentes</b>
+      <span class="muted">O posto de atendimento acessível na entrada da USF, com o telefone e o comando Braille ao lado.</span>
+    </button>
+    <button id="pick-secretariado">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="4" y="10" width="40" height="28" rx="4" fill="none" stroke="var(--accent)" stroke-width="4"/><path d="M14 46h20" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"/><path d="M50 22a8 8 0 0 1 8 8v6l3 4H39l3-4v-6a8 8 0 0 1 8-8z" fill="var(--accent)"/></svg>
+      <b>Secretariado</b>
+      <span class="muted">O computador do balcão: vê se o ecrã tátil está em uso, recebe mensagens e pedidos com notificação e avisa os utentes por SMS.</span>
+    </button>
+  </div>
+  <p style="margin-top:18px"><a href="#sala" id="pick-sala">Outro ecrã: sala de espera (mostra as chamadas)</a></p>
+</section>
+
+<!-- ================= ECRÃ TÁTIL DOS UTENTES ================= -->
+<section class="view" id="v-utente" data-view="utente">
+  <div class="station">
+    <div class="screen" aria-label="Ecrã tátil">
+
+      <!-- Início -->
+      <div class="mode active" id="m-home">
+        <div class="welcome">
+          <div>
+            <h1>Bem-vindo à USF Covelo</h1>
+            <p class="muted" style="font-size:1.12em;margin-top:6px">Escolha como prefere ser atendido.</p>
+          </div>
+          <button class="entry deaf" id="go-lgp">
+            <svg viewBox="0 0 96 96" aria-hidden="true"><rect width="96" height="96" rx="24" fill="rgba(255,255,255,.16)"/><path d="M30 44c0-11 8-19 18-19s17 7 17 17c0 7-4 10-7 13s-4 6-4 10c0 5-4 8-8 8" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><path d="M41 44c0-5 3-8 7-8s7 3 7 7" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/><path d="M20 76L76 20" stroke="currentColor" stroke-width="5.5" stroke-linecap="round"/></svg>
+            <span><b>Não tenho capacidade auditiva ou tenho dificuldades auditivas</b><span>Atendimento em Língua Gestual Portuguesa, com legendas, mensagens escritas e intérprete</span></span>
+          </button>
+          <button class="entry phone" id="go-phone">
+            <svg viewBox="0 0 96 96" aria-hidden="true"><rect width="96" height="96" rx="24" fill="var(--accent-soft)"/><path d="M30 26c4-3 9-2 11 2l5 10c1 3 0 6-2 8l-4 3c3 7 8 12 15 15l3-4c2-2 5-3 8-2l10 5c4 2 5 7 2 11l-4 4c-4 4-10 5-15 3-17-6-30-19-36-36-2-5-1-11 3-15z" fill="var(--ink)"/></svg>
+            <span><b>Atenda o telefone ao lado do ecrã</b><span class="muted">Para quem não vê ou vê mal. O atendimento por voz começa assim que levanta o telefone.</span></span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- LGP -->
+      <div class="mode" id="m-lgp">
+        <div class="screenbar">
+          <button class="btn ghost small" id="lgp-back">← Voltar ao início</button>
+          <span class="pill">Língua Gestual Portuguesa</span>
+        </div>
+        <div class="lgp">
+          <div class="stage">
+            <div class="stagehead">
+              <div class="row" style="gap:6px">
+                <button class="btn small" id="btn-replay">↺ Ver de novo</button>
+                <button class="btn ghost small" id="btn-slow" aria-pressed="false">Mais devagar</button>
+              </div>
+              <span class="hint" id="media-kind"></span>
+            </div>
+            <div class="media">
+              <video id="video-main" playsinline hidden></video>
+              <svg class="avatar" id="avatar-main" viewBox="40 34 320 362" role="img" aria-label="Pré-visualização do intérprete de LGP"></svg>
+              <div class="gloss" id="gloss-main"></div>
+            </div>
+            <div class="params" id="params-main"></div>
+            <div class="subs" id="subs-main" aria-live="polite"></div>
+          </div>
+
+          <div class="stack">
+            <div class="topics" id="topics"></div>
+            <div class="acts">
+              <button class="btn act" id="btn-chat">
+                <svg viewBox="0 0 30 30" aria-hidden="true"><rect x="3" y="5" width="24" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M9 21l-3 5 7-5" fill="currentColor"/></svg>
+                Escrever ao secretariado <span class="badge" id="chat-badge" hidden>nova</span>
+              </button>
+              <button class="btn act" id="btn-interp">
+                <svg viewBox="0 0 30 30" aria-hidden="true"><rect x="2" y="7" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M20 13l8-4v12l-8-4z" fill="currentColor"/></svg>
+                Falar com um intérprete
+              </button>
+            </div>
+
+            <div class="card panel" id="panel-chat">
+              <div class="row" style="justify-content:space-between"><h3>Conversa com o secretariado</h3><span class="live" id="live-chat"><i></i><span>Um funcionário responde</span></span></div>
+              <button class="btn signal small" id="btn-ci-open" style="margin-top:8px">Confirmar a minha presença (check-in)</button>
+              <div class="thread" id="thread-user" aria-live="polite" style="margin-top:10px"></div>
+              <div class="typing" id="desk-typing"></div>
+              <div class="checkin" id="checkin-box" hidden>
+                <div id="ci-form">
+                  <div class="row" style="justify-content:space-between"><b>Confirmar a minha presença (check-in)</b></div>
+                  <p class="muted" style="margin:4px 0 10px">Indique o seu telemóvel para receber uma SMS quando o médico estiver pronto para o chamar.</p>
+                  <label class="sr" for="ci-phone">Número de telemóvel</label>
+                  <input class="field" id="ci-phone" inputmode="numeric" maxlength="9" placeholder="9_ _ _ _ _ _ _ _" style="max-width:330px;letter-spacing:.12em;margin-bottom:10px">
+                  <div class="keypad" id="ci-keypad"></div>
+                  <div class="row" style="margin-top:12px"><button class="btn signal" id="ci-go">Confirmar presença</button><span class="hint">Sem telemóvel? Confirme na mesma: o secretariado chama-o pessoalmente.</span></div>
+                </div>
+                <div id="ci-ok" hidden class="stack" style="align-items:flex-start;gap:6px">
+                  <span class="pill ok">Presença confirmada</span>
+                  <div class="ticket" id="ci-ticket">A000</div>
+                  <p id="ci-msg"></p>
+                </div>
+              </div>
+              <div class="composer">
+                <label class="sr" for="chat-input">A sua mensagem</label>
+                <input class="field" id="chat-input" autocomplete="off" placeholder="Escreva a sua mensagem…">
+              </div>
+              <div class="sugg" id="sugg" aria-label="Sugestões de palavras"></div>
+              <div class="phr" id="phrases" aria-label="Frases rápidas"></div>
+              <div class="kbd" id="kbd"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Voz -->
+      <div class="mode" id="m-voz">
+        <div class="voz">
+          <div class="screenbar" style="margin:0">
+            <div class="vstatus on" id="vstatus"><span class="dot"></span><span id="vstatus-txt">Em linha</span></div>
+            <span class="row" style="gap:8px"><span class="hint" id="voice-name"></span><span class="pill">Atendimento por voz</span></span>
+          </div>
+          <div>
+            <div class="hint" style="margin-bottom:6px">O assistente está a dizer:</div>
+            <div class="now" id="voz-now" aria-live="polite"></div>
+          </div>
+          <div id="digits-box" hidden><div class="hint">Número marcado:</div><div class="digits" id="digits">—</div></div>
+          <ol class="menu" id="vmenu" aria-label="Opções do teclado"></ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Telefone com teclado Braille -->
+    <aside class="hardware" aria-label="Telefone com teclado Braille">
+      <div class="card phonebox" id="phonebox">
+        <h3>Telefone de atendimento</h3>
+        <svg viewBox="0 -20 170 170" aria-hidden="true">
+          <rect x="22" y="72" width="126" height="70" rx="16" fill="#1C2427"/>
+          <rect x="38" y="86" width="94" height="12" rx="6" fill="#33403F"/>
+          <g class="handset"><path d="M24 60c0-10 6-16 16-16h90c10 0 16 6 16 16v6h-32v-8H56v8H24z" fill="var(--accent)"/></g>
+        </svg>
+        <button class="btn" id="btn-hook" style="width:100%">Atender o telefone</button>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:10px;text-align:center">Teclado Braille do telefone</h3>
+        <div class="pad" id="pad"></div>
+        <p class="hint" style="margin-top:10px">No teclado do computador: espaço atende ou pousa, 0–9, * repete, # confirma, A pede ajuda.</p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ================= SECRETARIADO ================= -->
+<section class="view" id="v-secretariado" data-view="secretariado">
+  <div class="card statusbar">
+    <div class="screenstate">
+      <span class="pill off" id="kiosk-pill">Desligado</span>
+      <div><div class="big" id="kiosk-title">Ecrã tátil dos utentes</div><div class="muted" id="kiosk-detail">Sem ligação ao ecrã tátil.</div></div>
+    </div>
+    <div class="row">
+      <button class="btn ghost small" id="btn-notif">Ativar notificações</button>
+      <button class="btn ghost small" id="btn-sound" aria-pressed="true">Som: ligado</button>
+    </div>
+  </div>
+
+  <div class="console">
+    <div class="card">
+      <div class="row" style="justify-content:space-between"><h3>Mensagens escritas (pessoas surdas)</h3><span class="badge" id="msg-count" hidden>0</span></div>
+      <div class="thread desk" id="thread-desk" style="margin-top:10px"></div>
+      <div class="quick" id="quick-desk" style="margin-top:10px"></div>
+      <form id="form-desk" class="row" style="margin-top:10px;flex-wrap:nowrap">
+        <label class="sr" for="desk-input">Responder</label>
+        <input class="field" id="desk-input" autocomplete="off" placeholder="Responder ao utente…" style="font-size:1em">
+        <button class="btn">Enviar</button>
+      </form>
+    </div>
+    <div class="stack" style="gap:18px">
+      <div class="card">
+        <div class="row" style="justify-content:space-between"><h3>Pedidos</h3><span class="badge" id="req-count" hidden>0</span></div>
+        <div id="req-list" style="margin-top:6px"></div>
+      </div>
+      <div class="card">
+        <h3>Presenças confirmadas (check-in)</h3>
+        <div id="ci-list" style="margin-top:6px"></div>
+      </div>
+      <div class="card">
+        <h3>Vídeos em LGP do intérprete</h3>
+        <p class="muted" style="margin-top:6px">Grave cada resposta com um intérprete de LGP fluente. Quando há vídeo, o ecrã tátil mostra-o em vez da pré-visualização.</p>
+        <div id="video-list" style="margin-top:6px"></div>
+        <p class="hint" id="video-hint"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SALA DE ESPERA ================= -->
+<section class="view" id="v-sala" data-view="sala">
+  <div class="board">
+    <div class="bnow" id="board-now">
+      <div style="font-size:1.3em">Senha chamada</div>
+      <div class="big" id="board-ticket">—</div>
+      <div class="where" id="board-where">Aguarde, por favor</div>
+    </div>
+    <div>
+      <div class="clock" id="clock">--:--</div>
+      <div style="margin-top:16px;font-weight:700">Últimas chamadas</div>
+      <ul id="board-list"></ul>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap cols">
+    <div><b>USF Covelo</b><br>Rua Faria Guimarães, 915-931 · 4200 Porto<br>Telefone: 22 557 4810</div>
+    <div><b>Horário</b><br>Segunda a sexta, 08h00–20h00<br>SNS 24: 808 24 24 24 · Emergência: 112</div>
+    <div><b>Sobre este protótipo</b><br><span class="muted">Os vídeos LGP devem ser gravados por um intérprete e validados pela comunidade surda; até lá aparece uma pré-visualização ilustrada. A videochamada e as SMS são simuladas.</span></div>
+  </div>
+</footer>
+
+<!-- Videochamada com intérprete -->
+<div class="overlay" id="ov-interp" role="dialog" aria-modal="true" aria-label="Videochamada com intérprete de LGP">
+  <div class="call">
+    <div class="vid" id="call-vid">
+      <span class="tag" id="call-state">A ligar…</span>
+      <div class="ring" id="call-ring"><svg viewBox="0 0 30 30" width="48" height="48" aria-hidden="true"><rect x="2" y="7" width="18" height="16" rx="3" fill="none" stroke="#45C3CB" stroke-width="2.4"/><path d="M20 13l8-4v12l-8-4z" fill="#45C3CB"/></svg></div>
+      <video id="video-interp" playsinline loop muted hidden style="width:100%;height:100%;object-fit:cover"></video>
+      <div id="interp-placeholder" hidden style="text-align:center;padding:30px">
+        <div style="font-size:1.3em;font-weight:700">Intérprete de LGP em linha</div>
+        <p style="opacity:.8;margin-top:8px;max-width:40ch">Na versão final, aqui aparece o intérprete em vídeo, ligado ao serviço de interpretação (como no SNS 24 e nas Lojas do Cidadão).</p>
+      </div>
+      <div class="selfcam">A sua câmara</div>
+    </div>
+    <div class="side">
+      <div class="row" style="justify-content:space-between"><b>Intérprete de LGP</b><span id="call-timer" style="font-variant-numeric:tabular-nums">00:00</span></div>
+      <p style="opacity:.85">Gestue para a câmara. O intérprete fala com o secretariado por si.</p>
+      <div id="call-ci">
+        <b>Confirmar presença durante a chamada</b>
+        <p style="opacity:.85;margin:4px 0 8px">Telemóvel para receber a SMS de chamada (opcional):</p>
+        <input class="field" id="call-phone" inputmode="numeric" maxlength="9" placeholder="9_ _ _ _ _ _ _ _" style="letter-spacing:.12em;margin-bottom:8px">
+        <div class="keypad" id="call-keypad"></div>
+        <button class="btn signal" id="call-ci-go" style="margin-top:10px;width:100%">Confirmar presença</button>
+      </div>
+      <div id="call-ci-ok" hidden><span class="pill ok">Presença confirmada</span><div class="ticket" id="call-ticket" style="font-size:2.4em">A000</div></div>
+      <button class="btn signal" id="btn-endcall">Terminar chamada</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="ov-call" role="alertdialog" aria-modal="true" aria-labelledby="call-title">
+  <div class="alertbox">
+    <div id="call-title" style="font-size:1.6em;font-weight:700">É a sua vez</div>
+    <div class="ticket" id="alert-ticket">A000</div>
+    <div style="font-size:1.6em;font-weight:700" id="alert-where"></div>
+    <button class="btn" id="btn-alert-ok" style="margin-top:18px;background:#000;color:#fff">Ok</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+"use strict";
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const hhmm = t => new Date(t).toLocaleTimeString("pt-PT", {hour: "2-digit", minute: "2-digit"});
+const reduceMotion = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+const uid = () => Math.random().toString(36).slice(2, 10);
+const maskPhone = p => p && p.length === 9 ? `${p.slice(0, 2)}• ••• •${p.slice(7)}` : "";
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+/* ================= Conteúdo fixo ================= */
+const SAUDACAO = {id: "saudacao", titulo: "Saudação inicial", texto: "Olá! Bem-vindo à USF Covelo. Escolha o que precisa.", glosas: ["OLÁ", "BEM-VINDO", "USF", "ESCOLHER"]};
+const FRASES = [
+  {id: "checkin", titulo: "Como fazer o check-in na consulta", voz: "saber como fazer o check-in",
+   texto: "A realização do check-in envolve fornecer o seu cartão de cidadão e a confirmação da consulta.",
+   glosas: ["CHECK-IN", "FAZER", "CARTÃO DE CIDADÃO", "DAR", "CONSULTA", "CONFIRMAR"]},
+  {id: "docs", titulo: "Que documentos tenho de trazer", voz: "saber que documentos trazer",
+   texto: "Os documentos necessários para a consulta são o cartão de cidadão para dar início ao check-in e os exames requisitados pelo médico.",
+   glosas: ["CONSULTA", "PRECISAR", "CARTÃO DE CIDADÃO", "CHECK-IN", "EXAMES", "MÉDICO", "PEDIR"]},
+  {id: "consultorios", titulo: "Onde ficam os consultórios", voz: "saber onde fica a sala da consulta",
+   texto: "Para ter informações sobre onde fica a sala onde irá ter a sua consulta, consulte o secretariado.",
+   glosas: ["SALA", "CONSULTA", "ONDE?", "SECRETARIADO", "PERGUNTAR"]},
+  {id: "fazercheckin", titulo: "Quero fazer check-in", voz: "dar entrada na consulta", go: true,
+   texto: "Vamos avisar o secretariado. Confirme a sua presença e escreva se precisar de alguma coisa.",
+   glosas: ["SECRETARIADO", "AJUDA", "CONFIRMAR", "ESCREVER"]}
+];
+const ICONS = {
+  checkin: '<svg viewBox="0 0 40 40" aria-hidden="true"><rect x="3" y="9" width="34" height="23" rx="4" fill="none" stroke="currentColor" stroke-width="2.6"/><circle cx="13" cy="19" r="4" fill="currentColor"/><path d="M7 28c1-4 4-5 6-5s5 1 6 5M22 17h10M22 23h7" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>',
+  docs: '<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M10 4h14l7 7v25H10z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><path d="M24 4v7h7M15 19h11M15 25h11M15 31h7" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>',
+  consultorios: '<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M9 36V5h20v31M5 36h30" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="24" cy="21" r="2" fill="currentColor"/></svg>',
+  fazercheckin: '<svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="16" fill="none" stroke="currentColor" stroke-width="2.8"/><path d="M12 20l6 6 11-12" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+};
+/* Mensagem do telefone, tal como definida pela USF */
+const BOAS_VINDAS = "Olá, bem-vindo à USF Covelo. Está a falar com o assistente de atendimento. Use as teclas de 1 a 4 do comando. Prima 1 para saber como fazer o check-in. Prima 2 para saber que documentos trazer. Prima 3 para saber onde fica a sala da consulta. Prima 4 para dar entrada na consulta. Para chamar o secretariado, prima o botão Ajuda, em baixo no comando.";
+const MENU_CURTO = "Prima 1, 2, 3 ou 4 para outra opção, asterisco para repetir, ou o botão Ajuda para chamar o secretariado.";
+
+/* ================= Avatar realista ================= */
+/* Mão desenhada com o pulso na origem e os dedos para cima; polegar do lado +x. Dedos articulados (falange proximal + distal) com unhas */
+const FING = [{x: 10.5, len: 34, w: 8.6}, {x: 3.4, len: 38, w: 8.9}, {x: -3.6, len: 35, w: 8.4}, {x: -10.6, len: 28, w: 7.4}]; // indicador, médio, anelar, mínimo
+function handMarkup(shape, pid, side = "tras") {
+  const back = side !== "frente";
+  const SK = `fill="url(#${pid}-skin)" stroke="#8A5A42" stroke-width="1.3"`;
+  const NAIL = `fill="#F4D3C2" stroke="#C9967C" stroke-width=".7"`;
+  function finger(i, a1 = 0, a2 = 0, k = 1) {
+    const f = FING[i], len = f.len * k, p = len * .56, d = len * .44, w = f.w;
+    return `<g transform="translate(${f.x} -40) rotate(${a1})">
+      <rect x="${-w / 2}" y="${-p - 3}" width="${w}" height="${p + 6}" rx="${w / 2}" ${SK}/>
+      <path d="M${-w * .3} ${-p * .45} q${w * .3} 1.6 ${w * .6} 0" stroke="#A8735A" stroke-width=".8" fill="none"/>
+      <g transform="translate(0 ${-p}) rotate(${a2})">
+        <rect x="${-w * .47}" y="${-d - 1}" width="${w * .94}" height="${d + 4}" rx="${w * .47}" ${SK}/>
+        <path d="M${-w * .28} 1.5 q${w * .28} 1.4 ${w * .56} 0" stroke="#A8735A" stroke-width=".8" fill="none"/>
+        ${back ? `<rect x="${-w * .28}" y="${-d + 1}" width="${w * .56}" height="${Math.min(7, d * .45)}" rx="${w * .26}" ${NAIL}/>` : `<path d="M${-w * .25} ${-d * .35} q${w * .25} 1.2 ${w * .5} 0" stroke="#B98468" stroke-width=".7" fill="none"/>`}
+      </g></g>`;
+  }
+  const fold = i => { const f = FING[i]; return `<g><rect x="${f.x - f.w / 2}" y="-51" width="${f.w}" height="17" rx="${f.w / 2}" ${SK}/><path d="M${f.x - f.w * .3} -44 q${f.w * .3} 1.5 ${f.w * .6} 0" stroke="#A8735A" stroke-width=".8" fill="none"/></g>`; };
+  function thumb(a1, a2 = 10, len = 30) {
+    const p = len * .52, d = len * .48;
+    return `<g transform="translate(15 -12) rotate(${a1})">
+      <rect x="-5.2" y="${-p - 3}" width="10.4" height="${p + 6}" rx="5.2" ${SK}/>
+      <g transform="translate(0 ${-p}) rotate(${a2})">
+        <rect x="-4.8" y="${-d - 1}" width="9.6" height="${d + 4}" rx="4.8" ${SK}/>
+        ${back ? `<rect x="-2.8" y="${-d + 1}" width="5.6" height="6.5" rx="2.6" ${NAIL}/>` : ""}
+      </g></g>`;
+  }
+  const across = (y = -26) => `<g><rect x="-13" y="${y}" width="30" height="10.5" rx="5.2" ${SK}/>${back ? `<rect x="-12" y="${y + 2.2}" width="6.2" height="6" rx="2.6" ${NAIL}/>` : ""}</g>`;
+  const palm = `<path d="M-13 14 L-15 0 C-20 -14 -21 -30 -19 -41 C-12 -47 12 -47 19 -41 C21 -30 20 -14 16 0 L13 14 Z" ${SK}/>
+    <path d="M9 -8 C14 -14 15 -24 13 -30" stroke="#C48B6C" stroke-width="1.1" fill="none" opacity=".7"/>` + (back
+    ? `<path d="M-9 -38 L-6 -14 M-2 -40 L-1 -14 M5 -40 L4 -14" stroke="#CF9677" stroke-width="1" opacity=".55" fill="none"/>`
+    : `<path d="M-16 -31 C-6 -26 6 -27 17 -34" stroke="#A8735A" stroke-width="1.1" fill="none"/><path d="M-15 -22 C-5 -18 4 -19 11 -25" stroke="#A8735A" stroke-width="1" fill="none"/><path d="M13 -4 C4 -10 1 -22 5 -34" stroke="#A8735A" stroke-width="1" fill="none"/><ellipse cx="9" cy="-10" rx="7" ry="10" fill="#F2C2A4" opacity=".55"/>`);
+  const S = {
+    "B": () => [0,1,2,3].map(i => finger(i)).join("") + palm + across(-24),
+    "5": () => thumb(58, 8) + [finger(0, 14), finger(1, 4), finger(2, -6), finger(3, -16)].join("") + palm,
+    "1": () => finger(0) + palm + fold(1) + fold(2) + fold(3) + across(-36),
+    "V": () => finger(0, 11) + finger(1, -7) + palm + fold(2) + fold(3) + across(-36),
+    "L": () => thumb(84, 4) + finger(0) + palm + fold(1) + fold(2) + fold(3),
+    "Y": () => thumb(72, 6) + finger(3, -14) + palm + fold(0) + fold(1) + fold(2),
+    "A": () => palm + [0,1,2,3].map(fold).join("") + thumb(4, 0, 27),
+    "S": () => palm + [0,1,2,3].map(fold).join("") + across(-40),
+    "C": () => thumb(96, 22) + [finger(0, 20, 52), finger(1, 18, 52), finger(2, 16, 50), finger(3, 14, 48)].join("") + palm,
+    "O": () => thumb(48, 44) + [finger(0, 30, 70, .95), finger(1, 28, 70, .95), finger(2, 26, 66), finger(3, 24, 64)].join("") + palm
+  };
+  return `<g filter="url(#${pid}-shadow)"><g transform="${side === "lado" ? "scale(.62 1)" : ""}">` + (S[shape] || S["B"])() + `</g></g>`;
+}
+/* Poses em coordenadas do avatar (400 x 430). a = mão à esquerda do ecrã (dominante), b = mão à direita. r em graus, 0 = dedos para cima */
+const REST = {a: {x: 150, y: 470, s: "B", r: 180}, b: {x: 250, y: 470, s: "B", r: 180}};
+const SIGNS = {
+  "OLÁ": {a: {x: 112, y: 150, s: "B", r: -12}, m: "wave"},
+  "BEM-VINDO": {a: {x: 140, y: 300, s: "B", r: -75}, b: {x: 260, y: 300, s: "B", r: 75}, m: "toward"},
+  "USF": {a: {x: 196, y: 280, s: "5", r: -95}, m: "tap"},
+  "ESCOLHER": {a: {x: 175, y: 255, s: "O", r: 10}, b: {x: 245, y: 305, s: "5", r: 15}, m: "tap"},
+  "CHECK-IN": {a: {x: 150, y: 310, s: "B", r: -90}, b: {x: 250, y: 320, s: "B", r: 90}, m: "toward"},
+  "FAZER": {a: {x: 168, y: 300, s: "S", r: 0}, b: {x: 232, y: 300, s: "S", r: 0}, m: "circle"},
+  "CARTÃO DE CIDADÃO": {a: {x: 165, y: 285, s: "L", r: -35}, b: {x: 235, y: 285, s: "L", r: 35}, m: "pull"},
+  "DAR": {a: {x: 190, y: 300, s: "B", r: -100}, m: "away"},
+  "CONSULTA": {a: {x: 170, y: 300, s: "V", r: -60}, b: {x: 235, y: 315, s: "B", r: 85}, m: "tap"},
+  "CONFIRMAR": {a: {x: 165, y: 275, s: "S", r: 0}, m: "nod"},
+  "PRECISAR": {a: {x: 190, y: 270, s: "1", r: -70}, m: "nod"},
+  "EXAMES": {a: {x: 165, y: 295, s: "B", r: -80}, b: {x: 235, y: 305, s: "B", r: 80}, m: "wave"},
+  "MÉDICO": {a: {x: 165, y: 265, s: "C", r: 10}, b: {x: 245, y: 315, s: "S", r: 90}, m: "tap"},
+  "PEDIR": {a: {x: 180, y: 270, s: "B", r: -14}, b: {x: 220, y: 270, s: "B", r: 14}, m: "nod"},
+  "SALA": {a: {x: 140, y: 285, s: "B", r: 0}, b: {x: 260, y: 285, s: "B", r: 0}, m: "pull"},
+  "ONDE?": {a: {x: 150, y: 250, s: "1", r: 0}, m: "wave", q: true},
+  "SECRETARIADO": {a: {x: 160, y: 315, s: "B", r: -90}, b: {x: 240, y: 315, s: "B", r: 90}, m: "away"},
+  "PERGUNTAR": {a: {x: 165, y: 225, s: "1", r: 25}, m: "away", q: true},
+  "ABERTA": {a: {x: 185, y: 285, s: "B", r: -8}, b: {x: 215, y: 285, s: "B", r: 8}, m: "open"},
+  "SEGUNDA": {a: {x: 135, y: 235, s: "1", r: 0}, m: "tap"},
+  "SEXTA": {a: {x: 135, y: 235, s: "5", r: 0}, m: "tap"},
+  "HORAS": {a: {x: 232, y: 300, s: "1", r: -90}, b: {x: 255, y: 305, s: "S", r: 90}, m: "tap"},
+  "FIM DE SEMANA": {a: {x: 150, y: 270, s: "V", r: 0}, b: {x: 250, y: 270, s: "V", r: 0}, m: "wave"},
+  "FECHADA": {a: {x: 180, y: 285, s: "B", r: -90}, b: {x: 220, y: 285, s: "B", r: 90}, m: "none"},
+  "ESCREVER": {a: {x: 215, y: 300, s: "O", r: -20}, b: {x: 232, y: 325, s: "B", r: -90}, m: "wave"},
+  "OBRIGADO": {a: {x: 200, y: 175, s: "B", r: 0}, m: "away"},
+  "AJUDA": {a: {x: 200, y: 295, s: "A", r: 0}, b: {x: 205, y: 330, s: "B", r: -90}, m: "nod"},
+  "TELEFONE": {a: {x: 135, y: 140, s: "Y", r: 0}, m: "none"},
+  "NÃO": {a: {x: 160, y: 250, s: "1", r: 0}, m: "wave"},
+  "SIM": {a: {x: 165, y: 275, s: "S", r: 0}, m: "nod"},
+  "ESPERAR": {a: {x: 170, y: 290, s: "5", r: -20}, b: {x: 230, y: 290, s: "5", r: 20}, m: "wave"},
+  "MOMENTO": {a: {x: 165, y: 260, s: "1", r: 0}, m: "none"}
+};
+const PALMS = {"OLÁ": "frente", "CARTÃO DE CIDADÃO": "frente", "ESPERAR": "frente", "NÃO": "frente", "SEGUNDA": "frente", "SEXTA": "frente", "ABERTA": "frente", "EXAMES": "frente", "FIM DE SEMANA": "frente",
+  "DAR": "lado", "BEM-VINDO": "lado", "CHECK-IN": "lado", "SALA": "lado", "SECRETARIADO": "lado", "PEDIR": "lado", "FECHADA": "lado", "PERGUNTAR": "lado", "TELEFONE": "lado", "MÉDICO": "lado", "ESCOLHER": "lado"};
+Object.keys(PALMS).forEach(g => { if (SIGNS[g]) { SIGNS[g].a.p = PALMS[g]; if (SIGNS[g].b) SIGNS[g].b.p = PALMS[g]; } });
+const KEYWORDS = [
+  [/check/i, "CHECK-IN"], [/cart[ãa]o/i, "CARTÃO DE CIDADÃO"], [/consulta/i, "CONSULTA"], [/m[ée]dic/i, "MÉDICO"],
+  [/exame/i, "EXAMES"], [/\bsala|gabinete/i, "SALA"], [/\bonde\b/i, "ONDE?"], [/secretari|balc[ãa]o/i, "SECRETARIADO"],
+  [/hor[áa]|\bh\b|\d+h/i, "HORAS"], [/abert/i, "ABERTA"], [/fechad|encerrad/i, "FECHADA"], [/telefon|ligar/i, "TELEFONE"],
+  [/ajud/i, "AJUDA"], [/obrigad/i, "OBRIGADO"], [/\bol[áa]\b|bom dia|boa tarde/i, "OLÁ"], [/escrev/i, "ESCREVER"],
+  [/\bn[ãa]o\b/i, "NÃO"], [/\bsim\b|confirmad/i, "SIM"], [/esper|aguard/i, "ESPERAR"], [/momento/i, "MOMENTO"],
+  [/document|trazer/i, "EXAMES"], [/precis|necess/i, "PRECISAR"], [/pergunt|consulte/i, "PERGUNTAR"]
+];
+function glossesFor(text) {
+  const out = [];
+  text.split(/(?<=[.,!?;])\s+|\s+(?=e\s)/).forEach(chunk => {
+    KEYWORDS.forEach(([re, g]) => { if (re.test(chunk) && !out.includes(g)) out.push(g); });
+  });
+  return out.length ? out.slice(0, 8) : ["MOMENTO", "SECRETARIADO", "AJUDA"];
+}
+
+function avatarSkeleton(svg) {
+  const p = svg.id;
+  svg.innerHTML = `
+  <defs>
+    <radialGradient id="${p}-bg" cx="50%" cy="35%" r="75%"><stop offset="0" stop-color="#F3F6F6"/><stop offset="1" stop-color="#C9D4D5"/></radialGradient>
+    <radialGradient id="${p}-face" cx="46%" cy="38%" r="62%"><stop offset="0" stop-color="#F2C7A9"/><stop offset=".6" stop-color="#E2AB89"/><stop offset="1" stop-color="#C58A68"/></radialGradient>
+    <linearGradient id="${p}-skin" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#D59A78"/><stop offset=".55" stop-color="#EDBB9B"/><stop offset="1" stop-color="#E0A886"/></linearGradient>
+    <linearGradient id="${p}-neck" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#B97E5E"/><stop offset=".35" stop-color="#DDA585"/><stop offset="1" stop-color="#E4AE8E"/></linearGradient>
+    <linearGradient id="${p}-hair" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#4A3226"/><stop offset=".5" stop-color="#2E1E17"/><stop offset="1" stop-color="#1D130F"/></linearGradient>
+    <linearGradient id="${p}-shirt" x1="0" x2="1"><stop offset="0" stop-color="#121B20"/><stop offset=".5" stop-color="#22313A"/><stop offset="1" stop-color="#121B20"/></linearGradient>
+    <radialGradient id="${p}-cheek" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#E58C7E" stop-opacity=".45"/><stop offset="1" stop-color="#E58C7E" stop-opacity="0"/></radialGradient>
+    <filter id="${p}-shadow" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2.5" stdDeviation="2.2" flood-color="#000" flood-opacity=".28"/></filter>
+  </defs>
+  <rect width="400" height="430" fill="url(#${p}-bg)"/>
+  <ellipse cx="200" cy="430" rx="190" ry="40" fill="#000" opacity=".06"/>
+  <circle cx="232" cy="44" r="21" fill="url(#${p}-hair)"/>
+  <path d="M76 430 L90 272 C96 238 122 220 158 212 C170 209 180 205 186 199 L214 199 C220 205 230 209 242 212 C278 220 304 238 310 272 L324 430 Z" fill="url(#${p}-shirt)"/>
+  <path d="M180 156 L180 196 C188 208 212 208 220 196 L220 156 Z" fill="url(#${p}-neck)"/>
+  <path d="M184 200 C192 212 208 212 216 200" stroke="#0E161A" stroke-width="3" fill="none"/>
+  <g class="head">
+    <ellipse cx="151" cy="114" rx="8" ry="15" fill="#D99D7B" stroke="#9A6449" stroke-width="1"/>
+    <ellipse cx="249" cy="114" rx="8" ry="15" fill="#D99D7B" stroke="#9A6449" stroke-width="1"/>
+    <path d="M153 100 C153 58 176 40 200 40 C224 40 247 58 247 100 C247 133 238 152 222 164 C212 171 206 174 200 174 C194 174 188 171 178 164 C162 152 153 133 153 100 Z" fill="url(#${p}-face)" stroke="#A8735A" stroke-width="1"/>
+    <ellipse cx="174" cy="134" rx="13" ry="8" fill="url(#${p}-cheek)"/><ellipse cx="226" cy="134" rx="13" ry="8" fill="url(#${p}-cheek)"/>
+    <path d="M149 108 C140 54 172 30 204 32 C238 34 262 58 251 108 C248 84 236 66 214 60 C196 70 172 72 157 86 C153 92 151 99 149 108Z" fill="url(#${p}-hair)"/>
+    <path d="M168 62 C182 52 210 48 232 58" stroke="#5B4033" stroke-width="2" fill="none" opacity=".6"/>
+    <g class="brows">
+      <path d="M166 96 C172 90 184 89 192 93 L191 96 C184 93 174 94 167 98Z" fill="#3A281F"/>
+      <path d="M234 96 C228 90 216 89 208 93 L209 96 C216 93 226 94 233 98Z" fill="#3A281F"/>
+    </g>
+    <g class="eyes">
+      <ellipse cx="180" cy="110" rx="9.5" ry="5.6" fill="#FBF8F5"/><ellipse cx="220" cy="110" rx="9.5" ry="5.6" fill="#FBF8F5"/>
+      <g class="look"><circle cx="180.5" cy="110" r="4.7" fill="#6B4630"/><circle cx="180.5" cy="110" r="2.3" fill="#140C08"/><circle cx="182" cy="108.5" r="1.2" fill="#fff"/></g>
+      <g class="look"><circle cx="219.5" cy="110" r="4.7" fill="#6B4630"/><circle cx="219.5" cy="110" r="2.3" fill="#140C08"/><circle cx="221" cy="108.5" r="1.2" fill="#fff"/></g>
+      <path d="M170 109 C174 103 186 103 190 109" stroke="#2A1A12" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <path d="M210 109 C214 103 226 103 230 109" stroke="#2A1A12" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <path d="M172 114 C177 117 184 117 188 114" stroke="#B98468" stroke-width="1" fill="none"/>
+      <path d="M212 114 C217 117 224 117 228 114" stroke="#B98468" stroke-width="1" fill="none"/>
+      <ellipse class="lid" cx="180" cy="110" rx="10.5" ry="0" fill="#D9A07F"/><ellipse class="lid" cx="220" cy="110" rx="10.5" ry="0" fill="#D9A07F"/>
+    </g>
+    <path d="M200 112 C199 122 195 131 194 136 C196 140 204 140 206 136" stroke="#B17A5D" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <path d="M194 137 C196 135 198 136 199 138 M201 138 C202 136 204 135 206 137" stroke="#8E5A43" stroke-width="1.2" fill="none"/>
+    <ellipse class="mouthin" cx="200" cy="153" rx="10" ry="0" fill="#4A1E1A"/>
+    <path class="lip-u" d="M186 151 C191 147 196 148 200 150 C204 148 209 147 214 151 C208 153.5 192 153.5 186 151Z" fill="#B4615A"/>
+    <path class="lip-l" d="M187 152 C193 160 207 160 213 152 C207 155 193 155 187 152Z" fill="#A9524B"/>
+  </g>
+  <g class="arm a"><path class="o up" stroke="#0B1216" stroke-width="38" fill="none" stroke-linecap="round"/><path class="o fo" stroke="#0B1216" stroke-width="31" fill="none" stroke-linecap="round"/><path class="up" stroke="#1E2C34" stroke-width="35" fill="none" stroke-linecap="round"/><path class="fo" stroke="#24343D" stroke-width="28" fill="none" stroke-linecap="round"/></g>
+  <g class="arm b"><path class="o up" stroke="#0B1216" stroke-width="38" fill="none" stroke-linecap="round"/><path class="o fo" stroke="#0B1216" stroke-width="31" fill="none" stroke-linecap="round"/><path class="up" stroke="#1E2C34" stroke-width="35" fill="none" stroke-linecap="round"/><path class="fo" stroke="#24343D" stroke-width="28" fill="none" stroke-linecap="round"/></g>
+  <path class="trail" fill="none" stroke="#00A3AE" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>
+  <g class="hand b"></g>
+  <g class="hand a"></g>`;
+}
+
+function makeSigner(svg, subs, glossEl, paramsEl) {
+  avatarSkeleton(svg);
+  const pid = svg.id;
+  const arm = {a: svg.querySelector(".arm.a"), b: svg.querySelector(".arm.b")};
+  const hand = {a: svg.querySelector(".hand.a"), b: svg.querySelector(".hand.b")};
+  const brows = svg.querySelector(".brows"), head = svg.querySelector(".head");
+  const mouthIn = svg.querySelector(".mouthin"), lipL = svg.querySelector(".lip-l"), lids = svg.querySelectorAll(".lid");
+  const looks = svg.querySelectorAll(".look"), trailEl = svg.querySelector(".trail");
+  let trail = [], tracking = false;
+  const SH = {a: {x: 142, y: 234}, b: {x: 258, y: 234}};
+  const cur = {a: {...REST.a}, b: {...REST.b}};
+  const shown = {a: "", b: ""};
+  let token = 0, slow = false;
+  // pestanejar natural
+  (function blink() {
+    setTimeout(() => { lids.forEach(l => l.setAttribute("ry", "6.5")); setTimeout(() => { lids.forEach(l => l.setAttribute("ry", "0")); blink(); }, 130); }, 2600 + Math.random() * 2600);
+  })();
+  function elbow(S, W, side) {
+    const L1 = 104, L2 = 98;
+    let dx = W.x - S.x, dy = W.y - S.y, d = Math.hypot(dx, dy);
+    d = Math.min(Math.max(d, 20), L1 + L2 - 1);
+    const a = Math.atan2(dy, dx);
+    const b = Math.acos(Math.min(1, Math.max(-1, (L1 * L1 + d * d - L2 * L2) / (2 * L1 * d))));
+    const e1 = {x: S.x + L1 * Math.cos(a + b), y: S.y + L1 * Math.sin(a + b)};
+    const e2 = {x: S.x + L1 * Math.cos(a - b), y: S.y + L1 * Math.sin(a - b)};
+    const out = q => side === "a" ? -q.x : q.x;
+    return (out(e1) + e1.y * .6) > (out(e2) + e2.y * .6) ? e1 : e2;
+  }
+  function draw(off = {a: {}, b: {}}) {
+    ["a", "b"].forEach(k => {
+      const q = cur[k], o = off[k] || {};
+      const W = {x: q.x + (o.x || 0), y: q.y + (o.y || 0)};
+      const r = q.r + (o.r || 0);
+      const S = SH[k], E = elbow(S, W, k);
+      // a manga acaba um pouco antes do pulso
+      const rad = (r - 90) * Math.PI / 180, cuff = {x: W.x - Math.cos(rad) * -6, y: W.y - Math.sin(rad) * -6};
+      const up = `M${S.x} ${S.y} L${E.x.toFixed(1)} ${E.y.toFixed(1)}`, fo = `M${E.x.toFixed(1)} ${E.y.toFixed(1)} L${cuff.x.toFixed(1)} ${cuff.y.toFixed(1)}`;
+      arm[k].querySelectorAll(".up").forEach(pth => pth.setAttribute("d", up));
+      arm[k].querySelectorAll(".fo").forEach(pth => pth.setAttribute("d", fo));
+      const side = q.p || "tras";
+      if (shown[k] !== q.s + side) { hand[k].innerHTML = handMarkup(q.s, pid, side); shown[k] = q.s + side; }
+      const flip = (k === "b") !== (side === "frente");
+      hand[k].setAttribute("transform", `translate(${W.x.toFixed(1)} ${W.y.toFixed(1)}) rotate(${r.toFixed(1)})${flip ? " scale(-1 1)" : ""} scale(1.5)`);
+      if (k === "a") {
+        // o olhar acompanha a mão dominante; rasto mostra o movimento
+        const gx = W.y > 420 ? 0 : Math.max(-3, Math.min(3, (W.x - 200) / 30)), gy = W.y > 420 ? 0 : Math.max(-1.2, Math.min(2, (W.y - 200) / 60));
+        looks.forEach(l => l.setAttribute("transform", `translate(${gx.toFixed(1)} ${gy.toFixed(1)})`));
+        if (tracking) { trail.push([W.x, W.y]); if (trail.length > 18) trail.shift(); }
+        trailEl.setAttribute("d", trail.length > 1 ? "M" + trail.map(t => t[0].toFixed(1) + " " + t[1].toFixed(1)).join(" L") : "");
+      }
+    });
+  }
+  draw();
+  const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  const lerp = (a, b, t) => a + (b - a) * t;
+  function tween(target, ms, my) {
+    return new Promise(res => {
+      const from = {a: {...cur.a}, b: {...cur.b}}, t0 = performance.now();
+      function f(now) {
+        if (my !== token) return res(false);
+        const t = Math.min(1, (now - t0) / ms), e = ease(t);
+        ["a", "b"].forEach(k => { const T = target[k]; cur[k] = {x: lerp(from[k].x, T.x, e), y: lerp(from[k].y, T.y, e), r: lerp(from[k].r, T.r, e), s: t > .5 ? T.s : from[k].s, p: t > .5 ? T.p : from[k].p}; });
+        draw();
+        if (t < 1) requestAnimationFrame(f); else res(true);
+      }
+      requestAnimationFrame(f);
+    });
+  }
+  function mouth(open) { mouthIn.setAttribute("ry", open.toFixed(1)); lipL.setAttribute("transform", `translate(0 ${(open * .8).toFixed(1)})`); }
+  function hold(m, ms, my, headMove) {
+    return new Promise(res => {
+      const t0 = performance.now();
+      function f(now) {
+        if (my !== token) return res(false);
+        const t = Math.min(1, (now - t0) / ms), w2 = Math.sin(t * Math.PI * 4);
+        let o = {};
+        if (!reduceMotion) switch (m) {
+          case "tap": o = {y: Math.max(0, w2) * 10}; break;
+          case "nod": o = {y: Math.abs(w2) * 9}; break;
+          case "wave": o = {r: w2 * 14}; break;
+          case "circle": o = {x: Math.cos(t * Math.PI * 4) * 12, y: Math.sin(t * Math.PI * 4) * 12}; break;
+          case "toward": o = {y: -t * 26}; break;
+          case "away": o = {y: t * 22, x: t * 10}; break;
+          case "pull": o = {x: -t * 18}; break;
+          case "open": o = {x: -t * 28, r: -t * 10}; break;
+        }
+        const ob = {...o}; if (ob.x) ob.x = -ob.x; if (ob.r) ob.r = -ob.r;
+        draw({a: o, b: m === "open" || m === "pull" ? ob : {}});
+        mouth(Math.abs(Math.sin(t * Math.PI * 6)) * 4.5);
+        if (!reduceMotion && headMove === "nod") head.setAttribute("transform", `rotate(0) translate(0 ${(Math.abs(w2) * 4).toFixed(1)})`);
+        else if (!reduceMotion && headMove === "shake") head.setAttribute("transform", `rotate(${(w2 * 5).toFixed(1)} 200 170)`);
+        else if (headMove === "tilt") head.setAttribute("transform", "rotate(-4 200 170)");
+        if (t < 1) requestAnimationFrame(f); else { mouth(0); head.setAttribute("transform", ""); res(true); }
+      }
+      requestAnimationFrame(f);
+    });
+  }
+  function setSubs(text) {
+    subs.textContent = "";
+    return text.split(/\s+/).filter(Boolean).map((w, i, arr) => {
+      const sp = document.createElement("span"); sp.className = "w"; sp.textContent = w + (i < arr.length - 1 ? " " : "");
+      subs.appendChild(sp); return sp;
+    });
+  }
+  const PALM_TXT = {frente: "palma virada para si", tras: "costas da mão para si", lado: "palma de lado"};
+  const MOV_TXT = {tap: "toque repetido", nod: "movimento curto para baixo", wave: "abanar", circle: "movimento circular", toward: "movimento para o corpo", away: "movimento para fora", pull: "afastar as mãos", open: "abrir", none: "sem movimento"};
+  const HEAD = {"SIM": "nod", "CONFIRMAR": "nod", "NÃO": "shake", "FECHADA": "shake", "ONDE?": "tilt", "PERGUNTAR": "tilt"};
+  async function play(text, glosas) {
+    const my = ++token;
+    const spans = setSubs(text);
+    const gl = (glosas && glosas.length) ? glosas : glossesFor(text);
+    const k = slow ? 1.7 : 1;
+    for (let i = 0; i < gl.length; i++) {
+      if (my !== token) return;
+      const g = SIGNS[gl[i]] || SIGNS["MOMENTO"];
+      glossEl.textContent = gl[i];
+      brows.setAttribute("transform", g.q ? "translate(0 -6)" : "");
+      const target = {a: {...g.a}, b: g.b ? {...g.b} : {...REST.b}};
+      if (paramsEl) paramsEl.textContent = `Configuração ${g.a.s} · ${PALM_TXT[g.a.p || "tras"]} · ${MOV_TXT[g.m] || "sem movimento"}${g.b ? " · duas mãos" : ""}${g.q ? " · sobrancelhas levantadas" : ""}`;
+      trail = []; tracking = false;
+      const upto = Math.round(spans.length * (i + 1) / gl.length);
+      spans.forEach((s, j) => s.classList.toggle("on", j < upto));
+      if (!await tween(target, 420 * k, my)) return;
+      tracking = true;
+      if (!await hold(g.m, 780 * k, my, HEAD[gl[i]])) return;
+      tracking = false;
+    }
+    if (my !== token) return;
+    spans.forEach(s => s.classList.add("on"));
+    glossEl.textContent = ""; brows.setAttribute("transform", ""); trail = []; if (paramsEl) paramsEl.textContent = "";
+    await tween({a: {...REST.a}, b: {...REST.b}}, 500, my);
+  }
+  function stop() { token++; trail = []; tracking = false; if (paramsEl) paramsEl.textContent = ""; glossEl.textContent = ""; brows.setAttribute("transform", ""); head.setAttribute("transform", ""); mouth(0); cur.a = {...REST.a}; cur.b = {...REST.b}; draw(); }
+  return {play, stop, setSlow: v => { slow = v; }, show: t => { stop(); setSubs(t).forEach(s => s.classList.add("on")); }};
+}
+
+
+const signerMain = makeSigner($("#avatar-main"), $("#subs-main"), $("#gloss-main"), $("#params-main"));
+
+/* ================= Estado partilhado em tempo real ================= */
+const store = {
+  rev: 0, next: 13,
+  chats: [],
+  reqs: [],      // pedidos: {id, tipo: ajuda|interprete|checkin-voz, origem, status: pendente|atendido, t}
+  checkins: [{id: "ex1", code: "A011", origem: "lgp", phone: "912345678", status: "espera", t: Date.now() - 600000, exemplo: true}],
+  calls: []
+};
+let room = null, peers = [], kiosk = null;
+const snap = () => JSON.parse(JSON.stringify(store));
+function clean(d) {
+  const s = (v, n) => String(v ?? "").slice(0, n);
+  const arr = v => Array.isArray(v) ? v.slice(-80) : [];
+  return {
+    rev: Number(d.rev) || 0, next: Number(d.next) || store.next,
+    chats: arr(d.chats).map(c => ({id: s(c.id, 20), from: c.from === "utente" ? "utente" : "secretariado", text: s(c.text, 600), t: Number(c.t) || 0, lida: !!c.lida})),
+    reqs: arr(d.reqs).map(r => ({id: s(r.id, 20), tipo: ["ajuda", "interprete", "checkin-voz"].includes(r.tipo) ? r.tipo : "ajuda", origem: s(r.origem, 60), status: r.status === "atendido" ? "atendido" : "pendente", t: Number(r.t) || 0})),
+    checkins: arr(d.checkins).map(k => ({id: s(k.id, 20), code: s(k.code, 8), origem: k.origem === "voz" ? "voz" : "lgp", phone: s(k.phone, 9).replace(/\D/g, ""), status: k.status === "chamado" ? "chamado" : "espera", gabinete: s(k.gabinete, 24), t: Number(k.t) || 0, exemplo: !!k.exemplo})),
+    calls: arr(d.calls).map(c => ({code: s(c.code, 8), gabinete: s(c.gabinete, 24), t: Number(c.t) || 0}))
+  };
+}
+function mutate(fn) { const prev = snap(); fn(); store.rev = Date.now(); afterChange(prev, true); broadcast(); }
+function broadcast() { if (room) { try { room.emit("state", snap()); } catch (e) {} } else if (bc) { try { bc.postMessage({type: "state", data: snap()}); } catch (e) {} } }
+let bc = null, bcKioskSeen = 0;
+try { bc = new BroadcastChannel("usf-covelo-atendimento"); } catch (e) { bc = null; }
+function applyRemote(data) { try { if (!data || typeof data !== "object") return; const d = clean(data); if (d.rev <= store.rev) return; const prev = snap(); Object.assign(store, d); afterChange(prev, false); } catch (e) {} }
+if (bc) bc.onmessage = ev => {
+  if (room) return;
+  const m = ev.data || {};
+  if (m.type === "state") applyRemote(m.data);
+  else if (m.type === "hello") broadcast();
+  else if (m.type === "presence" && m.p && m.p.funcao === "utente") { kiosk = m.p; bcKioskSeen = Date.now(); renderKiosk(); }
+  else if (m.type === "typing" && role === "secretariado") { $("#kiosk-detail").textContent = "Em uso: a pessoa surda está a escrever…"; clearTimeout(typingTimer); typingTimer = setTimeout(renderKiosk, 2500); }
+};
+const mine = {reqs: new Set(), checkins: new Set()};
+
+function afterChange(prev, local) {
+  const isNew = (list, prevList) => list.filter(x => !prevList.some(p => p.id === x.id));
+  const newUser = isNew(store.chats, prev.chats).filter(c => c.from === "utente");
+  const newDesk = isNew(store.chats, prev.chats).filter(c => c.from === "secretariado");
+  const newReq = isNew(store.reqs, prev.reqs);
+  const newCi = isNew(store.checkins, prev.checkins);
+  if (role === "secretariado" && !local) {
+    newUser.forEach(m => notify("Nova mensagem de uma pessoa surda", m.text));
+    newReq.forEach(r => notify(r.tipo === "interprete" ? "Videochamada com intérprete" : r.tipo === "checkin-voz" ? "Pessoa cega deu entrada" : "Pedido de ajuda", r.origem));
+    newCi.forEach(c => notify("Presença confirmada " + c.code, c.origem === "lgp" ? "Pessoa surda" + (c.phone ? " · SMS " + maskPhone(c.phone) : "") : "Pessoa cega · acompanhar"));
+  }
+  if (role === "utente" && screenMode === "lgp" && newDesk.length) {
+    if (!$("#panel-chat").classList.contains("active")) $("#chat-badge").hidden = false;
+    const m = newDesk[newDesk.length - 1];
+    playText("Secretariado: " + m.text);
+  }
+  const answered = store.reqs.filter(r => r.status === "atendido" && prev.reqs.some(p => p.id === r.id && p.status !== "atendido") && mine.reqs.has(r.id));
+  if (answered.length && role === "utente") {
+    if (screenMode === "voz") say("O secretariado recebeu o seu pedido. Um funcionário vem a caminho.");
+    else toast("Secretariado", "Recebemos o seu pedido. Um funcionário vem a caminho.");
+  }
+  if (store.calls.length > prev.calls.length) onNewCall(store.calls[store.calls.length - 1]);
+  renderAll();
+}
+
+/* ================= Funções e vistas ================= */
+const VIEWS = ["escolha", "utente", "secretariado", "sala"];
+let role = null, view = "escolha";
+const ROLE_KEY = "usfcovelo-funcao";
+function savedRole() { try { return localStorage.getItem(ROLE_KEY); } catch (e) { return null; } }
+function setRole(r) { try { if (r) localStorage.setItem(ROLE_KEY, r); else localStorage.removeItem(ROLE_KEY); } catch (e) {} location.hash = r || "escolha"; }
+function route() {
+  let h = location.hash.slice(1);
+  if (!VIEWS.includes(h)) h = savedRole() || "escolha";
+  view = h; role = h === "escolha" ? null : h;
+  $$("section.view").forEach(s => s.classList.toggle("active", s.dataset.view === view));
+  $("#rolechip").hidden = !role; $("#btn-role").hidden = !role;
+  $("#rolechip").textContent = {utente: "Ecrã tátil dos utentes", secretariado: "Secretariado", sala: "Sala de espera"}[role] || "";
+  if (role !== "utente") { stopVoice(); }
+  sendPresence();
+  renderAll();
+  window.scrollTo(0, 0);
+}
+window.addEventListener("hashchange", route);
+$("#pick-utente").addEventListener("click", () => setRole("utente"));
+$("#pick-secretariado").addEventListener("click", () => setRole("secretariado"));
+$("#pick-sala").addEventListener("click", e => { e.preventDefault(); setRole("sala"); });
+$("#btn-role").addEventListener("click", () => setRole(null));
+
+$("#btn-size").addEventListener("click", e => { const on = e.currentTarget.getAttribute("aria-pressed") !== "true"; e.currentTarget.setAttribute("aria-pressed", on); if (on) document.documentElement.dataset.size = "grande"; else delete document.documentElement.dataset.size; });
+$("#btn-contrast").addEventListener("click", e => { const on = e.currentTarget.getAttribute("aria-pressed") !== "true"; e.currentTarget.setAttribute("aria-pressed", on); if (on) document.documentElement.dataset.contrast = "high"; else delete document.documentElement.dataset.contrast; });
+
+let toastTimer;
+function toast(title, body) {
+  const t = $("#toast"); t.textContent = ""; t.appendChild(el("b", null, title)); if (body) t.appendChild(el("span", null, body));
+  t.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("show"), 6000);
+}
+
+/* ================= Notificações do secretariado ================= */
+let soundOn = true, unread = 0, audioCtx = null;
+const baseTitle = document.title;
+function chime() {
+  if (!soundOn) return;
+  try {
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    [660, 880].forEach((f, i) => { const o = audioCtx.createOscillator(), g = audioCtx.createGain(); o.frequency.value = f; g.gain.value = .12; o.connect(g); g.connect(audioCtx.destination); o.start(audioCtx.currentTime + i * .18); o.stop(audioCtx.currentTime + i * .18 + .16); });
+  } catch (e) {}
+}
+function notify(title, body) {
+  unread++; document.title = `(${unread}) ${baseTitle}`;
+  toast(title, body); chime();
+  try { if (window.Notification && Notification.permission === "granted") new Notification(title, {body}); } catch (e) {}
+}
+window.addEventListener("focus", () => { unread = 0; document.title = baseTitle; });
+$("#btn-notif").addEventListener("click", async () => {
+  chime();
+  try {
+    if (!window.Notification) throw 0;
+    const p = await Notification.requestPermission();
+    $("#btn-notif").textContent = p === "granted" ? "Notificações ativas" : "Notificações no ecrã e som";
+  } catch (e) { $("#btn-notif").textContent = "Notificações no ecrã e som"; }
+});
+$("#btn-sound").addEventListener("click", e => { soundOn = !soundOn; e.currentTarget.setAttribute("aria-pressed", soundOn); e.currentTarget.textContent = "Som: " + (soundOn ? "ligado" : "desligado"); if (soundOn) chime(); });
+
+/* ================= Ecrã tátil: modos ================= */
+let screenMode = "home", idleTimer = null;
+function setScreen(m) {
+  screenMode = m;
+  ["home", "lgp", "voz"].forEach(k => $("#m-" + k).classList.toggle("active", k === m));
+  if (m !== "lgp") { signerMain.stop(); $("#video-main").pause(); }
+  bumpIdle(); sendPresence();
+}
+function bumpIdle() {
+  clearTimeout(idleTimer);
+  if (screenMode === "lgp") idleTimer = setTimeout(() => { if (screenMode === "lgp" && !$("#ov-interp").classList.contains("show")) { resetLgp(); setScreen("home"); } }, 150000);
+}
+document.addEventListener("pointerdown", bumpIdle);
+document.addEventListener("keydown", bumpIdle);
+function sendPresence() {
+  if (!room) { if (bc && role === "utente") { try { bc.postMessage({type: "presence", p: {funcao: "utente", modo: screenMode, t: Date.now(), atividade: lastActivity}}); } catch (e) {} } return; }
+  const p = {funcao: role || "escolha"};
+  if (role === "utente") { p.modo = screenMode; p.t = Date.now(); p.atividade = lastActivity; }
+  try { room.presence(p); } catch (e) {}
+}
+let lastActivity = "";
+function activity(txt) { lastActivity = txt; sendPresence(); }
+
+/* ================= Modo LGP ================= */
+let localVideos = {};
+let videos = {}, assets = null, dbDoc = null, slowOn = false, lastPhrase = SAUDACAO;
+function setSubs(text) { const s = $("#subs-main"); s.textContent = ""; return text.split(/\s+/).filter(Boolean).map((w, i, a) => { const sp = el("span", "w", w + (i < a.length - 1 ? " " : "")); s.appendChild(sp); return sp; }); }
+function playPhrase(f) {
+  lastPhrase = f;
+  const vid = $("#video-main"), svg = $("#avatar-main");
+  const vsrc = videos[f.id] ? "/_blob/" + encodeURIComponent(videos[f.id]) : localVideos[f.id];
+  if (vsrc) {
+    signerMain.stop(); svg.hidden = true; vid.hidden = false; $("#params-main").hidden = true;
+    $("#media-kind").textContent = "Intérprete de LGP";
+    vid.src = vsrc; vid.playbackRate = slowOn ? .75 : 1;
+    const spans = setSubs(f.texto);
+    vid.ontimeupdate = () => { const p = vid.duration ? vid.currentTime / vid.duration : 0; const n = Math.ceil(spans.length * p); spans.forEach((s, j) => s.classList.toggle("on", j < n)); };
+    vid.onended = () => spans.forEach(s => s.classList.add("on"));
+    vid.play().catch(() => {});
+  } else {
+    vid.pause(); vid.hidden = true; svg.hidden = false; $("#params-main").hidden = false;
+    $("#media-kind").textContent = "Pré-visualização · falta o vídeo do intérprete";
+    signerMain.play(f.texto, f.glosas);
+  }
+}
+function playText(text) { $("#video-main").pause(); $("#video-main").hidden = true; $("#avatar-main").hidden = false; signerMain.play(text, glossesFor(text)); }
+
+FRASES.forEach(f => {
+  const b = el("button", "topic" + (f.go ? " go" : "")); b.type = "button";
+  b.innerHTML = ICONS[f.id] + "<span></span>"; b.lastChild.textContent = f.titulo;
+  b.addEventListener("click", () => {
+    $$(".topic").forEach(t => t.classList.remove("on")); if (!f.go) b.classList.add("on");
+    playPhrase(f); activity("Pessoa surda: " + f.titulo.toLowerCase());
+    if (f.go) { openChat(); showCheckin(); if (!store.chats.some(c => c.from === "utente" && /check-in/i.test(c.text) && Date.now() - c.t < 600000)) sendUserChat("Olá, quero fazer check-in."); $("#ci-phone").focus(); }
+  });
+  $("#topics").appendChild(b);
+});
+$("#go-lgp").addEventListener("click", () => { setScreen("lgp"); playPhrase(SAUDACAO); activity("Pessoa surda no ecrã"); });
+$("#go-phone").addEventListener("click", () => pickUp());
+$("#lgp-back").addEventListener("click", () => { resetLgp(); setScreen("home"); });
+$("#btn-replay").addEventListener("click", () => playPhrase(lastPhrase));
+$("#btn-slow").addEventListener("click", e => {
+  slowOn = !slowOn; e.currentTarget.setAttribute("aria-pressed", slowOn);
+  e.currentTarget.textContent = slowOn ? "Velocidade normal" : "Mais devagar";
+  signerMain.setSlow(slowOn); $("#video-main").playbackRate = slowOn ? .75 : 1;
+});
+function showCheckin() { $("#checkin-box").hidden = false; $("#btn-ci-open").hidden = true; }
+$("#btn-ci-open").addEventListener("click", showCheckin);
+function openChat() { $("#panel-chat").classList.add("active"); $("#chat-badge").hidden = true; scrollThreads(); }
+$("#btn-chat").addEventListener("click", () => { const on = $("#panel-chat").classList.toggle("active"); if (on) { $("#chat-badge").hidden = true; scrollThreads(); activity("Pessoa surda a escrever ao secretariado"); } });
+function resetLgp() {
+  $("#panel-chat").classList.remove("active"); $("#chat-input").value = ""; renderSugg();
+  $("#ci-form").hidden = false; $("#ci-ok").hidden = true; $("#ci-phone").value = ""; $("#checkin-box").hidden = true; $("#btn-ci-open").hidden = false;
+  $$(".topic").forEach(t => t.classList.remove("on"));
+}
+
+/* Teclado rápido: teclas grandes, sugestões de palavras e frases prontas */
+const VOCAB = ("consulta consultas médico médica enfermeira enfermagem check-in cheguei chegada marcada marcar desmarcar remarcar hoje amanhã horas manhã tarde atrasado atrasada atraso receita receitas renovar medicação medicamentos exames análises resultados vacina vacinas atestado declaração baixa urgente dor febre preciso quero tenho posso pode podem ajuda ajudar obrigado obrigada desculpe percebi entendi sala gabinete onde quando quanto tempo esperar espera nome número telemóvel cartão cidadão utente família filho filha mãe pai marido mulher bebé criança papel documento documentos certificado vou estou está estão sim não olá bom dia boa tarde intérprete escrever falar consigo secretariado senha chamar chamado já agora minutos depois antes primeira vez seguinte").split(" ");
+const PHRASES = ["Cheguei para a minha consulta.", "Tenho consulta marcada para hoje.", "Quero marcar uma consulta.", "Preciso de renovar a receita.", "Quanto tempo falta?", "Não percebi. Pode escrever de outra forma?", "Obrigado."];
+const ROWS = [["1","2","3","4","5","6","7","8","9","0"], ["q","w","e","r","t","y","u","i","o","p"], ["a","s","d","f","g","h","j","k","l","ç"], ["z","x","c","v","b","n","m",",",".","?"]];
+const ACCENTS = [["á","à","â","ã","é","ê","í","ó","ô","õ"], ["ú","ü","Á","É","Í","Ó","Ú","Ç","!","-"]];
+let shift = true, accentsOn = false;
+function buildKeyboard() {
+  const k = $("#kbd"); k.innerHTML = "";
+  const rows = accentsOn ? ACCENTS : ROWS;
+  rows.forEach(r => {
+    const row = el("div", "kr");
+    r.forEach(ch => { const b = el("button", null, shift && !accentsOn ? ch.toUpperCase() : ch); b.type = "button"; b.addEventListener("click", () => typeChar(shift && !accentsOn ? ch.toUpperCase() : ch)); row.appendChild(b); });
+    k.appendChild(row);
+  });
+  const last = el("div", "kr");
+  const mk = (label, cls, fn, pressed) => { const b = el("button", cls, label); b.type = "button"; if (pressed != null) b.setAttribute("aria-pressed", pressed); b.addEventListener("click", fn); last.appendChild(b); };
+  mk("⇧", "w2", () => { shift = !shift; buildKeyboard(); }, shift);
+  mk("á é ã", "w2", () => { accentsOn = !accentsOn; buildKeyboard(); }, accentsOn);
+  mk("Espaço", "w5", () => typeChar(" "));
+  mk("⌫", "w2", () => { const i = $("#chat-input"); i.value = i.value.slice(0, -1); afterType(); });
+  mk("Enviar ➜", "w2 go", () => sendUserChat());
+  k.appendChild(last);
+}
+function typeChar(ch) { const i = $("#chat-input"); i.value += ch; if (shift && ch.trim()) { shift = false; buildKeyboard(); } afterType(); }
+function afterType() {
+  const v = $("#chat-input").value;
+  const wantShift = v === "" || /[.?!]\s$/.test(v);
+  if (wantShift !== shift && !accentsOn) { shift = wantShift; buildKeyboard(); }
+  renderSugg(); activity("Pessoa surda a escrever…");
+  if (room) { try { room.emit("typing", {t: Date.now()}); } catch (e) {} } else if (bc) { try { bc.postMessage({type: "typing"}); } catch (e) {} }
+}
+function renderSugg() {
+  const box = $("#sugg"); box.innerHTML = "";
+  const v = $("#chat-input").value, m = v.match(/([\p{L}-]+)$/u), part = m ? m[1].toLowerCase() : "";
+  if (!part) return;
+  const norm = s => s.normalize("NFD").replace(/\p{M}/gu, "");
+  const list = VOCAB.filter(w => norm(w).startsWith(norm(part)) && w !== part).slice(0, 5);
+  list.forEach(w => {
+    const b = el("button", null, w); b.type = "button";
+    b.addEventListener("click", () => { const i = $("#chat-input"); const cap = /^\p{Lu}/u.test(part) || /^\p{Lu}/u.test(m[1]); i.value = i.value.slice(0, i.value.length - m[1].length) + (cap ? w.charAt(0).toUpperCase() + w.slice(1) : w) + " "; afterType(); });
+    box.appendChild(b);
+  });
+}
+PHRASES.forEach(p => { const b = el("button", null, p); b.type = "button"; b.addEventListener("click", () => sendUserChat(p)); $("#phrases").appendChild(b); });
+$("#chat-input").addEventListener("input", afterType);
+$("#chat-input").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); sendUserChat(); } });
+buildKeyboard();
+function sendUserChat(text) {
+  const v = (text ?? $("#chat-input").value).trim(); if (!v) return;
+  if (text == null) $("#chat-input").value = "";
+  mutate(() => store.chats.push({id: uid(), from: "utente", text: v, t: Date.now()}));
+  afterType(); activity("Pessoa surda enviou uma mensagem");
+}
+
+/* Check-in com telemóvel (no chat e na videochamada) */
+function makeKeypad(box, input) {
+  ["1","2","3","4","5","6","7","8","9","⌫","0","Limpar"].forEach(k => {
+    const b = el("button", null, k); b.type = "button"; if (k === "Limpar") b.style.fontSize = ".85em";
+    b.addEventListener("click", () => { if (k === "⌫") input.value = input.value.slice(0, -1); else if (k === "Limpar") input.value = ""; else if (input.value.length < 9) input.value += k; });
+    box.appendChild(b);
+  });
+}
+makeKeypad($("#ci-keypad"), $("#ci-phone"));
+makeKeypad($("#call-keypad"), $("#call-phone"));
+function doCheckin(phoneRaw, origem) {
+  const phone = String(phoneRaw || "").replace(/\D/g, "");
+  if (phone && !/^9\d{8}$/.test(phone)) { toast("Número inválido", "O telemóvel deve ter 9 algarismos e começar por 9."); return null; }
+  let code; const id = uid(); mine.checkins.add(id);
+  mutate(() => { code = "A" + String(store.next).padStart(3, "0"); store.next++; store.checkins.push({id, code, origem, phone, status: "espera", t: Date.now()}); });
+  activity((origem === "voz" ? "Pessoa cega" : "Pessoa surda") + " confirmou presença " + code);
+  return {code, phone};
+}
+$("#ci-go").addEventListener("click", () => {
+  const r = doCheckin($("#ci-phone").value, "lgp"); if (!r) return;
+  $("#ci-ticket").textContent = r.code;
+  $("#ci-msg").textContent = r.phone ? `Pode sentar-se. Vai receber uma SMS no ${maskPhone(r.phone)} quando o médico estiver pronto.` : "Pode sentar-se. O secretariado vai chamá-lo pessoalmente.";
+  $("#ci-form").hidden = true; $("#ci-ok").hidden = false;
+  sendUserChat(`Confirmei a minha presença (senha ${r.code}).`);
+  playText("Presença confirmada. Pode sentar-se.");
+});
+
+/* Videochamada com intérprete (simulada no protótipo) */
+let callStart = 0, callTick = null;
+$("#btn-interp").addEventListener("click", () => {
+  $("#ov-interp").classList.add("show");
+  $("#call-state").textContent = "A ligar ao intérprete…"; $("#call-ring").hidden = false; $("#video-interp").hidden = true; $("#interp-placeholder").hidden = true;
+  $("#call-ci").hidden = false; $("#call-ci-ok").hidden = true; $("#call-phone").value = "";
+  const id = uid(); mine.reqs.add(id);
+  mutate(() => store.reqs.push({id, tipo: "interprete", origem: "Ecrã tátil · pessoa surda", status: "pendente", t: Date.now()}));
+  activity("Pessoa surda em videochamada com intérprete");
+  setTimeout(() => {
+    if (!$("#ov-interp").classList.contains("show")) return;
+    $("#call-state").textContent = "Em chamada"; $("#call-ring").hidden = true;
+    const isrc = videos.interprete ? "/_blob/" + encodeURIComponent(videos.interprete) : localVideos.interprete;
+    if (isrc) { const v = $("#video-interp"); v.hidden = false; v.src = isrc; v.play().catch(() => {}); }
+    else $("#interp-placeholder").hidden = false;
+    callStart = Date.now(); clearInterval(callTick);
+    callTick = setInterval(() => { const s = Math.floor((Date.now() - callStart) / 1000); $("#call-timer").textContent = String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0"); }, 1000);
+  }, 2500);
+});
+$("#call-ci-go").addEventListener("click", () => {
+  const r = doCheckin($("#call-phone").value, "lgp"); if (!r) return;
+  $("#call-ticket").textContent = r.code; $("#call-ci").hidden = true; $("#call-ci-ok").hidden = false;
+});
+$("#btn-endcall").addEventListener("click", () => { clearInterval(callTick); $("#video-interp").pause(); $("#ov-interp").classList.remove("show"); $("#call-timer").textContent = "00:00"; activity("Pessoa surda no ecrã"); });
+
+/* ================= Telefone com teclado Braille ================= */
+let tts = null;
+/* Voz em português de Portugal: 1.º uma voz pt-PT do sistema (ex.: Joana, Helia, Raquel, Duarte); 2.º a voz do Claude com language pt-PT */
+let ptVoice = null, ttsPT = true;
+function findPTVoice() {
+  try {
+    const vs = window.speechSynthesis ? speechSynthesis.getVoices() : [];
+    const pt = vs.filter(v => /^pt[-_]PT$/i.test(v.lang) || /portugu[eê]s.*portugal|portugal/i.test(v.name));
+    ptVoice = pt.find(v => /natural|online|neural/i.test(v.name)) || pt[0] || null;
+  } catch (e) { ptVoice = null; }
+  const lab = $("#voice-name");
+  if (lab) lab.textContent = ptVoice ? "Voz: português de Portugal · " + ptVoice.name.replace(/Microsoft |Google |\(.*\)/g, "").trim() : (tts && ttsPT ? "Voz: português de Portugal" : "Sem voz pt-PT neste dispositivo");
+}
+if (window.speechSynthesis) { findPTVoice(); speechSynthesis.addEventListener && speechSynthesis.addEventListener("voiceschanged", findPTVoice); }
+function speakSystem(text, voiceObj) {
+  return new Promise(res => {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text); u.lang = "pt-PT"; u.rate = .95;
+    if (voiceObj) u.voice = voiceObj;
+    u.onend = res; u.onerror = res; speechSynthesis.speak(u);
+  });
+}
+async function speakPT(text) {
+  try {
+    if (ptVoice) return await speakSystem(text, ptVoice);
+    if (tts && ttsPT) {
+      try { return await tts.speak(text, {language: "pt-PT"}); }
+      catch (e) { if (e && (e.code === "busy" || e.code === "rate_limited")) return; ttsPT = false; findPTVoice(); }
+    }
+    if (window.speechSynthesis) return await speakSystem(text, null);
+  } catch (e) {}
+}
+
+const voice = {offHook: false, last: "", mode: "menu", digits: ""};
+const BR = {"1": "⠼⠁", "2": "⠼⠃", "3": "⠼⠉", "4": "⠼⠙", "5": "⠼⠑", "6": "⠼⠋", "7": "⠼⠛", "8": "⠼⠓", "9": "⠼⠊", "0": "⠼⠚", "*": "⠔", "#": "⠼"};
+const PAD_LABEL = {"*": "Repetir", "#": "Confirmar"};
+["1","2","3","4","5","6","7","8","9","*","0","#"].forEach(k => {
+  const b = el("button", "pk"); b.type = "button"; b.dataset.k = k; b.setAttribute("aria-label", PAD_LABEL[k] ? `Tecla ${k}: ${PAD_LABEL[k]}` : "Tecla " + k);
+  b.appendChild(el("b", null, k)); const br = el("span", "br", BR[k]); br.setAttribute("aria-hidden", "true"); b.appendChild(br);
+  if (PAD_LABEL[k]) b.appendChild(el("span", null, PAD_LABEL[k]));
+  b.addEventListener("click", () => pressKey(k)); $("#pad").appendChild(b);
+});
+(() => { const b = el("button", "pk help"); b.type = "button"; b.dataset.k = "a"; b.setAttribute("aria-label", "Ajuda: chamar o secretariado"); const br = el("span", "br", "⠁⠚⠥⠙⠁"); br.setAttribute("aria-hidden", "true"); b.appendChild(br); b.appendChild(el("b", null, "AJUDA")); b.lastChild.style.fontSize = "1.1em"; b.appendChild(el("span", null, "Chamar o secretariado")); b.addEventListener("click", () => pressKey("a")); $("#pad").appendChild(b); })();
+
+function stopVoice() { try { if (tts) tts.stop(); } catch (e) {} try { window.speechSynthesis && speechSynthesis.cancel(); } catch (e) {} }
+function setStatus(txt, cls) { $("#vstatus-txt").textContent = txt; $("#vstatus").className = "vstatus " + (cls || ""); }
+async function say(text) {
+  voice.last = text; $("#voz-now").textContent = text; setStatus("A falar…", "on");
+  await speakPT(text);
+  if (voice.offHook) setStatus(voice.mode === "digits" ? "À espera do número" : "Em linha · escolha uma tecla", voice.mode === "digits" ? "wait" : "on");
+}
+function renderMenu() {
+  const ol = $("#vmenu"); ol.innerHTML = "";
+  const items = voice.mode === "digits"
+    ? [["0–9", "Marcar o número de telemóvel"], ["#", "Confirmar o número"], ["*", "Não quero SMS"]]
+    : [["1", "Como fazer o check-in"], ["2", "Que documentos trazer"], ["3", "Onde fica a sala da consulta"], ["4", "Dar entrada na consulta"], ["*", "Repetir"]];
+  items.forEach(([k, t]) => { const li = el("li"); li.appendChild(el("b", null, k)); li.appendChild(document.createTextNode(t)); ol.appendChild(li); });
+  const li = el("li", "help"); li.appendChild(el("b", null, "⠁")); li.appendChild(document.createTextNode("Ajuda: chamar o secretariado")); ol.appendChild(li);
+  $("#digits-box").hidden = voice.mode !== "digits"; $("#digits").textContent = voice.digits || "—";
+}
+function hookUI() { $("#phonebox").classList.toggle("off", voice.offHook); $("#btn-hook").textContent = voice.offHook ? "Pousar o telefone" : "Atender o telefone"; }
+function pickUp() {
+  if (voice.offHook) return;
+  voice.offHook = true; voice.mode = "menu"; voice.digits = ""; hookUI();
+  $("#ov-interp").classList.remove("show");
+  setScreen("voz"); renderMenu(); activity("Pessoa cega ao telefone");
+  say(BOAS_VINDAS);
+}
+function hangUp() { stopVoice(); voice.offHook = false; voice.mode = "menu"; hookUI(); setScreen("home"); activity(""); }
+$("#btn-hook").addEventListener("click", () => voice.offHook ? hangUp() : pickUp());
+let pendingCheckin = null;
+function pressKey(k) {
+  const btn = $(`.pk[data-k="${k}"]`); if (btn) { btn.classList.add("flash"); setTimeout(() => btn.classList.remove("flash"), 250); }
+  if (k === "a") {
+    const id = uid(); mine.reqs.add(id);
+    mutate(() => store.reqs.push({id, tipo: "ajuda", origem: voice.offHook ? "Telefone · pessoa cega" : "Teclado Braille", status: "pendente", t: Date.now()}));
+    if (!voice.offHook) { voice.offHook = true; hookUI(); setScreen("voz"); renderMenu(); }
+    say("Pedido de ajuda enviado ao secretariado. Fique junto ao telefone. Um funcionário vem ter consigo.");
+    return;
+  }
+  if (!voice.offHook) return pickUp();
+  if (voice.mode === "digits") {
+    if (/\d/.test(k)) { if (voice.digits.length < 9) voice.digits += k; renderMenu(); stopVoice(); setStatus("A marcar: " + voice.digits.length + " de 9", "wait"); return; }
+    if (k === "#") {
+      if (!/^9\d{8}$/.test(voice.digits)) { voice.digits = ""; renderMenu(); say("O número deve ter 9 algarismos e começar por 9. Marque de novo e prima cardinal, ou prima asterisco se não quiser SMS."); return; }
+      finishVoiceCheckin(voice.digits); return;
+    }
+    if (k === "*") { finishVoiceCheckin(""); return; }
+  }
+  if (k === "*") { if (voice.last) say(voice.last); return; }
+  if (k === "#") { say(MENU_CURTO); return; }
+  const f = {"1": FRASES[0], "2": FRASES[1], "3": FRASES[2]}[k];
+  if (f) { activity("Pessoa cega ouviu: " + f.titulo.toLowerCase()); say(f.texto + " " + MENU_CURTO); return; }
+  if (k === "4") {
+    voice.mode = "digits"; voice.digits = ""; renderMenu();
+    say("Vamos dar entrada na sua consulta. Se quiser receber uma mensagem no telemóvel quando o médico estiver pronto, marque agora o número e prima cardinal. Se não quiser, prima asterisco: um funcionário vem buscá-lo à sala de espera.");
+    return;
+  }
+  say("Essa tecla não tem opção. " + MENU_CURTO);
+}
+function finishVoiceCheckin(phone) {
+  voice.mode = "menu"; voice.digits = ""; renderMenu();
+  const r = doCheckin(phone, "voz"); if (!r) return;
+  const id = uid(); mine.reqs.add(id);
+  mutate(() => store.reqs.push({id, tipo: "checkin-voz", origem: "Telefone · pessoa cega · senha " + r.code, status: "pendente", t: Date.now()}));
+  say(`A sua entrada está registada com a senha ${r.code.split("").join(" ")}. ` + (r.phone ? "Vai receber uma mensagem quando o médico estiver pronto. " : "") + "Quando o médico estiver pronto, um funcionário vem buscá-lo e acompanha-o até ao gabinete. Pode pousar o telefone.");
+}
+document.addEventListener("keydown", e => {
+  if (role !== "utente" || e.target.closest("input,textarea,select")) return;
+  if ($("#ov-interp").classList.contains("show")) return;
+  const k = e.key.toLowerCase();
+  if (k === " ") { e.preventDefault(); voice.offHook ? hangUp() : pickUp(); return; }
+  if (/^[0-9*#a]$/.test(k)) { e.preventDefault(); pressKey(k); }
+});
+
+/* ================= Sala de espera / chamada ================= */
+let boardFlash = false;
+function onNewCall(c) {
+  boardFlash = true;
+  if (role === "secretariado") return;
+  if (role === "utente" && screenMode === "lgp") {
+    $("#alert-ticket").textContent = c.code; $("#alert-where").textContent = "Dirija-se ao " + c.gabinete;
+    $("#ov-call").classList.add("show");
+  }
+}
+$("#btn-alert-ok").addEventListener("click", () => $("#ov-call").classList.remove("show"));
+
+/* ================= Secretariado ================= */
+["Bom dia! Em que posso ajudar?", "Um momento, por favor.", "A sua presença está confirmada.", "Dirija-se ao balcão do secretariado.", "O médico está com algum atraso.", "Vamos ter consigo."].forEach(q => {
+  const b = el("button", null, q); b.type = "button"; b.addEventListener("click", () => { $("#desk-input").value = q; $("#desk-input").focus(); }); $("#quick-desk").appendChild(b);
+});
+$("#form-desk").addEventListener("submit", e => {
+  e.preventDefault(); const v = $("#desk-input").value.trim(); if (!v) return; $("#desk-input").value = "";
+  mutate(() => { store.chats.forEach(c => { if (c.from === "utente") c.lida = true; }); store.chats.push({id: uid(), from: "secretariado", text: v, t: Date.now()}); });
+});
+function renderThread(box, me) {
+  box.innerHTML = "";
+  if (!store.chats.length) { box.appendChild(el("p", "muted", me === "utente" ? "Escreva a sua mensagem. Um funcionário do secretariado responde aqui." : "Ainda sem mensagens.")); return; }
+  store.chats.forEach(c => {
+    const d = el("div", "msg" + (c.from === me ? " me" : ""));
+    d.appendChild(el("small", null, (c.from === "utente" ? "Pessoa surda" : "Secretariado") + " · " + hhmm(c.t)));
+    d.appendChild(document.createTextNode(c.text)); box.appendChild(d);
+  });
+}
+function scrollThreads() { ["#thread-user", "#thread-desk"].forEach(s => { $(s).scrollTop = 1e6; }); }
+const REQ_TXT = {ajuda: "Pedido de ajuda", interprete: "Videochamada com intérprete", "checkin-voz": "Pessoa cega deu entrada"};
+const GABINETES = ["Gabinete 1", "Gabinete 2", "Gabinete 3", "Gabinete 4", "Sala de enfermagem"];
+function renderDesk() {
+  renderThread($("#thread-desk"), "secretariado");
+  const unreadMsgs = store.chats.filter(c => c.from === "utente" && !c.lida).length;
+  $("#msg-count").hidden = !unreadMsgs; $("#msg-count").textContent = unreadMsgs;
+  const rl = $("#req-list"); rl.innerHTML = "";
+  const pend = store.reqs.filter(r => r.status === "pendente").length;
+  $("#req-count").hidden = !pend; $("#req-count").textContent = pend;
+  if (!store.reqs.length) rl.appendChild(el("p", "muted", "Sem pedidos."));
+  store.reqs.slice().reverse().slice(0, 8).forEach(r => {
+    const it = el("div", "item" + (r.status === "pendente" ? " new" : "")), l = el("div");
+    l.appendChild(el("b", null, REQ_TXT[r.tipo])); l.appendChild(document.createElement("br"));
+    l.appendChild(el("span", "muted", r.origem + " · " + hhmm(r.t))); it.appendChild(l);
+    if (r.status === "pendente") { const b = el("button", "btn signal small", r.tipo === "interprete" ? "Visto" : "Vou a caminho"); b.addEventListener("click", () => mutate(() => { const x = store.reqs.find(z => z.id === r.id); if (x) x.status = "atendido"; })); it.appendChild(b); }
+    else it.appendChild(el("span", "pill ok", "Atendido"));
+    rl.appendChild(it);
+  });
+  const cl = $("#ci-list"); cl.innerHTML = "";
+  const waiting = store.checkins.filter(c => c.status === "espera");
+  if (!waiting.length) cl.appendChild(el("p", "muted", "Ninguém à espera."));
+  waiting.forEach(c => {
+    const it = el("div", "item"), l = el("div");
+    const b = el("b", null, c.code + (c.exemplo ? " (exemplo)" : "")); b.style.fontSize = "1.15em"; l.appendChild(b); l.appendChild(document.createElement("br"));
+    l.appendChild(el("span", "muted", (c.origem === "voz" ? "Pessoa cega · ir buscar à sala de espera" : "Pessoa surda") + (c.phone ? " · SMS " + maskPhone(c.phone) : " · sem telemóvel") + " · " + hhmm(c.t)));
+    const r = el("div", "row"), sel = el("select", "sel"); sel.setAttribute("aria-label", "Gabinete para " + c.code);
+    GABINETES.forEach(g => sel.appendChild(el("option", null, g)));
+    const btn = el("button", "btn small", c.phone ? "Médico pronto: enviar SMS" : c.origem === "voz" ? "Médico pronto: ir buscar" : "Médico pronto: chamar");
+    btn.addEventListener("click", () => {
+      mutate(() => { const x = store.checkins.find(z => z.id === c.id); if (!x) return; x.status = "chamado"; x.gabinete = sel.value; store.calls.push({code: x.code, gabinete: sel.value, t: Date.now()}); });
+      toast(c.phone ? "SMS enviada (simulação)" : "Chamada registada", c.phone ? `Para ${maskPhone(c.phone)}: «USF Covelo: o médico está pronto. Dirija-se ao ${sel.value}.»` : `${c.code} · ${sel.value}`);
+    });
+    r.appendChild(sel); r.appendChild(btn); it.appendChild(l); it.appendChild(r); cl.appendChild(it);
+  });
+  renderKiosk(); renderVideos();
+}
+const MODE_TXT = {home: "No ecrã inicial, à espera de utentes", lgp: "Em uso: atendimento em LGP", voz: "Em uso: telefone (pessoa cega)"};
+function renderKiosk() {
+  const pill = $("#kiosk-pill");
+  if (!room && !(bc && kiosk && Date.now() - bcKioskSeen < 70000)) { pill.className = "pill off"; pill.textContent = "Desligado"; $("#kiosk-detail").textContent = room || bc ? "O ecrã tátil não está ligado." : "Abra o ecrã tátil noutro computador para ver o estado em tempo real."; return; }
+  if (!kiosk) { pill.className = "pill off"; pill.textContent = "Desligado"; $("#kiosk-detail").textContent = "O ecrã tátil não está ligado."; return; }
+  const busy = kiosk.modo && kiosk.modo !== "home";
+  pill.className = "pill " + (busy ? "warn" : "ok"); pill.textContent = busy ? "Em uso" : "Ligado";
+  $("#kiosk-detail").textContent = (MODE_TXT[kiosk.modo] || "Ligado") + (kiosk.atividade ? " · " + kiosk.atividade : "");
+}
+function renderVideos() {
+  const vl = $("#video-list"); vl.innerHTML = "";
+  [SAUDACAO, ...FRASES, {id: "interprete", titulo: "Vídeo de espera da videochamada (opcional)"}].forEach(f => {
+    const it = el("div", "item"), l = el("div");
+    l.appendChild(el("b", null, f.titulo)); l.appendChild(document.createElement("br"));
+    const has = videos[f.id] || localVideos[f.id];
+    l.appendChild(el("span", has ? "pill ok" : "muted", videos[f.id] ? "Vídeo carregado" : localVideos[f.id] ? "Vídeo na pasta videos/" : "Falta gravar (videos/" + f.id + ".mp4)"));
+    it.appendChild(l);
+    if (assets && dbDoc) {
+      const r = el("div", "row");
+      const inp = el("input"); inp.type = "file"; inp.accept = "video/*"; inp.id = "up-" + f.id; inp.className = "sr";
+      const lab = el("label", "btn small", videos[f.id] ? "Substituir" : "Carregar vídeo"); lab.setAttribute("for", inp.id); lab.tabIndex = 0;
+      inp.addEventListener("change", async () => {
+        const file = inp.files && inp.files[0]; if (!file) return; lab.textContent = "A carregar…";
+        try { const a = await assets.upload(file); const v = {...videos, [f.id]: a.id}; await dbDoc.set(v); videos = v; toast("Vídeo guardado", f.titulo); }
+        catch (e) { toast("Não foi possível carregar", "Confirme que é um vídeo com menos de 20 MB."); }
+        renderVideos();
+      });
+      r.appendChild(inp); r.appendChild(lab);
+      if (videos[f.id]) { const rm = el("button", "btn ghost small", "Remover"); rm.addEventListener("click", async () => { const v = {...videos}; delete v[f.id]; try { await dbDoc.set(v); videos = v; } catch (e) {} renderVideos(); }); r.appendChild(rm); }
+      it.appendChild(r);
+    }
+    vl.appendChild(it);
+  });
+  $("#video-hint").textContent = assets && dbDoc ? "" : "Para acrescentar vídeos, coloque-os na pasta videos/ do site com os nomes indicados.";
+}
+function renderBoard() {
+  const last = store.calls[store.calls.length - 1];
+  $("#board-ticket").textContent = last ? last.code : "—";
+  $("#board-where").textContent = last ? "Dirija-se ao " + last.gabinete : "Aguarde, por favor";
+  const now = $("#board-now");
+  if (boardFlash && role === "sala") { now.classList.remove("new"); void now.offsetWidth; now.classList.add("new"); boardFlash = false; }
+  const ul = $("#board-list"); ul.innerHTML = "";
+  store.calls.slice(-6, -1).reverse().forEach(c => { const li = el("li"); li.appendChild(el("b", null, c.code)); li.appendChild(el("span", null, c.gabinete)); ul.appendChild(li); });
+  if (!ul.children.length) { const li = el("li"); li.appendChild(el("span", null, "Ainda sem chamadas anteriores")); ul.appendChild(li); }
+}
+function renderLive() {
+  const on = !!room, n = peers.length;
+  $("#live").classList.toggle("on", on);
+  $("#live").lastElementChild.textContent = on ? (n > 1 ? `Tempo real · ${n} ecrãs ligados` : "Tempo real · à espera de outros ecrãs") : bc ? "Tempo real entre separadores deste navegador" : "Só neste dispositivo";
+  $("#live-chat").classList.toggle("on", on);
+}
+function renderAll() { renderThread($("#thread-user"), "utente"); renderDesk(); renderBoard(); renderLive(); scrollThreads(); }
+const tickClock = () => { $("#clock").textContent = new Date().toLocaleTimeString("pt-PT", {hour: "2-digit", minute: "2-digit"}); };
+setInterval(tickClock, 1000); tickClock();
+let typingTimer;
+route();
+if (bc) { try { bc.postMessage({type: "hello"}); } catch (e) {} setInterval(() => { if (!room && role === "utente") sendPresence(); if (!room && role === "secretariado") renderKiosk(); }, 20000); }
+["saudacao", "checkin", "docs", "consultorios", "fazercheckin", "interprete"].forEach(id => {
+  try { fetch(`videos/${id}.mp4`, {method: "HEAD"}).then(r => { if (r.ok) { localVideos[id] = `videos/${id}.mp4`; renderVideos(); } }).catch(() => {}); } catch (e) {}
+});
+
+/* ================= Capacidades da plataforma ================= */
+(async () => {
+  for (let i = 0; i < 40 && !(window.claude && window.claude.use); i++) await new Promise(r => setTimeout(r, 250));
+  if (!window.claude || !window.claude.use) return;
+  const use = n => window.claude.use(n).catch(() => null);
+  use("room").then(r => {
+    if (!r) return; room = r;
+    r.on("state", data => { try { if (!data || typeof data !== "object") return; const d = clean(data); if (d.rev <= store.rev) return; const prev = snap(); Object.assign(store, d); afterChange(prev, false); } catch (e) {} });
+    r.on("typing", () => { if (role !== "secretariado") return; $("#kiosk-detail").textContent = "Em uso: a pessoa surda está a escrever…"; clearTimeout(typingTimer); typingTimer = setTimeout(renderKiosk, 2500); });
+    r.onPeers(list => {
+      const arr = Array.isArray(list) ? list : Object.values(list || {});
+      if (arr.length > peers.length) setTimeout(broadcast, 300);
+      peers = arr;
+      const pres = arr.map(p => (p && (p.presence || p.state)) || p).filter(p => p && p.funcao === "utente" && !(p.you || p.self));
+      kiosk = pres.sort((a, b) => (b.t || 0) - (a.t || 0))[0] || null;
+      renderLive(); renderKiosk();
+    });
+    sendPresence(); renderLive(); renderKiosk(); setTimeout(broadcast, 500);
+    setInterval(() => { if (role === "utente") sendPresence(); }, 30000);
+  });
+  use("tts").then(t => { if (t) tts = t; findPTVoice(); });
+  use("assets").then(a => { assets = a; renderVideos(); });
+  use("db").then(db => {
+    if (!db) return;
+    try {
+      dbDoc = db.doc("conteudos/videos-lgp");
+      const apply = s => { const d = s && typeof s.data === "function" ? s.data() : (s && s.data !== undefined ? s.data : s); const v = {}; if (d && typeof d === "object") Object.keys(d).forEach(k => { if (typeof d[k] === "string" && /^[\w-]{1,80}$/.test(d[k])) v[k] = d[k]; }); videos = v; renderVideos(); };
+      if (typeof dbDoc.onSnapshot === "function") dbDoc.onSnapshot(apply, () => {}); else dbDoc.get().then(apply).catch(() => {});
+    } catch (e) { dbDoc = null; }
+    renderVideos();
+  });
+})();
+</script>
+</body>
+</html>
