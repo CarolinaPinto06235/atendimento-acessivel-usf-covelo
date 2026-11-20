@@ -2,25 +2,52 @@
 
 Protótipo de um posto de atendimento acessível para a USF Covelo (ULS São João), para pessoas surdas ou com dificuldades auditivas e para pessoas cegas ou com baixa visão.
 
+**Abrir a aplicação:** https://carolinapinto06235.github.io/atendimento-acessivel-usf-covelo/
+
 Projeto desenvolvido no âmbito do estágio em Saúde Digital e Inovação Biomédica. O plano de implementação para a ULS São João está em [PLANO.md](PLANO.md).
 
-## O que faz
+## Como está organizada
 
-Ao abrir, a aplicação pergunta para que vai ser usado o computador:
+Ao abrir, escolhe-se o que o computador vai ser:
 
-- **Ecrã tátil dos utentes**
-  - *Não tenho capacidade auditiva ou tenho dificuldades auditivas*: quatro respostas fixas em Língua Gestual Portuguesa com legendas (como fazer o check-in, que documentos trazer, onde ficam os consultórios, quero fazer check-in), conversa escrita em tempo real com o secretariado, videochamada com intérprete de LGP e confirmação de presença com aviso por SMS.
-  - *Telefone com teclado Braille (0–9, \*, # e Ajuda)*: ao atender, uma mensagem de boas-vindas em português de Portugal; as teclas 1 a 4 dão as respostas pré-definidas e a 4 regista a entrada na consulta.
-- **Secretariado**: estado do ecrã tátil, mensagens e pedidos com notificação e som, presenças confirmadas e botão «Médico pronto».
-- **Sala de espera** (opcional): mostra a senha chamada em grande.
+### Ecrã tátil (posto na entrada da USF)
 
-## Como usar
+**Pessoas surdas.** No ecrã inicial há um botão: *Não oiço ou oiço com dificuldade*. A partir daí, cada ecrã tem os botões **← Voltar** e **⌂ Início** e um indicador de onde a pessoa está.
 
-Abra `index.html` num navegador (Chrome ou Edge recomendados).
+1. **Língua Gestual**: o vídeo do intérprete (ou a pré-visualização) e as perguntas frequentes:
+   - Como fazer o check-in na consulta
+   - Que documentos tenho de trazer
+   - Onde ficam os consultórios
+   - Horário da USF
+2. **Falar com alguém**, três opções:
+   - **Escrever ao secretariado**: conversa escrita em tempo real, com teclado grande, sugestões de palavras e frases rápidas.
+   - **Falar com um intérprete**: videochamada em LGP.
+   - **Dar entrada na consulta**: passo a passo (nome, número de utente, telemóvel para SMS opcional, confirmar).
 
-Para publicar com GitHub Pages: *Settings → Pages → Branch: main / (root)*. O endereço fica `https://<utilizador>.github.io/<repositório>/`.
+**Pessoas cegas.** O telefone com teclado Braille, ao lado do ecrã, funciona à parte. Ao atender:
 
-Para testar o fluxo completo num só computador, abra a página em dois separadores do mesmo navegador: um como «Ecrã tátil dos utentes» e outro como «Secretariado». Os dois comunicam entre si.
+- Ouve-se a mensagem de boas-vindas da USF.
+- **1, 2, 3**: como fazer o check-in, que documentos trazer, onde fica a sala da consulta.
+- **4**: dar entrada na consulta. O assistente pede o nome (dito em voz alta), repete-o para confirmar, pede o número de utente (marcado no teclado), repete o nome e o número, pergunta se quer SMS (telemóvel opcional) e transfere a chamada para o secretariado, que já recebe o nome e o número de utente.
+- **Ajuda**: passa a chamada para o secretariado em qualquer momento.
+- **\*** repete, **#** confirma.
+
+### Secretariado (computador do balcão)
+
+- Estado do **ecrã tátil** e do **telefone**, em separado (em uso, o que a pessoa está a fazer).
+- **Conversa escrita** com as pessoas surdas, com notificação e som.
+- **Chamadas e pedidos**: videochamadas com intérprete, chamadas do telefone e chamadas transferidas depois da entrada na consulta.
+- **Entradas na consulta**: nome, número de utente e telemóvel; botão «Médico pronto» que envia a SMS (simulada) ou indica que é preciso ir buscar a pessoa.
+
+### Sala de espera (opcional)
+
+Mostra a senha chamada em grande.
+
+## Experimentar num só computador
+
+Abra o link em dois separadores do mesmo navegador (Chrome ou Edge): num escolha **Ecrã tátil**, no outro **Secretariado**. Os dois comunicam entre si.
+
+No telefone, para o nome é preciso microfone. Sem microfone, abra «Testar sem microfone» e escreva o nome. A voz usa a do sistema: instale uma voz de português de Portugal no Windows para ouvir com o sotaque certo.
 
 ## Vídeos em LGP
 
@@ -32,14 +59,13 @@ As respostas devem ser gravadas por um intérprete de LGP fluente e validadas pe
 | `videos/checkin.mp4` | Como fazer o check-in na consulta |
 | `videos/docs.mp4` | Que documentos tenho de trazer |
 | `videos/consultorios.mp4` | Onde ficam os consultórios |
-| `videos/fazercheckin.mp4` | Quero fazer check-in |
+| `videos/horario.mp4` | Horário da USF |
 | `videos/interprete.mp4` | Vídeo da videochamada (opcional) |
 
 Enquanto um vídeo não existir, aparece uma pré-visualização ilustrada, que não é LGP validada.
 
 ## Limitações do protótipo
 
-- A videochamada com intérprete e o envio de SMS são simulados.
-- Fora do ambiente Claude, a comunicação em tempo real só funciona entre separadores do mesmo navegador. Para ligar o ecrã tátil e o computador do secretariado em máquinas diferentes é preciso um pequeno servidor (por exemplo, WebSocket) alojado pela ULS.
-- A voz usa a síntese do sistema operativo: instale uma voz de português de Portugal no computador do ecrã tátil.
-- Não guarda dados em servidor; os números de telemóvel ficam apenas na sessão. Uma versão real precisa de parecer do Encarregado de Proteção de Dados da ULS.
+- A videochamada com intérprete, a transferência de chamadas do telefone e o envio de SMS são simulados.
+- No GitHub Pages, a comunicação em tempo real só funciona entre separadores do mesmo navegador. Para ligar o ecrã tátil e o computador do secretariado em máquinas diferentes é preciso um pequeno servidor alojado pela ULS.
+- Não guarda dados em servidor. Uma versão real precisa de parecer do Encarregado de Proteção de Dados da ULS.

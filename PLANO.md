@@ -10,12 +10,10 @@ Propõe-se um piloto de 6 meses na USF Covelo: um posto de atendimento acessíve
 
 **A solução:**
 
-- **Uma aplicação, duas funções.** Ao abrir, escolhe-se se o computador é o ecrã tátil dos utentes ou o do secretariado. O secretariado vê em tempo real se o ecrã tátil está ligado e em uso, e recebe notificação com som de cada mensagem, pedido de ajuda, videochamada e presença confirmada.
-- **Pessoas surdas ou com dificuldades auditivas.** Quatro opções fixas respondidas em LGP por um intérprete humano em vídeo, com legendas: como fazer o check-in, que documentos trazer, onde ficam os consultórios e «Quero fazer check-in», que abre a conversa com o secretariado.
-- **Texto livre em tempo real.** Teclado no ecrã com teclas grandes, sugestões de palavras e frases prontas; o secretariado responde do balcão.
-- **Falar com um intérprete.** Videochamada com um intérprete de LGP, como nas Lojas do Cidadão.
-- **Check-in com aviso por SMS.** Durante a conversa ou a videochamada, o utente confirma a presença e indica o telemóvel; recebe uma SMS quando o médico estiver pronto.
-- **Pessoas cegas ou com baixa visão.** Piso podotátil até um telefone com teclado Braille de 0 a 9 e botão Ajuda. Ao atender, ouve-se a mensagem de boas-vindas da USF; as teclas 1 a 4 dão as respostas pré-definidas e a 4 regista a entrada na consulta.
+- **Uma aplicação, duas funções.** Ao abrir, escolhe-se se o computador é o ecrã tátil ou o do secretariado. O secretariado vê em separado o estado do ecrã tátil e do telefone, e recebe notificação com som de cada mensagem, chamada e entrada na consulta.
+- **Pessoas surdas ou com dificuldades auditivas.** Botão «Não oiço ou oiço com dificuldade»; depois, o vídeo do intérprete em LGP com legendas e quatro perguntas frequentes (check-in, documentos, consultórios, horário). Navegação com Voltar e Início em todos os ecrãs.
+- **Falar com alguém, três opções.** Escrever ao secretariado em tempo real (teclado grande, sugestões de palavras, frases rápidas); videochamada com um intérprete de LGP, como nas Lojas do Cidadão; dar entrada na consulta passo a passo (nome, número de utente e telemóvel opcional para SMS).
+- **Pessoas cegas ou com baixa visão.** Piso podotátil até um telefone com teclado Braille de 0 a 9 e botão Ajuda, independente do ecrã. Ao atender, ouve-se a mensagem de boas-vindas da USF; as teclas 1 a 3 dão as respostas pré-definidas; a 4 dá entrada na consulta: o assistente pede o nome e o número de utente, repete-os para confirmar, pergunta pelo telemóvel para SMS e transfere a chamada para o secretariado, que já recebe estes dados.
 
 **Protótipo funcional:** o ficheiro `index.html` deste repositório. Ao abrir, pergunta se o computador é o ecrã tátil dos utentes ou o do secretariado.
 
@@ -74,7 +72,7 @@ Até haver resposta, os vídeos de intérprete resolvem o problema da compreens�
 ## Outras ideias para pessoas cegas
 
 - **Acompanhamento até ao gabinete.** Quando uma pessoa cega dá entrada pela tecla 4, o secretariado vê «ir buscar à sala de espera» e um funcionário acompanha-a quando o médico estiver pronto. Já está na aplicação.
-- **SMS opcional pelo telefone.** Depois da tecla 4, a pessoa pode marcar o telemóvel e premir cardinal; o leitor de ecrã do telemóvel lê-lhe a SMS de chamada. Já está na aplicação.
+- **Entrada na consulta pelo telefone.** Depois da tecla 4, o assistente recolhe nome e número de utente, confirma-os em voz alta e transfere a chamada ao secretariado; a pessoa pode deixar o telemóvel para receber a SMS de chamada, que o leitor de ecrã lhe lê. Já está na aplicação.
 - **Sinal sonoro de localização** junto ao telefone, no fim do piso podotátil.
 - **Auscultador com controlo de volume e acoplamento indutivo** para aparelhos auditivos.
 - **Braille e letra grande nas portas** dos gabinetes, à altura da mão.
