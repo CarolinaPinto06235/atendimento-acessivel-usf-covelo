@@ -301,6 +301,13 @@ details.sim summary{cursor:pointer;font-size:.85em;color:var(--muted)}
 .toast b{display:block}
 @media (prefers-reduced-motion: reduce){.board .bnow.new,.ring,.visor .dot.listen{animation:none}}
 
+.login{max-width:480px;margin:10px auto}
+.login .field{font-size:1.4em;letter-spacing:.2em;text-align:center}
+.login .keypad{margin:12px auto 0}
+.err{color:#b3261e;font-weight:600;min-height:1.5em;margin-top:8px}
+.overlay{position:fixed;inset:0;background:rgba(10,18,50,.72);display:none;align-items:center;justify-content:center;z-index:70;padding:16px}
+.overlay.show{display:flex}
+.overlay .card{max-width:440px;width:100%}
 footer.site{background:var(--azul);color:#c9d0e6;padding:26px 0;font-size:.92em;position:relative;margin-top:30px}
 footer.site:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--verde-vivo),var(--verde) 40%,var(--terra))}
 footer.site b{color:#fff}
@@ -324,7 +331,7 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
     <button class="chipbtn" id="btn-size" aria-pressed="false">A+ Texto maior</button>
     <button class="chipbtn" id="btn-contrast" aria-pressed="false">Alto contraste</button>
     <span class="live" id="live"><i></i><span>Só neste dispositivo</span></span>
-    <button class="chipbtn" id="btn-role" hidden>Mudar função</button>
+    <button class="chipbtn" id="btn-role" hidden>Terminar sessão</button>
   </div>
 </div></header>
 
@@ -333,7 +340,7 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
 <!-- ================= ESCOLHA DE FUNÇÃO ================= -->
 <section class="view" id="v-inicio" data-view="inicio">
   <h1>Atendimento acessível da USF Covelo</h1>
-  <p class="muted" style="margin-top:8px;max-width:62ch">Escolha para que vai ser usado este computador. A escolha fica guardada e pode ser mudada em «Mudar função».</p>
+  <p class="muted" style="margin-top:8px;max-width:62ch">Escolha para que vai ser usado este computador e entre com o código de acesso. O ecrã tátil fica bloqueado: os utentes não o conseguem fechar nem mudar de função.</p>
   <div class="choice">
     <button id="pick-ecra">
       <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="13" rx="2"/><path d="M9 21h6M12 16v5"/></svg>
@@ -347,6 +354,24 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
     </button>
   </div>
   <p style="margin-top:18px"><a href="#sala" id="pick-sala">Outro ecrã: sala de espera (mostra as senhas chamadas)</a></p>
+</section>
+
+<!-- ================= ENTRAR (código de acesso) ================= -->
+<section class="view" id="v-login" data-view="login">
+  <div class="card login">
+    <h2 id="login-title">Entrar</h2>
+    <p class="muted" id="login-hint" style="margin-top:6px"></p>
+    <form id="form-login" style="margin-top:16px">
+      <label class="sr" for="login-code" id="login-label">Código de acesso</label>
+      <input class="field" id="login-code" type="password" autocomplete="off">
+      <div class="keypad" id="login-keypad"></div>
+      <p class="err" id="login-err" role="alert"></p>
+      <div class="row" style="justify-content:space-between;margin-top:6px">
+        <button type="button" class="btn ghost" id="login-back">← Voltar</button>
+        <button class="btn">Entrar</button>
+      </div>
+    </form>
+  </div>
 </section>
 
 <!-- ================= ECRÃ TÁTIL ================= -->
@@ -630,6 +655,24 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
 </footer>
 
 <div class="toast" id="toast" role="status"></div>
+
+<!-- Desbloquear o ecrã tátil (só para funcionários) -->
+<div class="overlay" id="ov-unlock" role="dialog" aria-modal="true" aria-labelledby="unlock-title">
+  <div class="card">
+    <h3 id="unlock-title">Desbloquear este ecrã</h3>
+    <p class="muted" style="margin-top:4px">Só para funcionários. Introduza o código do ecrã tátil para sair deste modo.</p>
+    <form id="form-unlock" style="margin-top:12px">
+      <label class="sr" for="unlock-code">Código</label>
+      <input class="field" id="unlock-code" type="password" inputmode="numeric" autocomplete="off" style="text-align:center;letter-spacing:.2em">
+      <div class="keypad" id="unlock-keypad" style="margin:12px auto 0"></div>
+      <p class="err" id="unlock-err" role="alert"></p>
+      <div class="row" style="justify-content:space-between">
+        <button type="button" class="btn ghost" id="unlock-cancel">Cancelar</button>
+        <button class="btn">Desbloquear</button>
+      </div>
+    </form>
+  </div>
+</div>
 
 <script>
 "use strict";
@@ -1077,28 +1120,112 @@ function afterChange(prev, local) {
   renderAll();
 }
 
-/* ================= Funções (escolha inicial) ================= */
-const VIEWS = ["inicio", "ecra", "secretariado", "sala"];
-let role = null, view = "inicio";
-const ROLE_KEY = "usfcovelo-funcao";
-function savedRole() { try { const r = localStorage.getItem(ROLE_KEY); return VIEWS.includes(r) ? r : null; } catch (e) { return null; } }
-function setRole(r) { try { if (r) localStorage.setItem(ROLE_KEY, r); else localStorage.removeItem(ROLE_KEY); } catch (e) {} location.hash = r || "inicio"; }
+/* ================= Funções, códigos de acesso e bloqueio do ecrã tátil ================= */
+const VIEWS = ["inicio", "login", "ecra", "secretariado", "sala"];
+const ROLES = ["ecra", "secretariado", "sala"];
+const LOCKED = ["ecra", "sala"];           // ecrãs públicos: ficam bloqueados até um funcionário introduzir o código
+let role = null, view = "inicio", loginFor = null, memSession = null;
+const SESS_KEY = "usfcovelo-sessao";
+/* Códigos guardados apenas como resumo SHA-256 (ver README para os mudar).
+   Nota: num site estático isto evita o uso indevido no posto, mas não substitui um login com servidor. */
+const SALT = "usf-covelo-atendimento:";
+const ACCESS = {ecra: "8090e899feaf6c96712a5c1b59d2c5d987c618e3939f73e1e31f8e8794e74958", secretariado: "4378af69c6818198006fea201dbf59b1b0557209720bf9b7d5d5a701706c43ca"};
+const LOGIN_TXT = {
+  ecra: ["Entrar no ecrã tátil", "Introduza o código do ecrã tátil. Depois de entrar, o ecrã fica bloqueado neste modo."],
+  sala: ["Entrar no ecrã da sala de espera", "Use o código do ecrã tátil. Depois de entrar, o ecrã fica bloqueado neste modo."],
+  secretariado: ["Entrar no secretariado", "Introduza a palavra-passe do secretariado."]
+};
+async function sha(txt) {
+  if (!(window.crypto && crypto.subtle)) return null;
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(txt));
+  return Array.from(new Uint8Array(buf)).map(x => x.toString(16).padStart(2, "0")).join("");
+}
+async function checkCode(r, code) { const key = r === "sala" ? "ecra" : r; return (await sha(SALT + key + ":" + String(code).trim())) === ACCESS[key]; }
+function getSession() {
+  let s = memSession;
+  try { const raw = localStorage.getItem(SESS_KEY); s = raw ? JSON.parse(raw) : memSession; } catch (e) {}
+  if (!s || !ROLES.includes(s.role)) return null;
+  if (s.role === "secretariado" && Date.now() - (s.t || 0) > 12 * 3600e3) return null;
+  return s;
+}
+function setSession(r) {
+  const s = r ? {role: r, t: Date.now()} : null; memSession = s;
+  try { if (s) localStorage.setItem(SESS_KEY, JSON.stringify(s)); else localStorage.removeItem(SESS_KEY); } catch (e) {}
+}
+function goHash(h) { if (location.hash.slice(1) === h) route(); else location.hash = h; }
 function route() {
+  const sess = getSession();
   let h = location.hash.slice(1);
-  if (!VIEWS.includes(h)) h = savedRole() || "inicio";
-  if (h === "inicio") { try { localStorage.removeItem(ROLE_KEY); } catch (e) {} }
-  view = h; role = h === "inicio" ? null : h;
-  $$("section.view").forEach(s => s.classList.toggle("active", s.dataset.view === view));
-  $("#rolechip").hidden = !role; $("#btn-role").hidden = !role;
+  if (sess && LOCKED.includes(sess.role)) h = sess.role;                       // bloqueado: ignora outros endereços
+  else if (ROLES.includes(h)) { if (!sess || sess.role !== h) { loginFor = h; h = "login"; } }
+  else if (h === "login") { if (!loginFor) h = sess ? sess.role : "inicio"; }
+  else h = sess ? sess.role : "inicio";
+  if (h !== "login" && location.hash.slice(1) !== h) { try { history.replaceState(null, "", "#" + h); } catch (e) {} }
+  view = h; role = ROLES.includes(h) ? h : null;
+  $$("section.view").forEach(sec => sec.classList.toggle("active", sec.dataset.view === view));
+  if (view === "login") prepareLogin();
+  $("#rolechip").hidden = !role;
   $("#rolechip").textContent = {ecra: "Ecrã tátil dos utentes", secretariado: "Secretariado", sala: "Sala de espera"}[role] || "";
+  $("#btn-role").hidden = role !== "secretariado";
   if (role !== "ecra") stopVoice();
   sendPresence(); renderAll(); window.scrollTo(0, 0);
 }
 window.addEventListener("hashchange", route);
-$("#pick-ecra").addEventListener("click", () => setRole("ecra"));
-$("#pick-secretariado").addEventListener("click", () => setRole("secretariado"));
-$("#pick-sala").addEventListener("click", e => { e.preventDefault(); setRole("sala"); });
-$("#btn-role").addEventListener("click", () => { hangUp(); setRole(null); });
+$("#pick-ecra").addEventListener("click", () => goHash("ecra"));
+$("#pick-secretariado").addEventListener("click", () => goHash("secretariado"));
+$("#pick-sala").addEventListener("click", e => { e.preventDefault(); goHash("sala"); });
+$("#btn-role").addEventListener("click", () => { setSession(null); goHash("inicio"); });
+
+/* Formulário de entrada, com espera após 5 tentativas erradas */
+let fails = 0, lockUntil = 0;
+function prepareLogin() {
+  const [t, hint] = LOGIN_TXT[loginFor] || ["Entrar", ""];
+  $("#login-title").textContent = t; $("#login-hint").textContent = hint;
+  const numeric = loginFor !== "secretariado";
+  const inp = $("#login-code"); inp.value = ""; inp.setAttribute("inputmode", numeric ? "numeric" : "text");
+  $("#login-label").textContent = numeric ? "Código do ecrã tátil" : "Palavra-passe do secretariado";
+  inp.placeholder = numeric ? "Código" : "Palavra-passe";
+  $("#login-keypad").hidden = !numeric; $("#login-err").textContent = "";
+  setTimeout(() => inp.focus(), 50);
+}
+function codePad(box, input) {
+  ["1","2","3","4","5","6","7","8","9","⌫","0","Limpar"].forEach(k => {
+    const b = el("button", null, k); b.type = "button"; if (k === "Limpar") b.style.fontSize = ".85em";
+    b.addEventListener("click", () => { if (k === "⌫") input.value = input.value.slice(0, -1); else if (k === "Limpar") input.value = ""; else if (input.value.length < 12) input.value += k; });
+    box.appendChild(b);
+  });
+}
+async function tryCode(r, input, errEl) {
+  if (Date.now() < lockUntil) { errEl.textContent = `Demasiadas tentativas. Tente de novo dentro de ${Math.ceil((lockUntil - Date.now()) / 1000)} s.`; return false; }
+  const ok = await checkCode(r, input.value);
+  if (ok) { fails = 0; errEl.textContent = ""; input.value = ""; return true; }
+  fails++; input.value = "";
+  if (fails >= 5) { lockUntil = Date.now() + 60000; fails = 0; errEl.textContent = "Código errado 5 vezes. Aguarde 1 minuto."; }
+  else errEl.textContent = window.crypto && crypto.subtle ? "Código errado. Tente de novo." : "Este navegador não consegue verificar o código. Abra a aplicação pelo endereço https.";
+  return false;
+}
+codePad($("#login-keypad"), $("#login-code"));
+$("#form-login").addEventListener("submit", async e => {
+  e.preventDefault();
+  const r = loginFor;
+  if (await tryCode(r, $("#login-code"), $("#login-err"))) { setSession(r); loginFor = null; goHash(r); }
+});
+$("#login-back").addEventListener("click", () => { loginFor = null; goHash("inicio"); });
+
+/* Desbloquear o ecrã tátil: 5 toques seguidos no logótipo do ecrã (ou no relógio da sala de espera) */
+let taps = [];
+function secretTap() {
+  const now = Date.now(); taps = taps.filter(t => now - t < 4000); taps.push(now);
+  if (taps.length >= 5) { taps = []; openUnlock(); }
+}
+function openUnlock() { $("#unlock-code").value = ""; $("#unlock-err").textContent = ""; $("#ov-unlock").classList.add("show"); setTimeout(() => $("#unlock-code").focus(), 50); }
+codePad($("#unlock-keypad"), $("#unlock-code"));
+$("#unlock-cancel").addEventListener("click", () => $("#ov-unlock").classList.remove("show"));
+$("#form-unlock").addEventListener("submit", async e => {
+  e.preventDefault();
+  if (await tryCode("ecra", $("#unlock-code"), $("#unlock-err"))) { $("#ov-unlock").classList.remove("show"); hangUp(); goHome(); setSession(null); goHash("inicio"); }
+});
+$("#clock").addEventListener("click", secretTap);
 $("#brand").addEventListener("click", e => { e.preventDefault(); if (role === "ecra") goHome(); });
 $("#btn-size").addEventListener("click", e => { const on = e.currentTarget.getAttribute("aria-pressed") !== "true"; e.currentTarget.setAttribute("aria-pressed", on); if (on) document.documentElement.dataset.size = "grande"; else delete document.documentElement.dataset.size; });
 $("#btn-contrast").addEventListener("click", e => { const on = e.currentTarget.getAttribute("aria-pressed") !== "true"; e.currentTarget.setAttribute("aria-pressed", on); if (on) document.documentElement.dataset.contrast = "high"; else delete document.documentElement.dataset.contrast; });
@@ -1165,7 +1292,7 @@ function onEnter(s) {
 function leave(s) { if (s === "interp") endCall(); }
 $("#nav-back").addEventListener("click", back);
 $("#nav-home").addEventListener("click", goHome);
-$("#k-home").addEventListener("click", e => { e.preventDefault(); goHome(); });
+$("#k-home").addEventListener("click", e => { e.preventDefault(); goHome(); secretTap(); });
 $("#tab-info").addEventListener("click", goHome);
 $("#tab-lgp").addEventListener("click", () => { leave(curScr()); stack = ["inicio"]; go("lgp"); });
 $("#go-lgp").addEventListener("click", () => go("lgp"));

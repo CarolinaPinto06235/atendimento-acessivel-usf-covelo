@@ -73,3 +73,21 @@ Enquanto um vídeo não existir, aparece uma pré-visualização ilustrada, que 
 - A videochamada com intérprete, a transferência de chamadas do telefone e o envio de SMS são simulados.
 - No GitHub Pages, a comunicação em tempo real só funciona entre separadores do mesmo navegador. Para ligar o ecrã tátil e o computador do secretariado em máquinas diferentes é preciso um pequeno servidor alojado pela ULS.
 - Não guarda dados em servidor. Uma versão real precisa de parecer do Encarregado de Proteção de Dados da ULS.
+
+## Entrar e bloqueio do ecrã tátil
+
+Cada função (ecrã tátil e secretariado) pede um código antes de abrir. Os códigos não estão escritos no repositório: só está guardado o seu resumo SHA-256, em `const ACCESS` no `index.html`. O ecrã da sala de espera usa o código do ecrã tátil.
+
+- Depois de entrar no **ecrã tátil**, o computador fica bloqueado nesse modo: não há botão para sair, o logótipo só volta ao início do ecrã, mudar o endereço (`#secretariado`, `#inicio`) não tem efeito e recarregar a página mantém o bloqueio.
+- **Para sair (funcionários):** toque 5 vezes seguidas no logótipo «USF Covelo» dentro do ecrã (na sala de espera, no relógio) e introduza o código do ecrã tátil.
+- O **secretariado** tem o botão «Terminar sessão»; a sessão termina sozinha ao fim de 12 horas.
+- Após 5 códigos errados, é preciso esperar 1 minuto.
+
+**Mudar os códigos:** calcule o novo resumo e substitua o valor correspondente em `const ACCESS`:
+
+```bash
+python3 -c "import hashlib;print(hashlib.sha256(b'usf-covelo-atendimento:ecra:NOVOCODIGO').hexdigest())"
+python3 -c "import hashlib;print(hashlib.sha256(b'usf-covelo-atendimento:secretariado:NOVAPASSE').hexdigest())"
+```
+
+> Limite: o site é estático e o repositório é público, por isso estes códigos impedem que os utentes saiam do ecrã ou abram o secretariado, mas não são um login seguro. Na versão para a ULS, o secretariado deve usar contas reais (por exemplo o Firebase Authentication que o site da USF já tem) e o ecrã tátil deve correr em modo quiosque do sistema (Chrome `--kiosk` ou «Acesso guiado» no tablet), para que também não se possa fechar o navegador.
