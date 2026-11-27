@@ -78,6 +78,17 @@ Até haver resposta, os vídeos de intérprete resolvem o problema da compreens�
 - **Braille e letra grande nas portas** dos gabinetes, à altura da mão.
 - **Informação antes de sair de casa:** o site da USF pode explicar o percurso desde a paragem de autocarro até à entrada.
 
+## Acessibilidade digital (Decreto-Lei 83/2018)
+
+Como serviço de uma entidade pública, a aplicação tem de cumprir o Decreto-Lei n.º 83/2018, que transpõe a Diretiva (UE) 2016/2102. Na prática, isto quer dizer a norma europeia EN 301 549, equivalente ao nível AA das WCAG 2.1, e a publicação de uma declaração de acessibilidade.
+
+- **Já feito no protótipo:** autoavaliação (testes automáticos em todos os ecrãs e verificação manual), correção dos problemas encontrados e rascunho da declaração (`acessibilidade.html`, «parcialmente conforme»).
+- **A fazer pela ULS:**
+  1. Avaliar o endereço final com o validador do Estado, o AccessMonitor.
+  2. Fazer testes com utilizadores. O Selo de Usabilidade e Acessibilidade de nível Ouro pede pelo menos 6 participantes, 2 deles com necessidades específicas.
+  3. Preencher a declaração oficial no Gerador da Declaração de Acessibilidade e Usabilidade (ARTE) e publicá-la com a aplicação.
+  4. Opcionalmente, candidatar a aplicação ao Selo de Usabilidade e Acessibilidade, que é gratuito para entidades públicas.
+
 ## Proteção de dados (RGPD)
 
 O ecrã tátil e o telefone recolhem o nome, o número de utente e, se a pessoa quiser, o telemóvel. São dados de saúde, uma categoria especial de dados pessoais (art. 9.º do RGPD), num equipamento que está numa sala pública. A proposta trata isto em duas partes.

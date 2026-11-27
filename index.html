@@ -12,7 +12,7 @@
 :root{
   /* Cores e tipo do site usf-covelo.github.io: verde e azul-escuro do logótipo, fundo creme, castanho da faixa.
      Layout: barra superior + cabeçalho do site; escolha de função; ecrã tátil com acesso rápido, aba LGP e modo voz ativado pelo telefone */
-  --verde:#3b8f2a; --verde-vivo:#62b92f; --verde-claro:#eef6e8;
+  --verde:#2e7a21; --verde-vivo:#62b92f; --verde-claro:#eef6e8;
   --azul:#16235e; --azul-claro:#e9ecf5; --terra:#a2521f;
   --bg:#faf8f3; --surface:#fff; --ink:#1f2433; --muted:#5a6070; --line:#e7e2d7;
   --accent:var(--verde); --accent-ink:#fff; --accent-soft:var(--verde-claro);
@@ -59,7 +59,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .btn.small{padding:6px 12px;font-size:.9em}
 .btn.big{padding:18px 22px;font-size:1.12em}
 .btn[disabled]{opacity:.45;cursor:not-allowed}
-.field{width:100%;font:inherit;font-size:1.2em;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink)}
+.field{width:100%;font:inherit;font-size:1.2em;padding:12px 14px;border-radius:12px;border:1.5px solid var(--field-line,#858b99);background:var(--surface);color:var(--ink)}
 .ico{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
 /* Barra superior e cabeçalho, como no site */
@@ -156,6 +156,7 @@ section.view.active{display:block}
 .info .steps-list li{list-style:none;counter-increment:p;display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:1.08em;color:var(--ink)}
 .info .steps-list li::before{content:counter(p);flex:none;width:34px;height:34px;border-radius:50%;background:var(--verde);color:#fff;display:grid;place-items:center;font-weight:700}
 .info .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.info .btn.big{color:#fff;font-size:1.12em;font-weight:600}
 .tbl{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
 .tbl td{padding:10px 0;border-bottom:1px solid var(--line);vertical-align:top;font-size:1.05em}
 .tbl td:first-child{font-weight:600;color:var(--azul);padding-right:16px;white-space:nowrap}
@@ -209,7 +210,7 @@ svg.avatar{display:block;width:100%;height:auto}
 .kbd button[aria-pressed="true"]{background:var(--azul);color:#fff}
 .keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:360px}
 .keypad button{padding:16px 0;font-size:1.4em;font-weight:700;border-radius:12px;border:1px solid var(--line);background:var(--surface)}
-.numfield{font-size:2em;font-weight:700;letter-spacing:.15em;font-variant-numeric:tabular-nums;padding:10px 16px;border:1.5px solid var(--line);border-radius:12px;min-height:66px;max-width:360px;background:var(--surface);color:var(--azul)}
+.numfield{font-size:2em;font-weight:700;letter-spacing:.15em;font-variant-numeric:tabular-nums;padding:10px 16px;border:1.5px solid var(--field-line,#858b99);border-radius:12px;min-height:66px;max-width:360px;background:var(--surface);color:var(--azul)}
 
 /* Passos da entrada na consulta */
 .steps{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
@@ -244,7 +245,7 @@ svg.avatar{display:block;width:100%;height:auto}
 .voz .vmenu{display:grid;gap:10px;padding:0;margin:0}
 .voz .vmenu li{list-style:none;display:flex;gap:14px;align-items:center;font-size:1.35em;font-weight:600;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,.06)}
 .voz .vmenu li b{display:inline-grid;place-items:center;min-width:48px;height:48px;border-radius:10px;background:#fff;color:var(--azul);flex:none;font-size:1em;padding:0 8px}
-.voz .vmenu li.help b{background:#E8590C;color:#fff}
+.voz .vmenu li.help b{background:#B8460B;color:#fff}
 .voz .vnum{font-size:2.4em;letter-spacing:.15em;font-weight:700}
 
 /* Telefone */
@@ -263,7 +264,7 @@ svg.avatar{display:block;width:100%;height:auto}
 .pk b{font-size:1.45em;line-height:1}
 .pk .br{font-size:1.25em;letter-spacing:.08em;line-height:1}
 .pk span{font-size:.7em}
-.pk.help{grid-column:1/-1;background:#E8590C;color:#fff;padding:12px 6px}
+.pk.help{grid-column:1/-1;background:#B8460B;color:#fff;padding:12px 6px}
 .pk.flash{outline:4px solid var(--verde-vivo);outline-offset:2px}
 details.sim summary{cursor:pointer;font-size:.85em;color:var(--muted)}
 
@@ -322,6 +323,19 @@ details.sim summary{cursor:pointer;font-size:.85em;color:var(--muted)}
 .priv{display:flex;gap:10px;align-items:flex-start;margin-top:14px;font-size:.88em;color:var(--muted)}
 .priv .ico{width:20px;height:20px;flex:none;color:var(--verde)}
 .chatpriv{font-size:.85em;color:var(--muted);margin-top:6px}
+@media (max-width:440px){
+  .screen{border-width:4px;border-radius:16px}
+  .tab{white-space:normal;flex:1 1 auto}
+  .kh,.navbar{padding:10px 10px}
+  .acesso{grid-template-columns:repeat(2,1fr)}
+  .wrap{padding-left:10px;padding-right:10px}
+}
+.skip{position:absolute;left:12px;top:-60px;z-index:100;background:var(--azul);color:#fff;padding:10px 16px;border-radius:10px;font-weight:700}
+.skip:focus{top:12px}
+.timeout{position:absolute;inset:0;background:rgba(10,18,50,.7);display:flex;align-items:center;justify-content:center;z-index:30;padding:16px}
+.timeout[hidden]{display:none}
+.timeout .card{max-width:460px;text-align:center}
+.timeout .count{font-size:2.6em;font-weight:800;color:var(--azul);margin:8px 0}
 footer.site{background:var(--azul);color:#c9d0e6;padding:26px 0;font-size:.92em;position:relative;margin-top:30px}
 footer.site:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--verde-vivo),var(--verde) 40%,var(--terra))}
 footer.site b{color:#fff}
@@ -330,6 +344,7 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
 </style>
 </head>
 <body>
+<a class="skip" href="#conteudo">Saltar para o conteúdo</a>
 
 <div class="topbar"><div class="wrap">
   <span><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Segunda a sexta, 08h00 – 20h00</span>
@@ -349,7 +364,7 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
   </div>
 </div></header>
 
-<main class="wrap">
+<main class="wrap" id="conteudo" tabindex="-1">
 
 <!-- ================= ESCOLHA DE FUNÇÃO ================= -->
 <section class="view" id="v-inicio" data-view="inicio">
@@ -394,6 +409,14 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
     <div>
       <div class="screen-label">Ecrã tátil</div>
       <div class="screen">
+        <div class="timeout" id="timeout" hidden role="alertdialog" aria-modal="true" aria-labelledby="to-t" aria-describedby="to-d">
+          <div class="card">
+            <h2 id="to-t" data-i18n="to_t">Ainda está aí?</h2>
+            <p id="to-d" class="muted" style="margin-top:6px" data-i18n="to_d">Por falta de uso, o ecrã vai voltar ao início e apagar o que escreveu.</p>
+            <div class="count" id="to-count" aria-live="off">20</div>
+            <button class="btn big" id="to-more" type="button" data-i18n="to_btn">Preciso de mais tempo</button>
+          </div>
+        </div>
         <div class="kh">
           <a class="brand" href="#" id="k-home"><img src="logo-usf-covelo.png" alt=""><span><b>USF Covelo</b><small data-i18n="k_sub">Informação ao utente</small></span></a>
           <div class="tabs" role="tablist" aria-label="Secções do ecrã">
@@ -529,9 +552,9 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
         <div class="scr" data-scr="entrada"><div class="scrbody">
           <div class="steps" id="steps"><span data-s="0" data-i18n="s0">1. Nome</span><span data-s="1" data-i18n="s1">2. Número de utente</span><span data-s="2" data-i18n="s2">3. Telemóvel</span><span data-s="3" data-i18n="s3">4. Confirmar</span></div>
           <div class="step" data-step="0">
-            <div class="steptitle" data-i18n="q_nome">Qual é o seu nome?</div>
+            <div class="steptitle" id="q-nome" data-i18n="q_nome">Qual é o seu nome?</div>
             <p class="muted" data-i18n="h_nome">Escreva o primeiro e o último nome.</p>
-            <input class="field" id="en-nome" autocomplete="off" style="margin-top:12px;font-size:1.4em" aria-label="Nome">
+            <input class="field" id="en-nome" autocomplete="off" style="margin-top:12px;font-size:1.4em" aria-labelledby="q-nome">
             <div class="kbd" id="kbd-nome"></div>
           </div>
           <div class="step" data-step="1">
@@ -546,6 +569,7 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
             <div class="numfield" id="en-tel" style="margin:12px 0" aria-live="polite"></div>
             <div class="keypad" id="kp-tel"></div>
             <label class="consent" id="consent-box" hidden><input type="checkbox" id="en-consent"><span data-i18n="consent">Autorizo que a USF Covelo use este número só para me avisar desta consulta. O número é apagado depois do aviso.</span></label>
+            <p class="err" id="consent-need" hidden data-i18n="consent_need">Para receber a SMS, marque a autorização. Se não quiser SMS, toque em «Não quero SMS».</p>
           </div>
           <div class="step" data-step="3">
             <div class="steptitle" data-i18n="q_conf">Confirme os seus dados</div>
@@ -620,7 +644,7 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
       <div class="card">
         <div class="row" style="justify-content:space-between"><h3>Conversa escrita</h3><span class="badge" id="msg-count" hidden>0</span></div>
         <p class="hint">Mensagens escritas no ecrã tátil por pessoas com dificuldade auditiva.</p>
-        <div class="thread desk" id="thread-desk" style="margin-top:10px"></div>
+        <div class="thread desk" id="thread-desk" style="margin-top:10px" aria-live="polite"></div>
         <div class="quick" id="quick-desk" style="margin-top:10px"></div>
         <p class="hint" id="desk-lang" hidden style="margin-top:8px"></p>
         <form id="form-desk" class="row" style="margin-top:10px;flex-wrap:nowrap">
@@ -671,6 +695,7 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
   <div class="wrap cols">
     <div><b>USF Covelo</b><br>Rua Faria Guimarães, 915/931<br>4200-292 Porto</div>
     <div><b>Contactos</b><br>22 557 4810<br>usf.covelo@ulssjoao.min-saude.pt</div>
+    <div><b>Acessibilidade</b><br><a id="a11y-link" href="acessibilidade.html" style="color:inherit">Declaração de acessibilidade</a></div>
     <div><b>Sobre este protótipo</b><br>Os vídeos LGP devem ser gravados por um intérprete e validados pela comunidade surda. A videochamada, a transferência de chamadas e as SMS são simuladas.</div>
   </div>
 </footer>
@@ -839,6 +864,7 @@ en: {
   consent: "I authorise USF Covelo to use this number only to tell me about this appointment. The number is deleted after the message is sent.",
   priv: "Your details are only used to register your arrival. Your name and SNS number disappear from the screen straight away and written conversations are not stored. Questions about your data: Data Protection Officer of ULS São João (ask the reception desk for the contact).",
   chat_priv: "When you leave this screen, the conversation is deleted.",
+  to_t: "Are you still there?", to_d: "As the screen is not being used, it will go back to the start and delete what you typed.", to_btn: "I need more time", consent_need: "To get the SMS, tick the authorisation. If you don’t want an SMS, tap “No SMS”.",
   sms: "USF Covelo: the doctor is ready. Please go to {g}.",
   acc_trazer: "What to bring", acc_entrada: "How to register your arrival", acc_horario: "Opening hours", acc_contactos: "Contacts", acc_oferecemos: "Our services", acc_marcar: "Book an appointment",
   f_saudacao_x: "Hello! Welcome to USF Covelo. Choose what you need.",
@@ -878,6 +904,7 @@ es: {
   consent: "Autorizo a la USF Covelo a usar este número solo para avisarme de esta consulta. El número se borra después del aviso.",
   priv: "Sus datos solo se usan para registrar su llegada. El nombre y el número de usuario desaparecen de la pantalla enseguida y las conversaciones escritas no se guardan. Dudas sobre sus datos: Delegado de Protección de Datos de la ULS São João (pida el contacto en la secretaría).",
   chat_priv: "Cuando salga de esta pantalla, la conversación se borra.",
+  to_t: "¿Sigue ahí?", to_d: "Como no se está usando, la pantalla volverá al inicio y borrará lo que ha escrito.", to_btn: "Necesito más tiempo", consent_need: "Para recibir el SMS, marque la autorización. Si no quiere SMS, toque «No quiero SMS».",
   sms: "USF Covelo: el médico está listo. Diríjase al {g}.",
   acc_trazer: "Qué traer", acc_entrada: "Cómo registrar su llegada", acc_horario: "Horario", acc_contactos: "Contactos", acc_oferecemos: "Qué ofrecemos", acc_marcar: "Pedir cita",
   f_saudacao_x: "¡Hola! Bienvenido/a a la USF Covelo. Elija lo que necesita.",
@@ -917,6 +944,7 @@ ar: {
   consent: "أوافق على أن تستخدم USF Covelo هذا الرقم فقط لإبلاغي بهذا الموعد. يُحذف الرقم بعد إرسال الرسالة.",
   priv: "تُستخدم بياناتك فقط لتسجيل وصولك. يختفي الاسم ورقم المستخدم من الشاشة فورًا، ولا يتم حفظ المحادثات المكتوبة. للاستفسار عن بياناتك: مسؤول حماية البيانات في ULS São João (اطلب جهة الاتصال من الاستقبال).",
   chat_priv: "عند مغادرة هذه الشاشة، يتم حذف المحادثة.",
+  to_t: "هل ما زلت هنا؟", to_d: "بسبب عدم الاستخدام، ستعود الشاشة إلى البداية وتحذف ما كتبته.", to_btn: "أحتاج إلى مزيد من الوقت", consent_need: "لتلقي الرسالة القصيرة، ضع علامة على الموافقة. إذا كنت لا تريد رسالة، اضغط «لا أريد رسالة».",
   sms: "USF Covelo: الطبيب جاهز. يرجى التوجه إلى {g}.",
   acc_trazer: "ماذا تحضر", acc_entrada: "كيفية تسجيل الوصول", acc_horario: "مواعيد العمل", acc_contactos: "الاتصال بنا", acc_oferecemos: "خدماتنا", acc_marcar: "حجز موعد",
   f_saudacao_x: "مرحبًا! أهلًا بك في USF Covelo. اختر ما تحتاج إليه.",
@@ -1505,6 +1533,7 @@ function route() {
   $("#rolechip").hidden = !role;
   $("#rolechip").textContent = {ecra: "Ecrã tátil dos utentes", secretariado: "Secretariado", sala: "Sala de espera"}[role] || "";
   $("#btn-role").hidden = role !== "secretariado";
+  $("#a11y-link").parentElement.hidden = role === "ecra" || role === "sala";   /* no ecrã público não há ligações para fora */
   if (role !== "ecra") stopVoice();
   sendPresence(); renderAll(); window.scrollTo(0, 0);
 }
@@ -1656,8 +1685,20 @@ $("#go-entrada-lgp").addEventListener("click", () => go("entrada"));
 $("#chat-entrada").addEventListener("click", () => go("entrada"));
 $("#call-entrada").addEventListener("click", () => go("entrada"));
 $("#btn-endcall").addEventListener("click", () => { endCall(); back(); });
-function bumpIdle() { clearTimeout(idleTimer); if (curScr() !== "inicio" || lang !== "pt") idleTimer = setTimeout(() => { if (curScr() !== "interp" && !voice.offHook) { goHome(); setLang("pt"); } }, 180000); }
+/* Ao fim de 2 min 40 s sem uso aparece um aviso; a pessoa tem 20 s para pedir mais tempo (WCAG 2.2.1) */
+let toTimer = null;
+function bumpIdle() {
+  clearTimeout(idleTimer); hideTimeout();
+  if (role === "ecra" && (curScr() !== "inicio" || lang !== "pt")) idleTimer = setTimeout(() => { if (curScr() !== "interp" && !voice.offHook) showTimeout(); else bumpIdle(); }, 160000);
+}
+function showTimeout() {
+  let n = 20; const box = $("#timeout"); box.hidden = false; $("#to-count").textContent = n; setTimeout(() => $("#to-more").focus(), 30);
+  clearInterval(toTimer);
+  toTimer = setInterval(() => { n--; $("#to-count").textContent = n; if (n <= 0) { hideTimeout(); clearTimeout(doneTimer); goHome(); setLang("pt"); } }, 1000);
+}
+function hideTimeout() { clearInterval(toTimer); toTimer = null; const box = $("#timeout"); if (box) box.hidden = true; }
 document.addEventListener("pointerdown", bumpIdle);
+document.addEventListener("keydown", bumpIdle);
 
 /* Acesso rápido e páginas de informação */
 ACESSO.forEach(id => {
@@ -1807,7 +1848,8 @@ function updateStepNav() {
   $("#st-prev").hidden = n === 0 || n === 4;
   $("#st-skip").hidden = n !== 2;
   $("#consent-box").hidden = !(n === 2 && ent.tel);
-  $("#consent-box").classList.toggle("need", n === 2 && /^9\d{8}$/.test(ent.tel) && !$("#en-consent").checked);
+  const needC = n === 2 && /^9\d{8}$/.test(ent.tel) && !$("#en-consent").checked;
+  $("#consent-box").classList.toggle("need", needC); $("#consent-need").hidden = !needC;
   const ok = n === 0 ? $("#en-nome").value.trim().length >= 2 : n === 1 ? /^\d{9}$/.test(ent.utente) : n === 2 ? (ent.tel === "" || (/^9\d{8}$/.test(ent.tel) && $("#en-consent").checked)) : true;
   $("#st-next").disabled = !ok;
   $("#st-next").textContent = t(n === 3 ? "nx_confirm" : n === 4 ? "nx_end" : n === 2 && !ent.tel ? "nx_nosms" : "nx_cont");
@@ -1819,7 +1861,7 @@ $("#st-next").addEventListener("click", () => {
   if (entradaStep === 3) {
     const r = registarEntrada({origem: entradaOrigem, nome: $("#en-nome").value.trim(), utente: ent.utente, phone: ent.tel});
     lastTel = ent.tel; clearEntrada();
-    clearTimeout(doneTimer); doneTimer = setTimeout(() => { if (curScr() === "entrada" && entradaStep === 4) { goHome(); setLang("pt"); } }, 20000);
+    clearTimeout(doneTimer); doneTimer = setTimeout(() => { if (curScr() === "entrada" && entradaStep === 4) showTimeout(); }, 20000);
     $("#en-ticket").textContent = r.code;
     renderDoneMsg();
     return setStep(4);

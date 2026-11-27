@@ -117,3 +117,12 @@ O ecrã tátil tem um seletor de língua no topo: **Português** (por omissão),
 
 A aplicação começa vazia: não há casos de exemplo e a primeira senha é A001. Os casos são criados por quem apresenta, no ecrã tátil e no telefone.
 No secretariado, o botão **Recomeçar** (tocar duas vezes) apaga mensagens, pedidos, entradas e senhas, para recomeçar entre ensaios.
+
+## Acessibilidade digital (Decreto-Lei 83/2018 · WCAG 2.1 AA)
+
+As aplicações de organismos públicos têm de cumprir o Decreto-Lei 83/2018 (norma EN 301 549, que corresponde ao nível AA das WCAG 2.1) e publicar uma declaração de acessibilidade.
+
+- **Avaliação feita (27/11/2026):** testes automáticos em todos os ecrãs (contraste, nomes dos botões, etiquetas, língua, ids, ecrã de 320 px) e verificação manual (teclado, foco, tempo, mensagens de estado).
+- **Correções:** verde e laranja mais escuros (contraste de 4,5:1), contorno dos campos mais visível, ligação «Saltar para o conteúdo», aviso «Ainda está aí?» com 20 segundos para pedir mais tempo antes de o ecrã voltar ao início, consentimento explicado por texto e não só por cor, ecrã a funcionar em 320 px de largura.
+- **Declaração:** `acessibilidade.html` (rascunho com a estrutura do modelo oficial, «parcialmente conforme», com as limitações conhecidas). Está ligada no rodapé, exceto no ecrã tátil e na sala de espera.
+- **Para a declaração oficial:** avaliar o endereço final no AccessMonitor (accessmonitor.acessibilidade.gov.pt), fazer testes com utilizadores e preencher a declaração no Gerador da ARTE (acessibilidade.gov.pt/gerador).

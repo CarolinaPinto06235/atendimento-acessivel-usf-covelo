@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Declaração de acessibilidade · Atendimento Acessível USF Covelo</title>
+<link rel="icon" href="favicon.png">
+<style>
+  :root{--verde:#2e7a21;--azul:#16235e;--bg:#faf8f3;--ink:#1f2433;--muted:#5a6070;--line:#e7e2d7}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  .skip{position:absolute;left:12px;top:-60px;background:var(--azul);color:#fff;padding:10px 16px;border-radius:10px;font-weight:700}
+  .skip:focus{top:12px}
+  header{background:#fff;border-bottom:1px solid var(--line)}
+  header .in{max-width:860px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:12px}
+  header img{width:44px;height:44px}
+  header b{color:var(--azul);font-size:1.15em}
+  main{max-width:860px;margin:0 auto;padding:24px 20px 60px}
+  h1{color:var(--azul);font-size:1.7em;line-height:1.25;margin:0 0 6px}
+  h2{color:var(--azul);font-size:1.25em;margin:32px 0 8px;padding-top:8px;border-top:1px solid var(--line)}
+  h3{font-size:1.05em;margin:18px 0 6px}
+  a{color:var(--azul);text-underline-offset:3px}
+  :focus-visible{outline:3px solid #62b92f;outline-offset:3px}
+  .estado{display:inline-block;background:#fff4e5;color:#7a3e00;border:1px solid #e9c48f;border-radius:999px;padding:4px 14px;font-weight:700}
+  .nota{background:#e9ecf5;color:var(--azul);border-radius:10px;padding:12px 16px;margin:16px 0}
+  .tabela{overflow-x:auto;border-radius:10px}
+  table{width:100%;min-width:520px;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:.95em}
+  th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+  th{background:#f2f0ea}
+  .ok{color:#1f5f15;font-weight:700}
+  .parc{color:#7a3e00;font-weight:700}
+  ul{padding-left:22px}
+  li{margin-bottom:6px}
+  .voltar{display:inline-block;margin-top:30px}
+</style>
+</head>
+<body>
+<a class="skip" href="#conteudo">Saltar para o conteúdo</a>
+<header><div class="in"><img src="logo-usf-covelo.png" alt=""><b>USF Covelo · Atendimento Acessível</b></div></header>
+<main id="conteudo" tabindex="-1">
+  <h1>Declaração de acessibilidade e usabilidade</h1>
+  <p>A USF Covelo, da ULS São João, compromete-se a tornar a aplicação «Atendimento Acessível USF Covelo» acessível, em conformidade com o Decreto-Lei n.º 83/2018, de 19 de outubro, que transpõe a Diretiva (UE) 2016/2102 relativa à acessibilidade dos sítios web e das aplicações móveis de organismos do setor público.</p>
+  <div class="nota"><b>Rascunho para a proposta à ULS São João.</b> Esta declaração descreve o protótipo. Quando a aplicação for adotada, a declaração oficial deve ser preenchida pela ULS no <a href="https://www.acessibilidade.gov.pt/gerador">Gerador da Declaração de Acessibilidade e Usabilidade</a> e publicada no endereço final da aplicação.</div>
+
+  <h2>I. Estado de conformidade</h2>
+  <p><span class="estado">Parcialmente conforme</span></p>
+  <p>A aplicação está parcialmente conforme com o Decreto-Lei n.º 83/2018 e com a norma EN 301 549, que corresponde ao nível AA das Diretrizes de Acessibilidade para Conteúdo Web (WCAG) 2.1. As não conformidades e exceções estão descritas abaixo.</p>
+
+  <h3>Conteúdos não acessíveis ou com limitações</h3>
+  <ul>
+    <li><b>Avatar de língua gestual:</b> é uma pré-visualização aproximada de LGP. Não substitui um intérprete e não garante compreensão. A solução prevista são vídeos gravados por intérpretes de cada língua gestual (LGP, BSL, LSE e língua gestual árabe), ainda por produzir.</li>
+    <li><b>Videochamada com intérprete, transferência de chamadas e SMS:</b> são simuladas no protótipo. A acessibilidade dos serviços reais (legendas em tempo real, por exemplo) tem de ser avaliada quando forem escolhidos os fornecedores.</li>
+    <li><b>Voz do telefone:</b> depende de o equipamento ter uma voz em português de Portugal. Sem essa voz, o texto aparece no ecrã, mas a pessoa cega não o ouve.</li>
+    <li><b>Telefone apenas em português:</b> o atendimento por voz para pessoas cegas não está disponível em inglês, espanhol ou árabe.</li>
+    <li><b>Preenchimento automático do nome (critério 1.3.5):</b> foi desativado de propósito, porque o ecrã é partilhado por vários utentes e o navegador não deve sugerir o nome de outra pessoa (proteção de dados).</li>
+    <li><b>Traduções:</b> ainda não foram revistas por falantes nativos.</li>
+  </ul>
+
+  <h2>II. Elaboração desta declaração</h2>
+  <p>Declaração elaborada a 27 de novembro de 2026, por avaliação da própria equipa do projeto (autoavaliação), em duas partes:</p>
+  <h3>1. Avaliação automática</h3>
+  <p>Testes automáticos executados no Chrome em todos os ecrãs da aplicação (página inicial, entrar, ecrã tátil em português e em árabe, as seis páginas de informação, língua gestual, conversa escrita, dar entrada na consulta, videochamada, telefone, secretariado e sala de espera), também com 320 píxeis de largura. Resultado final: sem erros nos critérios verificados.</p>
+  <h3>2. Avaliação manual</h3>
+  <div class="tabela" role="region" aria-label="Avaliação manual por critério" tabindex="0"><table>
+    <thead><tr><th scope="col">Critério WCAG 2.1</th><th scope="col">O que se verificou</th><th scope="col">Resultado</th></tr></thead>
+    <tbody>
+      <tr><td>1.1.1 Conteúdo não textual</td><td>Imagens e ícones têm texto alternativo ou estão marcados como decorativos; os botões com ícone têm nome.</td><td class="ok">Conforme</td></tr>
+      <tr><td>1.2 Média</td><td>As frases em língua gestual têm legendas; os vídeos não têm som.</td><td class="ok">Conforme</td></tr>
+      <tr><td>1.3.1 Informação e relações</td><td>Títulos, listas, tabelas e campos com etiquetas.</td><td class="ok">Conforme</td></tr>
+      <tr><td>1.3.5 Identificar o objetivo do campo</td><td>Preenchimento automático desligado por proteção de dados (ver acima).</td><td class="parc">Exceção justificada</td></tr>
+      <tr><td>1.4.1 Utilização da cor</td><td>Os avisos (por exemplo, o consentimento para SMS) são dados por texto, não só pela cor.</td><td class="ok">Conforme</td></tr>
+      <tr><td>1.4.3 Contraste (mínimo)</td><td>Todo o texto tem contraste de pelo menos 4,5:1 (3:1 no texto grande). Há também um modo de alto contraste.</td><td class="ok">Conforme</td></tr>
+      <tr><td>1.4.4 Redimensionar texto</td><td>Botão «A+ Texto maior» e zoom do navegador a 200% sem perda de conteúdo.</td><td class="ok">Conforme</td></tr>
+      <tr><td>1.4.10 Reajuste (reflow)</td><td>A 320 píxeis de largura não é preciso deslocar na horizontal.</td><td class="ok">Conforme</td></tr>
+      <tr><td>1.4.11 Contraste não textual</td><td>Contorno dos campos e foco com pelo menos 3:1.</td><td class="ok">Conforme</td></tr>
+      <tr><td>2.1.1 Teclado</td><td>Todas as funções funcionam só com teclado, incluindo o telefone simulado (espaço, 0–9, *, #, A).</td><td class="ok">Conforme</td></tr>
+      <tr><td>2.2.1 Tempo ajustável</td><td>Antes de o ecrã voltar ao início por falta de uso, aparece «Ainda está aí?» com 20 segundos para pedir mais tempo.</td><td class="ok">Conforme</td></tr>
+      <tr><td>2.4.1 Ignorar blocos</td><td>Ligação «Saltar para o conteúdo».</td><td class="ok">Conforme</td></tr>
+      <tr><td>2.4.3 / 2.4.7 Ordem e foco visível</td><td>O foco segue a ordem visual e tem contorno visível de 3 píxeis.</td><td class="ok">Conforme</td></tr>
+      <tr><td>3.1.1 / 3.1.2 Idioma</td><td>Página em português de Portugal; o ecrã tátil indica a língua escolhida (inglês, espanhol, árabe da direita para a esquerda).</td><td class="ok">Conforme</td></tr>
+      <tr><td>3.3.1 / 3.3.3 Erros e sugestões</td><td>Códigos errados e passos incompletos são explicados por texto.</td><td class="ok">Conforme</td></tr>
+      <tr><td>4.1.2 Nome, função, valor</td><td>Botões com estado (línguas, som, contraste) indicam se estão ativos.</td><td class="ok">Conforme</td></tr>
+      <tr><td>4.1.3 Mensagens de estado</td><td>Avisos e mensagens novas são anunciados aos leitores de ecrã.</td><td class="ok">Conforme</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Passos seguintes para a declaração oficial</h3>
+  <ul>
+    <li>Avaliar o endereço final da aplicação no validador do Estado, <a href="https://accessmonitor.acessibilidade.gov.pt/">AccessMonitor</a>.</li>
+    <li>Fazer testes de usabilidade e acessibilidade com utilizadores, incluindo pessoas surdas, cegas, idosas e com mobilidade reduzida.</li>
+    <li>Preencher e publicar a declaração no Gerador da ARTE e, se a ULS quiser, candidatar a aplicação ao <a href="https://selo.usabilidade.gov.pt/candidatura/">Selo de Usabilidade e Acessibilidade</a>.</li>
+  </ul>
+
+  <h2>III. Contacto e pedidos de informação</h2>
+  <p>Se encontrar alguma barreira de acessibilidade, ou se precisar da informação noutro formato, contacte a USF Covelo:</p>
+  <ul>
+    <li>Telefone: 22 557 4810</li>
+    <li>Email: usf.covelo@ulssjoao.min-saude.pt</li>
+    <li>Presencialmente: no secretariado, Rua Faria Guimarães, 915/931, 4200-292 Porto</li>
+  </ul>
+  <p>Os contactos definitivos para a declaração oficial devem ser confirmados pela ULS São João.</p>
+
+  <h2>IV. Outras evidências</h2>
+  <p>A aplicação foi desenhada para pessoas com deficiência auditiva (língua gestual, legendas e conversa escrita), visual (telefone com teclado em Braille e voz, piso tátil) e motora (telefone em alternativa ao ecrã), e para utentes que falam inglês, espanhol ou árabe.</p>
+
+  <a class="voltar" href="index.html">← Voltar à aplicação</a>
+</main>
+</body>
+</html>
