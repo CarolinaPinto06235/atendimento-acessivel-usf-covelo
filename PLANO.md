@@ -78,6 +78,29 @@ Até haver resposta, os vídeos de intérprete resolvem o problema da compreens�
 - **Braille e letra grande nas portas** dos gabinetes, à altura da mão.
 - **Informação antes de sair de casa:** o site da USF pode explicar o percurso desde a paragem de autocarro até à entrada.
 
+## Proteção de dados (RGPD)
+
+O ecrã tátil e o telefone recolhem o nome, o número de utente e, se a pessoa quiser, o telemóvel. São dados de saúde, uma categoria especial de dados pessoais (art. 9.º do RGPD), num equipamento que está numa sala pública. A proposta trata isto em duas partes.
+
+**O que o protótipo já faz (proteção de dados desde a conceção, art. 25.º)**
+
+- **Dados apagados do ecrã logo após cada entrada.** Assim que o utente confirma, o nome, o número de utente e o telemóvel desaparecem do ecrã e da memória do posto. O ecrã final mostra só a senha e o telemóvel mascarado (91• ••• •78), e volta ao início ao fim de 20 segundos. Se a pessoa sair a meio, os dados também são apagados. No telefone, os dados apagam-se quando a pessoa pousa o auscultador.
+- **Sem histórico das conversas.** A conversa escrita com o secretariado é apagada, nos dois lados, quando o utente sai do ecrã ou ao fim de 3 minutos sem uso. O ecrã avisa disso. Nada fica guardado no navegador.
+- **Consentimento para a SMS.** No ecrã, só é possível continuar com um número depois de marcar «Autorizo que a USF Covelo use este número só para me avisar desta consulta. O número é apagado depois do aviso.». No telefone, a mensagem de voz explica o mesmo antes de a pessoa marcar o número.
+- **Minimização e conservação.** Quando o secretariado carrega em «Médico pronto», o nome, o número de utente e o telemóvel são apagados; fica só a senha e o gabinete, para o ecrã da sala de espera.
+- **Informação ao utente (art. 13.º).** O ecrã inicial explica, em quatro línguas, para que servem os dados e a quem perguntar.
+- **Acesso restrito.** O secretariado só abre com palavra-passe, e o ecrã tátil não deixa sair para outras funções.
+
+**O que a ULS São João tem de fazer antes de usar com utentes**
+
+1. **Envolver o Encarregado de Proteção de Dados (EPD) da ULS** desde o início. As entidades públicas são obrigadas a ter um EPD (art. 37.º do RGPD; Lei n.º 58/2019), e cabe-lhe aconselhar sobre este tipo de projeto.
+2. **Fazer uma Avaliação de Impacto sobre a Proteção de Dados (AIPD, art. 35.º)**, com o EPD: dados de saúde, num ecrã em espaço público, com pessoas vulneráveis.
+3. **Definir o fundamento jurídico:** a prestação de cuidados de saúde (art. 9.º, n.º 2, alínea h) para a entrada na consulta; o consentimento (art. 6.º e 7.º) para a SMS.
+4. **Definir prazos de conservação** e confirmar que os registos de entrada ficam apenas no sistema clínico da USF, e não no equipamento do ecrã.
+5. **Escolher fornecedores dentro da UE** para o servidor, o serviço de SMS e a videochamada com intérprete, com contrato de subcontratação (art. 28.º).
+6. **Segurança do equipamento:** modo quiosque do sistema, atualizações, contas reais para o secretariado (em vez de um código partilhado) e ecrã virado de forma a que quem está na fila não o consiga ler.
+7. **Pôr a informação de privacidade** também em papel, junto do ecrã, com o contacto do EPD.
+
 ## Próximos passos
 
 O calendário é uma proposta; o passo que desbloqueia tudo é a aprovação da ULS em fevereiro.

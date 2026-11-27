@@ -316,6 +316,12 @@ details.sim summary{cursor:pointer;font-size:.85em;color:var(--muted)}
 .screen[dir="rtl"] .keypad,.screen[dir="rtl"] .kbd,.screen[dir="rtl"] .numfield,.screen[dir="rtl"] input,.screen[dir="rtl"] .summary dd{direction:ltr}
 .screen[dir="rtl"] .summary dd{text-align:right}
 .langtag{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;background:var(--azul-claro);color:var(--azul);font-size:.8em;font-weight:700}
+.consent{display:flex;gap:12px;align-items:flex-start;margin-top:4px;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);cursor:pointer;font-size:.98em}
+.consent input{width:26px;height:26px;flex:none;margin-top:2px;accent-color:var(--verde)}
+.consent.need{border-color:var(--terra);background:#fdf3ec}
+.priv{display:flex;gap:10px;align-items:flex-start;margin-top:14px;font-size:.88em;color:var(--muted)}
+.priv .ico{width:20px;height:20px;flex:none;color:var(--verde)}
+.chatpriv{font-size:.85em;color:var(--muted);margin-top:6px}
 footer.site{background:var(--azul);color:#c9d0e6;padding:26px 0;font-size:.92em;position:relative;margin-top:30px}
 footer.site:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--verde-vivo),var(--verde) 40%,var(--terra))}
 footer.site b{color:#fff}
@@ -427,6 +433,7 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
               </div>
               <p class="urgente" data-i18n-html="urgente">Antes de sair de casa, ligue para o <b>SNS 24 (808 24 24 24)</b>. Em caso de emergência, ligue <b>112</b>.</p>
             </div>
+            <p class="priv"><svg class="ico" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span data-i18n="priv">Os seus dados servem só para dar entrada na consulta. O nome e o número de utente desaparecem do ecrã logo a seguir e as conversas escritas não ficam guardadas. Dúvidas sobre os seus dados: Encarregado de Proteção de Dados da ULS São João (peça o contacto no secretariado).</span></p>
           </div>
         </div>
 
@@ -486,6 +493,7 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
               </div>
               <div class="sugg" id="sugg" aria-label="Sugestões de palavras"></div>
               <div class="kbd" id="kbd-chat"></div>
+              <p class="chatpriv" data-i18n="chat_priv">Quando sair deste ecrã, a conversa é apagada.</p>
             </div>
             <div class="stack">
               <div class="sectitle" data-i18n="frases">Frases rápidas</div>
@@ -537,6 +545,7 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
             <p class="muted" data-i18n="h_tel">Escreva o seu telemóvel. Se não quiser, toque em «Não quero SMS».</p>
             <div class="numfield" id="en-tel" style="margin:12px 0" aria-live="polite"></div>
             <div class="keypad" id="kp-tel"></div>
+            <label class="consent" id="consent-box" hidden><input type="checkbox" id="en-consent"><span data-i18n="consent">Autorizo que a USF Covelo use este número só para me avisar desta consulta. O número é apagado depois do aviso.</span></label>
           </div>
           <div class="step" data-step="3">
             <div class="steptitle" data-i18n="q_conf">Confirme os seus dados</div>
@@ -629,7 +638,7 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
     </div>
     <div class="stack" style="gap:18px">
       <div class="card">
-        <div class="row" style="justify-content:space-between"><h3>Chamadas e pedidos</h3><span class="badge" id="req-count" hidden>0</span></div>
+        <div class="row" style="justify-content:space-between"><h3>Mensagens, chamadas e pedidos</h3><span class="badge" id="req-count" hidden>0</span></div>
         <div id="req-list" style="margin-top:6px"></div>
       </div>
       <div class="card">
@@ -826,6 +835,9 @@ en: {
   call_ring: "Calling the interpreter…", call_on: "In call",
   th_empty: "Type your message below. A member of the reception staff will reply here.", th_me: "You", th_desk: "Reception",
   toast_interp: "The reception desk is following your video call.", lang_label: "Language",
+  consent: "I authorise USF Covelo to use this number only to tell me about this appointment. The number is deleted after the message is sent.",
+  priv: "Your details are only used to register your arrival. Your name and SNS number disappear from the screen straight away and written conversations are not stored. Questions about your data: Data Protection Officer of ULS São João (ask the reception desk for the contact).",
+  chat_priv: "When you leave this screen, the conversation is deleted.",
   sms: "USF Covelo: the doctor is ready. Please go to {g}.",
   acc_trazer: "What to bring", acc_entrada: "How to register your arrival", acc_horario: "Opening hours", acc_contactos: "Contacts", acc_oferecemos: "Our services", acc_marcar: "Book an appointment",
   f_saudacao_x: "Hello! Welcome to USF Covelo. Choose what you need.",
@@ -862,6 +874,9 @@ es: {
   call_ring: "Llamando al intérprete…", call_on: "En llamada",
   th_empty: "Escriba su mensaje abajo. Un empleado de la secretaría responderá aquí.", th_me: "Usted", th_desk: "Secretaría",
   toast_interp: "La secretaría está siguiendo su videollamada.", lang_label: "Idioma",
+  consent: "Autorizo a la USF Covelo a usar este número solo para avisarme de esta consulta. El número se borra después del aviso.",
+  priv: "Sus datos solo se usan para registrar su llegada. El nombre y el número de usuario desaparecen de la pantalla enseguida y las conversaciones escritas no se guardan. Dudas sobre sus datos: Delegado de Protección de Datos de la ULS São João (pida el contacto en la secretaría).",
+  chat_priv: "Cuando salga de esta pantalla, la conversación se borra.",
   sms: "USF Covelo: el médico está listo. Diríjase al {g}.",
   acc_trazer: "Qué traer", acc_entrada: "Cómo registrar su llegada", acc_horario: "Horario", acc_contactos: "Contactos", acc_oferecemos: "Qué ofrecemos", acc_marcar: "Pedir cita",
   f_saudacao_x: "¡Hola! Bienvenido/a a la USF Covelo. Elija lo que necesita.",
@@ -898,6 +913,9 @@ ar: {
   call_ring: "جارٍ الاتصال بالمترجم…", call_on: "المكالمة جارية",
   th_empty: "اكتب رسالتك في الأسفل. سيرد عليك أحد موظفي الاستقبال هنا.", th_me: "أنت", th_desk: "الاستقبال",
   toast_interp: "يتابع موظفو الاستقبال مكالمة الفيديو الخاصة بك.", lang_label: "اللغة",
+  consent: "أوافق على أن تستخدم USF Covelo هذا الرقم فقط لإبلاغي بهذا الموعد. يُحذف الرقم بعد إرسال الرسالة.",
+  priv: "تُستخدم بياناتك فقط لتسجيل وصولك. يختفي الاسم ورقم المستخدم من الشاشة فورًا، ولا يتم حفظ المحادثات المكتوبة. للاستفسار عن بياناتك: مسؤول حماية البيانات في ULS São João (اطلب جهة الاتصال من الاستقبال).",
+  chat_priv: "عند مغادرة هذه الشاشة، يتم حذف المحادثة.",
   sms: "USF Covelo: الطبيب جاهز. يرجى التوجه إلى {g}.",
   acc_trazer: "ماذا تحضر", acc_entrada: "كيفية تسجيل الوصول", acc_horario: "مواعيد العمل", acc_contactos: "الاتصال بنا", acc_oferecemos: "خدماتنا", acc_marcar: "حجز موعد",
   f_saudacao_x: "مرحبًا! أهلًا بك في USF Covelo. اختر ما تحتاج إليه.",
@@ -1398,8 +1416,8 @@ function clean(d) {
   return {
     rev: Number(d.rev) || 0, next: Number(d.next) || store.next,
     chats: arr(d.chats).map(c => ({id: s(c.id, 20), from: c.from === "utente" ? "utente" : "secretariado", text: s(c.text, 600), shown: s(c.shown, 600), lang: ["en", "es", "ar"].includes(c.lang) ? c.lang : "pt", t: Number(c.t) || 0, lida: !!c.lida})),
-    reqs: arr(d.reqs).map(r => ({id: s(r.id, 20), tipo: ["interprete", "chamada", "transferencia"].includes(r.tipo) ? r.tipo : "chamada", origem: s(r.origem, 60), detalhe: s(r.detalhe, 200), status: r.status === "atendido" ? "atendido" : "pendente", t: Number(r.t) || 0})),
-    entradas: arr(d.entradas).map(k => ({id: s(k.id, 20), code: s(k.code, 8), origem: ["voz", "lgp", "ecra"].includes(k.origem) ? k.origem : "ecra", nome: s(k.nome, 80), utente: digits(k.utente, 9), phone: digits(k.phone, 9), status: k.status === "chamado" ? "chamado" : "espera", gabinete: s(k.gabinete, 24), lingua: ["en", "es", "ar"].includes(k.lingua) ? k.lingua : "pt", t: Number(k.t) || 0, exemplo: !!k.exemplo})),
+    reqs: arr(d.reqs).map(r => ({id: s(r.id, 20), tipo: ["interprete", "chamada", "transferencia", "entrada"].includes(r.tipo) ? r.tipo : "chamada", ref: s(r.ref, 20), origem: s(r.origem, 60), detalhe: s(r.detalhe, 200), status: r.status === "atendido" ? "atendido" : "pendente", t: Number(r.t) || 0})),
+    entradas: arr(d.entradas).map(k => ({id: s(k.id, 20), code: s(k.code, 8), origem: ["voz", "lgp", "ecra"].includes(k.origem) ? k.origem : "ecra", nome: s(k.nome, 80), utente: digits(k.utente, 9), phone: digits(k.phone, 9), consent: !!k.consent, status: k.status === "chamado" ? "chamado" : "espera", gabinete: s(k.gabinete, 24), lingua: ["en", "es", "ar"].includes(k.lingua) ? k.lingua : "pt", t: Number(k.t) || 0, exemplo: !!k.exemplo})),
     calls: arr(d.calls).map(c => ({code: s(c.code, 8), gabinete: s(c.gabinete, 24), t: Number(c.t) || 0}))
   };
 }
@@ -1423,7 +1441,7 @@ function afterChange(prev, local) {
   if (role === "secretariado" && !local) {
     newUser.forEach(m => notify("Nova mensagem escrita", m.text));
     newReq.forEach(r => notify(REQ_TXT[r.tipo], r.detalhe || r.origem));
-    newEnt.forEach(c => notify("Entrada na consulta " + c.code, (c.nome || "Sem nome") + " · n.º utente " + (c.utente || "—")));
+    if (prev.chats.length && !store.chats.length) toast("Conversa terminada", "O utente saiu do ecrã. A conversa foi apagada.");
   }
   if (role === "ecra" && newDesk.length) {
     if (curScr() === "chat") { const m = newDesk[newDesk.length - 1]; toast(t("th_desk"), m.shown || m.text); }
@@ -1603,13 +1621,19 @@ function back() {
   if (curScr() === "entrada" && entradaStep > 0 && entradaStep < 4) { setStep(entradaStep - 1); return; }
   leave(curScr()); if (stack.length > 1) stack.pop(); showScr(); if (curScr() === "lgp") playPhrase(lastPhrase);
 }
-function goHome() { leave(curScr()); stack = ["inicio"]; showScr(); }
+function goHome() {
+  leave(curScr());
+  if (role === "ecra" && stack.includes("chat")) endConversation();
+  stack = ["inicio"]; showScr();
+}
+/* A conversa escrita não fica guardada: é apagada quando o utente sai */
+function endConversation() { if (!store.chats.length) return; mutate(() => { store.chats = []; }); $("#chat-input").value = ""; renderSugg(); }
 function onEnter(s) {
   if (s === "lgp") playPhrase(SAUDACAO);
   if (s === "entrada") { entradaOrigem = stack.includes("lgp") ? "lgp" : "ecra"; startEntrada(); }
   if (s === "interp") startCall();
 }
-function leave(s) { if (s === "interp") endCall(); }
+function leave(s) { if (s === "interp") endCall(); if (s === "entrada") { clearEntrada(); clearTimeout(doneTimer); } }
 $("#nav-back").addEventListener("click", back);
 $("#nav-home").addEventListener("click", goHome);
 $("#k-home").addEventListener("click", e => { e.preventDefault(); goHome(); secretTap(); });
@@ -1755,7 +1779,8 @@ function makeKeypad(box, key) {
 }
 makeKeypad($("#kp-utente"), "utente");
 makeKeypad($("#kp-tel"), "tel");
-function startEntrada() { $("#en-nome").value = ""; ent.utente = ""; ent.tel = ""; nomeKbd.reset(); setStep(0); }
+function startEntrada() { clearEntrada(); setStep(0); }
+$("#en-consent").addEventListener("change", updateStepNav);
 function setStep(n) { entradaStep = n; renderEntrada(); }
 function renderEntrada() {
   $$(".step").forEach(s => s.classList.toggle("active", Number(s.dataset.step) === entradaStep));
@@ -1771,29 +1796,47 @@ function updateStepNav() {
   const n = entradaStep;
   $("#st-prev").hidden = n === 0 || n === 4;
   $("#st-skip").hidden = n !== 2;
-  const ok = n === 0 ? $("#en-nome").value.trim().length >= 2 : n === 1 ? /^\d{9}$/.test(ent.utente) : n === 2 ? (ent.tel === "" || /^9\d{8}$/.test(ent.tel)) : true;
+  $("#consent-box").hidden = !(n === 2 && ent.tel);
+  $("#consent-box").classList.toggle("need", n === 2 && /^9\d{8}$/.test(ent.tel) && !$("#en-consent").checked);
+  const ok = n === 0 ? $("#en-nome").value.trim().length >= 2 : n === 1 ? /^\d{9}$/.test(ent.utente) : n === 2 ? (ent.tel === "" || (/^9\d{8}$/.test(ent.tel) && $("#en-consent").checked)) : true;
   $("#st-next").disabled = !ok;
   $("#st-next").textContent = t(n === 3 ? "nx_confirm" : n === 4 ? "nx_end" : n === 2 && !ent.tel ? "nx_nosms" : "nx_cont");
 }
 $("#st-prev").addEventListener("click", () => setStep(Math.max(0, entradaStep - 1)));
-$("#st-skip").addEventListener("click", () => { ent.tel = ""; setStep(3); });
+$("#st-skip").addEventListener("click", () => { ent.tel = ""; $("#en-consent").checked = false; setStep(3); });
 $("#st-next").addEventListener("click", () => {
   if (entradaStep < 3) return setStep(entradaStep + 1);
   if (entradaStep === 3) {
     const r = registarEntrada({origem: entradaOrigem, nome: $("#en-nome").value.trim(), utente: ent.utente, phone: ent.tel});
+    lastTel = ent.tel; clearEntrada();
+    clearTimeout(doneTimer); doneTimer = setTimeout(() => { if (curScr() === "entrada" && entradaStep === 4) { goHome(); setLang("pt"); } }, 20000);
     $("#en-ticket").textContent = r.code;
-    lastTel = ent.tel; renderDoneMsg();
+    renderDoneMsg();
     return setStep(4);
   }
-  goHome();
+  clearTimeout(doneTimer); goHome(); setLang("pt");
 });
 let lastTel = "";
 function renderDoneMsg() { $("#en-msg").textContent = lastTel ? t("done_sms").replace("{tel}", maskPhone(lastTel)) : t("done_nosms"); }
 function registarEntrada(d) {
   let code; const id = uid();
-  mutate(() => { code = "A" + String(store.next).padStart(3, "0"); store.next++; store.entradas.push({id, code, origem: d.origem, nome: d.nome || "", utente: d.utente || "", phone: d.phone || "", status: "espera", lingua: lang, t: Date.now()}); });
+  mutate(() => {
+    code = "A" + String(store.next).padStart(3, "0"); store.next++;
+    store.entradas.push({id, code, origem: d.origem, nome: d.nome || "", utente: d.utente || "", phone: d.phone || "", consent: !!d.phone, status: "espera", lingua: lang, t: Date.now()});
+    /* Mensagem ao secretariado sempre que alguém dá entrada (no telefone segue com a transferência da chamada) */
+    if (d.origem !== "voz") store.reqs.push({id: uid(), tipo: "entrada", ref: id, origem: "Ecrã tátil",
+      detalhe: `Senha ${code} · ${d.nome || "Nome por confirmar"} · n.º utente ${d.utente}${d.phone ? " · SMS autorizada para " + maskPhone(d.phone) : " · sem SMS"}${lang !== "pt" ? " · fala " + LANG_PT[lang] : ""}${d.origem === "lgp" ? " · " + SIGN[lang].sigla : ""}`,
+      status: "pendente", t: Date.now()});
+  });
   return {code, id};
 }
+/* Apagar do ecrã os dados da entrada (nome, n.º de utente, telemóvel) */
+function clearEntrada() {
+  $("#en-nome").value = ""; ent.utente = ""; ent.tel = ""; $("#en-consent").checked = false;
+  ["#sum-nome", "#sum-utente", "#sum-tel"].forEach(q => { $(q).textContent = ""; });
+  nomeKbd.reset();
+}
+let doneTimer = null;
 
 /* ================= Videochamada com intérprete (simulada) ================= */
 let callStart = 0, callTick = null, callTimer = null;
@@ -1888,7 +1931,7 @@ function pickUp() {
   signerMain.stop(); $("#video-main").pause();
   setVState("menu", "A ouvir o menu"); say(BOAS_VINDAS);
 }
-function hangUp() { if (!voice.offHook) return; stopVoice(); clearTimeout(waitTyped.t); voice.offHook = false; setVState("pousado", ""); bumpIdle(); }
+function hangUp() { if (!voice.offHook) return; stopVoice(); clearTimeout(waitTyped.t); voice.offHook = false; voice.nome = ""; voice.utente = ""; voice.tel = ""; voice.last = ""; $("#voz-now").textContent = ""; $("#voz-num").textContent = ""; setVState("pousado", ""); bumpIdle(); }
 $("#btn-hook").addEventListener("click", () => voice.offHook ? hangUp() : pickUp());
 
 let rec = null;
@@ -1926,11 +1969,11 @@ function gotName(v) { voice.nome = v.trim().replace(/\s+/g, " ").slice(0, 80); s
 function noName() { voice.nome = ""; say("Não consegui ouvir o seu nome. Não faz mal: o secretariado confirma-o pelo número de utente.").then(askUtente); }
 function askUtente() { voice.utente = ""; setVState("utente", "A dar entrada: a marcar o n.º de utente"); say("Marque o seu número de utente, com 9 algarismos, e prima cardinal. O número está no cartão de cidadão."); }
 function confirmData() { setVState("conf-utente"); say(`${voice.nome ? "O seu nome é " + voice.nome + ", e o" : "O"} seu número de utente é ${spaced(voice.utente)}. Prima 1 para confirmar, ou 2 para corrigir.`); }
-function askTel() { voice.tel = ""; setVState("tel", "A dar entrada: telemóvel para SMS"); say("Se quiser receber uma mensagem no telemóvel quando o médico estiver pronto, marque o número e prima cardinal. Se não quiser, prima asterisco."); }
+function askTel() { voice.tel = ""; setVState("tel", "A dar entrada: telemóvel para SMS"); say("Se quiser receber uma mensagem no telemóvel quando o médico estiver pronto, marque o número e prima cardinal. Ao marcar o número, autoriza que seja usado só para este aviso; depois do aviso é apagado. Se não quiser, prima asterisco."); }
 function finishEntrada() {
   const r = registarEntrada({origem: "voz", nome: voice.nome, utente: voice.utente, phone: voice.tel});
   const id = uid(); mine.add(id);
-  mutate(() => store.reqs.push({id, tipo: "transferencia", origem: "Telefone", detalhe: `${voice.nome || "Nome por confirmar"} · n.º utente ${voice.utente}${voice.tel ? " · SMS " + maskPhone(voice.tel) : ""} · senha ${r.code}`, status: "pendente", t: Date.now()}));
+  mutate(() => store.reqs.push({id, tipo: "transferencia", ref: r.id, origem: "Telefone", detalhe: `${voice.nome || "Nome por confirmar"} · n.º utente ${voice.utente}${voice.tel ? " · SMS autorizada para " + maskPhone(voice.tel) : " · sem SMS"} · senha ${r.code}`, status: "pendente", t: Date.now()}));
   setVState("transferir", "Entrada " + r.code + ": a transferir para o secretariado");
   say(`A sua entrada está registada com a senha ${spaced(r.code)}. ${voice.tel ? "Vai receber uma mensagem quando o médico estiver pronto. " : ""}Vou passar a chamada ao secretariado, que já tem o seu nome e número de utente. Aguarde um momento.`);
 }
@@ -2002,7 +2045,7 @@ function renderThread(box, me) {
   });
 }
 function scrollThreads() { ["#thread-user", "#thread-desk"].forEach(s => { $(s).scrollTop = 1e6; }); }
-const REQ_TXT = {interprete: "Videochamada com intérprete", chamada: "Chamada do telefone", transferencia: "Chamada transferida após entrada na consulta"};
+const REQ_TXT = {interprete: "Videochamada com intérprete", chamada: "Chamada do telefone", transferencia: "Chamada transferida após entrada na consulta", entrada: "Nova entrada na consulta"};
 const GABINETES = ["Gabinete 1", "Gabinete 2", "Gabinete 3", "Gabinete 4", "Sala de enfermagem"];
 function renderDesk() {
   renderThread($("#thread-desk"), "secretariado");
@@ -2016,11 +2059,11 @@ function renderDesk() {
   if (!store.reqs.length) rl.appendChild(el("p", "muted", "Sem chamadas nem pedidos."));
   store.reqs.slice().reverse().slice(0, 8).forEach(r => {
     const it = el("div", "item" + (r.status === "pendente" ? " new" : "")), l = el("div");
-    l.appendChild(el("span", "tag", r.tipo === "interprete" ? "Ecrã tátil · língua gestual" : "Telefone"));
+    l.appendChild(el("span", "tag", r.tipo === "interprete" ? "Ecrã tátil · língua gestual" : r.tipo === "entrada" ? "Ecrã tátil" : "Telefone"));
     l.appendChild(el("b", null, REQ_TXT[r.tipo])); l.appendChild(document.createElement("br"));
     l.appendChild(el("span", "muted", (r.detalhe || r.origem) + " · " + hhmm(r.t))); it.appendChild(l);
-    if (r.status === "pendente") { const b = el("button", "btn signal small", r.tipo === "interprete" ? "Visto" : "Atender chamada"); b.addEventListener("click", () => mutate(() => { const x = store.reqs.find(z => z.id === r.id); if (x) x.status = "atendido"; })); it.appendChild(b); }
-    else it.appendChild(el("span", "pill ok", r.tipo === "interprete" ? "Visto" : "Atendida"));
+    if (r.status === "pendente") { const b = el("button", "btn signal small", r.tipo === "interprete" || r.tipo === "entrada" ? "Visto" : "Atender chamada"); b.addEventListener("click", () => mutate(() => { const x = store.reqs.find(z => z.id === r.id); if (x) x.status = "atendido"; })); it.appendChild(b); }
+    else it.appendChild(el("span", "pill ok", r.tipo === "interprete" || r.tipo === "entrada" ? "Visto" : "Atendida"));
     rl.appendChild(it);
   });
   const cl = $("#ci-list"); cl.innerHTML = "";
@@ -2031,12 +2074,18 @@ function renderDesk() {
     l.appendChild(el("span", "tag", c.origem === "lgp" ? "Ecrã tátil · " + SIGN[c.lingua || "pt"].sigla : ORIGEM_TXT[c.origem]));
     if (c.lingua && c.lingua !== "pt") l.appendChild(el("span", "langtag", "Fala " + LANG_PT[c.lingua]));
     l.appendChild(el("span", "who", c.code + " · " + (c.nome || "Nome por confirmar") + (c.exemplo ? " (exemplo)" : ""))); l.appendChild(document.createElement("br"));
-    l.appendChild(el("span", "muted", "N.º utente " + (c.utente || "—") + (c.phone ? " · SMS " + maskPhone(c.phone) : " · sem SMS") + " · " + hhmm(c.t)));
+    l.appendChild(el("span", "muted", "N.º utente " + (c.utente || "—") + (c.phone ? " · SMS autorizada " + maskPhone(c.phone) : " · sem SMS") + " · " + hhmm(c.t)));
     const r = el("div", "row"), sel = el("select", "sel"); sel.setAttribute("aria-label", "Gabinete para " + c.code);
     GABINETES.forEach(g => sel.appendChild(el("option", null, g)));
     const btn = el("button", "btn small", c.phone ? "Médico pronto: enviar SMS" : c.origem === "voz" ? "Médico pronto: ir buscar" : "Médico pronto: chamar");
     btn.addEventListener("click", () => {
-      mutate(() => { const x = store.entradas.find(z => z.id === c.id); if (!x) return; x.status = "chamado"; x.gabinete = sel.value; store.calls.push({code: x.code, gabinete: sel.value, t: Date.now()}); });
+      mutate(() => {
+        const x = store.entradas.find(z => z.id === c.id); if (!x) return;
+        x.status = "chamado"; x.gabinete = sel.value; store.calls.push({code: x.code, gabinete: sel.value, t: Date.now()});
+        /* Depois do aviso, os dados pessoais são apagados: fica só a senha e o gabinete */
+        x.nome = ""; x.utente = ""; x.phone = "";
+        store.reqs.forEach(r => { if (r.ref === x.id) { r.detalhe = `Senha ${x.code} · chamada para ${sel.value} · dados pessoais apagados`; r.status = "atendido"; } });
+      });
       toast(c.phone ? "SMS enviada (simulação)" : "Chamada registada", c.phone ? `Para ${maskPhone(c.phone)}: «${((TR[c.lingua] && TR[c.lingua].sms) || PT.sms).replace("{g}", sel.value)}»` : `${c.code} · ${sel.value}`);
     });
     r.appendChild(sel); r.appendChild(btn); it.appendChild(l); it.appendChild(r); cl.appendChild(it);

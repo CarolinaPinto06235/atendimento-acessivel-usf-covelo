@@ -103,3 +103,12 @@ O ecrã tátil tem um seletor de língua no topo: **Português** (por omissão),
 - **Língua gestual de cada língua:** português → LGP (Língua Gestual Portuguesa), inglês → BSL (Língua Gestual Britânica), espanhol → LSE (Língua Gestual Espanhola), árabe → Língua Gestual Árabe unificada. A aba, a videochamada e o pedido de intérprete que chega ao secretariado indicam a língua gestual certa.
 - **Vídeos:** `videos/<frase>.mp4` é LGP; para as outras línguas gestuais acrescenta-se `-en`, `-es` ou `-ar` (por exemplo `videos/checkin-en.mp4` em BSL). Se faltar o vídeo de uma língua gestual, o ecrã mostra o vídeo em LGP e avisa. O avatar só faz uma aproximação de LGP, e isso também é indicado ao utente.
 - Os textos estão em `TR`, `QP`, `DQ` e `INFO_TR` no `index.html`. As traduções devem ser revistas por um falante nativo antes de usar com utentes.
+
+## Proteção de dados
+
+- Depois de cada entrada, o nome, o número de utente e o telemóvel são apagados do ecrã; o ecrã final volta ao início ao fim de 20 segundos. No telefone, os dados apagam-se ao pousar.
+- A conversa escrita é apagada (no ecrã e no secretariado) quando o utente sai do ecrã ou ao fim de 3 minutos sem uso.
+- A SMS só é possível com consentimento: no ecrã, uma caixa a marcar; no telefone, a mensagem de voz explica-o antes de marcar o número.
+- Quando o secretariado carrega em «Médico pronto», os dados pessoais da entrada são apagados; fica só a senha e o gabinete.
+- **Mensagem ao secretariado:** cada entrada no ecrã tátil envia uma mensagem para «Mensagens, chamadas e pedidos», com a senha, o nome, o número de utente, se autorizou SMS e a língua. As entradas pelo telefone já chegam com a transferência da chamada.
+- O que a ULS tem de fazer (Encarregado de Proteção de Dados, avaliação de impacto, prazos) está no `PLANO.md`, secção «Proteção de dados (RGPD)».
