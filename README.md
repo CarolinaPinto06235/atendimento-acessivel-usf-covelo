@@ -60,7 +60,7 @@ As respostas devem ser gravadas por um intérprete de LGP fluente e validadas pe
 | Ficheiro | Conteúdo |
 | --- | --- |
 | `videos/saudacao.mp4` | Saudação inicial |
-| `videos/checkin.mp4` | Como dar entrada na consulta |
+| `videos/checkin.mp4` | Como dar entrada na consulta (LGP; `checkin-en.mp4` em BSL, `checkin-es.mp4` em LSE, `checkin-ar.mp4` em língua gestual árabe) |
 | `videos/docs.mp4` | Que documentos tenho de trazer |
 | `videos/consultorios.mp4` | Onde ficam os consultórios |
 | `videos/horario.mp4` | Horário da USF |
@@ -96,8 +96,10 @@ python3 -c "import hashlib;print(hashlib.sha256(b'usf-covelo-atendimento:secreta
 
 O ecrã tátil tem um seletor de língua no topo: **Português** (por omissão), **English**, **Español** e **العربية** (em árabe o ecrã passa a ler-se da direita para a esquerda).
 
-- Tudo o que o utente lê no ecrã é traduzido: informação, aba de dificuldade auditiva (legendas das frases em LGP), conversa escrita, videochamada e dar entrada na consulta. Os gestos do avatar continuam a ser LGP.
+- Tudo o que o utente lê no ecrã é traduzido: informação, aba de dificuldade auditiva (legendas das frases), conversa escrita, videochamada e dar entrada na consulta. 
 - Ao fim de 3 minutos sem uso, e quando um funcionário desbloqueia o ecrã, volta ao português.
 - **Secretariado:** fica sempre em português. Vê a língua do utente no estado do ecrã, nas mensagens («escreveu em inglês») e nas entradas («Fala inglês»). As frases rápidas do utente chegam já em português; as respostas rápidas do secretariado seguem também traduzidas para a língua do utente; o texto escrito à mão segue como está. A SMS simulada vai na língua do utente.
 - O telefone para pessoas cegas continua só em português de Portugal.
+- **Língua gestual de cada língua:** português → LGP (Língua Gestual Portuguesa), inglês → BSL (Língua Gestual Britânica), espanhol → LSE (Língua Gestual Espanhola), árabe → Língua Gestual Árabe unificada. A aba, a videochamada e o pedido de intérprete que chega ao secretariado indicam a língua gestual certa.
+- **Vídeos:** `videos/<frase>.mp4` é LGP; para as outras línguas gestuais acrescenta-se `-en`, `-es` ou `-ar` (por exemplo `videos/checkin-en.mp4` em BSL). Se faltar o vídeo de uma língua gestual, o ecrã mostra o vídeo em LGP e avisa. O avatar só faz uma aproximação de LGP, e isso também é indicado ao utente.
 - Os textos estão em `TR`, `QP`, `DQ` e `INFO_TR` no `index.html`. As traduções devem ser revistas por um falante nativo antes de usar com utentes.

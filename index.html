@@ -620,8 +620,9 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
         </form>
       </div>
       <div class="card">
-        <h3>Vídeos em LGP do intérprete</h3>
-        <p class="muted" style="margin-top:6px">Grave cada resposta com um intérprete de LGP fluente. Quando há vídeo, o ecrã tátil mostra-o em vez da pré-visualização.</p>
+        <h3>Vídeos do intérprete por língua gestual</h3>
+        <p class="muted" style="margin-top:6px">Grave cada resposta com um intérprete fluente de cada língua gestual. O ecrã mostra o vídeo da língua gestual que corresponde à língua escolhida pelo utente; se faltar, mostra o de LGP.</p>
+        <div class="quick" id="video-langs" style="margin-top:8px"></div>
         <div id="video-list" style="margin-top:6px"></div>
         <p class="hint" id="video-hint"></p>
       </div>
@@ -761,10 +762,17 @@ const ACESSO_LABEL = {trazer: "O que trazer", entrada: "Como dar entrada", horar
 const LANGS = [["pt", "Português"], ["en", "English"], ["es", "Español"], ["ar", "العربية"]];
 const LANG_PT = {pt: "português", en: "inglês", es: "espanhol", ar: "árabe"};
 let lang = "pt";
+/* Língua gestual correspondente a cada língua do ecrã */
+const SIGN = {
+  pt: {sigla: "LGP", nome: "Língua Gestual Portuguesa"},
+  en: {sigla: "BSL", nome: "Língua Gestual Britânica"},
+  es: {sigla: "LSE", nome: "Língua Gestual Espanhola"},
+  ar: {sigla: "LGA", nome: "Língua Gestual Árabe unificada"}
+};
 /* Textos em português usados pelo código (os do HTML são lidos do próprio ecrã ao arrancar) */
 const PT = {
   sc_inicio: "Início", sc_lgp: "Língua Gestual", sc_chat: "Escrever ao secretariado", sc_interp: "Intérprete", sc_entrada: "Dar entrada na consulta",
-  slow_off: "Mais devagar", slow_on: "Velocidade normal", mk_video: "Intérprete de LGP", mk_prev: "Pré-visualização · falta o vídeo do intérprete",
+  slow_off: "Mais devagar", slow_on: "Velocidade normal", mk_video: "Intérprete de LGP", mk_prev: "Pré-visualização · falta o vídeo do intérprete", mk_lgp: "Intérprete de LGP",
   k_space: "Espaço", k_send: "Enviar ➜", k_clear: "Limpar",
   nx_confirm: "Confirmar entrada ✓", nx_end: "Terminar", nx_nosms: "Continuar sem SMS →", nx_cont: "Continuar →", no_sms: "Não quer SMS",
   done_sms: "Pode sentar-se na sala de espera. Vai receber uma SMS no {tel} quando o médico estiver pronto.",
@@ -791,26 +799,26 @@ const DQ = {
 
 const TR = {
 en: {
-  k_sub: "Patient information", tab_info: "Information", tab_lgp: "Hearing difficulty · LGP", nav_back: "← Back", nav_home: "⌂ Home",
+  k_sub: "Patient information", tab_info: "Information", tab_lgp: "Hearing difficulty · BSL", nav_back: "← Back", nav_home: "⌂ Home",
   boas: "<b>Hello, welcome!</b> At USF Covelo we care for you and your family at every stage of life.",
-  ouvir_t: "I have difficulty hearing", ouvir_d: "Service in Portuguese Sign Language (LGP), with subtitles and written messages",
+  ouvir_t: "I have difficulty hearing", ouvir_d: "Service in British Sign Language (BSL), with subtitles and written messages",
   ver_t: "Can't see well or find the screen hard to use?", ver_d: "Pick up the phone on the right. Voice assistance starts straight away (in Portuguese).",
   fech: "When we are closed", ac_p: "Saturdays, Sundays and public holidays, 8 am – 2 pm, at the same address", urg_b: "Emergency services",
   urgente: "Before leaving home, call <b>SNS 24 (808 24 24 24)</b>. In an emergency, call <b>112</b>.",
   replay: "↺ Watch again", faq: "Frequently asked questions", falar: "Talk to someone",
   chat_t: "Write to the reception desk", badge: "new", chat_s: "Written conversation, in real time",
-  interp_t: "Talk to an interpreter", interp_s: "Video call in LGP",
+  interp_t: "Talk to an interpreter", interp_s: "Video call in BSL",
   ent_t: "Register your arrival", ent_s: "Name, SNS number and mobile for SMS",
   chat_h2: "Conversation with the reception desk", live_chat: "A staff member replies here", chat_ph: "Type your message…", frases: "Quick phrases", btn_entrada: "Register your arrival",
-  ip_t: "LGP interpreter on the line", ip_d: "In the final version, the interpreter appears here on video, connected to an interpreting service, as in the Lojas do Cidadão (citizen service centres).",
-  selfcam: "Your camera", ip_name: "LGP interpreter", call_d: "Sign to the camera. The interpreter talks to the reception desk for you and can register your arrival with you.", endcall: "End call",
+  ip_t: "BSL interpreter on the line", ip_d: "In the final version, the interpreter appears here on video, connected to an interpreting service, as in the Lojas do Cidadão (citizen service centres).",
+  selfcam: "Your camera", ip_name: "BSL interpreter", call_d: "Sign to the camera. The interpreter talks to the reception desk for you and can register your arrival with you.", endcall: "End call",
   s0: "1. Name", s1: "2. SNS number", s2: "3. Mobile", s3: "4. Confirm",
   q_nome: "What is your name?", h_nome: "Type your first and last name.",
   q_ut: "What is your SNS number?", h_ut: "It has 9 digits. You can find it on your citizen card or SNS card.",
   q_tel: "Would you like an SMS when the doctor is ready?", h_tel: "Type your mobile number. If you don't want one, tap “No SMS”.",
   q_conf: "Check your details", dt_nome: "Name", dt_ut: "SNS number", dt_sms: "SMS", reg: "Arrival registered", st_prev: "← Previous step", st_skip: "No SMS",
-  sc_inicio: "Home", sc_lgp: "Sign language", sc_chat: "Write to reception", sc_interp: "Interpreter", sc_entrada: "Register your arrival",
-  slow_off: "Slower", slow_on: "Normal speed", mk_video: "LGP interpreter", mk_prev: "Preview · interpreter video missing",
+  sc_inicio: "Home", sc_lgp: "Sign language (BSL)", sc_chat: "Write to reception", sc_interp: "Interpreter", sc_entrada: "Register your arrival",
+  slow_off: "Slower", slow_on: "Normal speed", mk_video: "BSL interpreter", mk_prev: "Preview · BSL video missing (the avatar signs in LGP, Portuguese Sign Language)", mk_lgp: "Portuguese Sign Language (LGP) video · BSL video missing",
   k_space: "Space", k_send: "Send ➜", k_clear: "Clear",
   nx_confirm: "Confirm arrival ✓", nx_end: "Finish", nx_nosms: "Continue without SMS →", nx_cont: "Continue →", no_sms: "No SMS",
   done_sms: "Please take a seat in the waiting room. You will get an SMS on {tel} when the doctor is ready.",
@@ -827,26 +835,26 @@ en: {
   f_horario_t: "Opening hours", f_horario_x: "USF Covelo is open Monday to Friday, from 8 am to 8 pm. It is closed at weekends and on public holidays."
 },
 es: {
-  k_sub: "Información al usuario", tab_info: "Información", tab_lgp: "Dificultad auditiva · LGP", nav_back: "← Volver", nav_home: "⌂ Inicio",
+  k_sub: "Información al usuario", tab_info: "Información", tab_lgp: "Dificultad auditiva · LSE", nav_back: "← Volver", nav_home: "⌂ Inicio",
   boas: "<b>¡Hola, bienvenido/a!</b> En la USF Covelo cuidamos de usted y de su familia en todas las etapas de la vida.",
-  ouvir_t: "Tengo dificultad para oír", ouvir_d: "Atención en Lengua de Signos Portuguesa (LGP), con subtítulos y mensajes escritos",
+  ouvir_t: "Tengo dificultad para oír", ouvir_d: "Atención en Lengua de Signos Española (LSE), con subtítulos y mensajes escritos",
   ver_t: "¿No ve o le cuesta usar la pantalla?", ver_d: "Descuelgue el teléfono de la derecha. La atención por voz empieza enseguida (en portugués).",
   fech: "Cuando estamos cerrados", ac_p: "Sábados, domingos y festivos, de 8 a 14 h, en la misma dirección", urg_b: "Servicios de urgencias",
   urgente: "Antes de salir de casa, llame al <b>SNS 24 (808 24 24 24)</b>. En caso de emergencia, llame al <b>112</b>.",
   replay: "↺ Ver de nuevo", faq: "Preguntas frecuentes", falar: "Hablar con alguien",
   chat_t: "Escribir a la secretaría", badge: "nuevo", chat_s: "Conversación por escrito, en tiempo real",
-  interp_t: "Hablar con un intérprete", interp_s: "Videollamada en LGP",
+  interp_t: "Hablar con un intérprete", interp_s: "Videollamada en LSE",
   ent_t: "Registrar su llegada a la consulta", ent_s: "Nombre, número de usuario y móvil para SMS",
   chat_h2: "Conversación con la secretaría", live_chat: "Un empleado responde aquí", chat_ph: "Escriba su mensaje…", frases: "Frases rápidas", btn_entrada: "Registrar su llegada",
-  ip_t: "Intérprete de LGP en línea", ip_d: "En la versión final, aquí aparecerá el intérprete en vídeo, conectado a un servicio de interpretación, como en las Lojas do Cidadão.",
-  selfcam: "Su cámara", ip_name: "Intérprete de LGP", call_d: "Haga los signos hacia la cámara. El intérprete habla con la secretaría por usted y puede registrar su llegada con usted.", endcall: "Finalizar llamada",
+  ip_t: "Intérprete de LSE en línea", ip_d: "En la versión final, aquí aparecerá el intérprete en vídeo, conectado a un servicio de interpretación, como en las Lojas do Cidadão.",
+  selfcam: "Su cámara", ip_name: "Intérprete de LSE", call_d: "Haga los signos hacia la cámara. El intérprete habla con la secretaría por usted y puede registrar su llegada con usted.", endcall: "Finalizar llamada",
   s0: "1. Nombre", s1: "2. Número de usuario", s2: "3. Móvil", s3: "4. Confirmar",
   q_nome: "¿Cómo se llama?", h_nome: "Escriba el nombre y el apellido.",
   q_ut: "¿Cuál es su número de usuario del SNS?", h_ut: "Tiene 9 dígitos. Figura en la tarjeta de ciudadano o en la tarjeta del SNS.",
   q_tel: "¿Quiere recibir un SMS cuando el médico esté listo?", h_tel: "Escriba su número de móvil. Si no lo desea, toque «No quiero SMS».",
   q_conf: "Confirme sus datos", dt_nome: "Nombre", dt_ut: "N.º de usuario", dt_sms: "SMS", reg: "Llegada registrada", st_prev: "← Paso anterior", st_skip: "No quiero SMS",
-  sc_inicio: "Inicio", sc_lgp: "Lengua de signos", sc_chat: "Escribir a la secretaría", sc_interp: "Intérprete", sc_entrada: "Registrar su llegada",
-  slow_off: "Más despacio", slow_on: "Velocidad normal", mk_video: "Intérprete de LGP", mk_prev: "Vista previa · falta el vídeo del intérprete",
+  sc_inicio: "Inicio", sc_lgp: "Lengua de signos (LSE)", sc_chat: "Escribir a la secretaría", sc_interp: "Intérprete", sc_entrada: "Registrar su llegada",
+  slow_off: "Más despacio", slow_on: "Velocidad normal", mk_video: "Intérprete de LSE", mk_prev: "Vista previa · falta el vídeo en LSE (el avatar signa en LGP, la lengua de signos portuguesa)", mk_lgp: "Vídeo en lengua de signos portuguesa (LGP) · falta el vídeo en LSE",
   k_space: "Espacio", k_send: "Enviar ➜", k_clear: "Borrar",
   nx_confirm: "Confirmar llegada ✓", nx_end: "Terminar", nx_nosms: "Continuar sin SMS →", nx_cont: "Continuar →", no_sms: "No quiere SMS",
   done_sms: "Puede sentarse en la sala de espera. Recibirá un SMS en el {tel} cuando el médico esté listo.",
@@ -863,26 +871,26 @@ es: {
   f_horario_t: "Horario de la USF", f_horario_x: "La USF Covelo abre de lunes a viernes, de 8:00 a 20:00. Los fines de semana y festivos está cerrada."
 },
 ar: {
-  k_sub: "معلومات للمرضى", tab_info: "معلومات", tab_lgp: "صعوبة في السمع · لغة الإشارة", nav_back: "→ رجوع", nav_home: "⌂ الرئيسية",
+  k_sub: "معلومات للمرضى", tab_info: "معلومات", tab_lgp: "صعوبة في السمع · لغة الإشارة العربية", nav_back: "→ رجوع", nav_home: "⌂ الرئيسية",
   boas: "<b>مرحبًا بكم!</b> في USF Covelo نعتني بك وبعائلتك في جميع مراحل الحياة.",
-  ouvir_t: "أجد صعوبة في السمع", ouvir_d: "خدمة بلغة الإشارة البرتغالية (LGP)، مع ترجمة نصية ورسائل مكتوبة",
+  ouvir_t: "أجد صعوبة في السمع", ouvir_d: "خدمة بلغة الإشارة العربية الموحدة، مع ترجمة نصية ورسائل مكتوبة",
   ver_t: "هل لا ترى جيدًا أو تجد صعوبة في استخدام الشاشة؟", ver_d: "ارفع سماعة الهاتف الموجود على اليمين. تبدأ الخدمة الصوتية فورًا (باللغة البرتغالية).",
   fech: "عندما نكون مغلقين", ac_p: "أيام السبت والأحد والعطل الرسمية، من 8 صباحًا حتى 2 ظهرًا، في العنوان نفسه", urg_b: "خدمات الطوارئ",
   urgente: "قبل مغادرة المنزل، اتصل بـ <b>SNS 24 (808 24 24 24)</b>. في حالات الطوارئ، اتصل بالرقم <b>112</b>.",
   replay: "↺ شاهد مرة أخرى", faq: "أسئلة شائعة", falar: "التحدث مع شخص",
   chat_t: "الكتابة إلى الاستقبال", badge: "جديد", chat_s: "محادثة مكتوبة في الوقت الفعلي",
-  interp_t: "التحدث مع مترجم", interp_s: "مكالمة فيديو بلغة الإشارة",
+  interp_t: "التحدث مع مترجم", interp_s: "مكالمة فيديو بلغة الإشارة العربية",
   ent_t: "تسجيل الوصول إلى الموعد", ent_s: "الاسم ورقم المستخدم والهاتف المحمول للرسائل القصيرة",
   chat_h2: "محادثة مع الاستقبال", live_chat: "يرد أحد الموظفين هنا", chat_ph: "اكتب رسالتك…", frases: "عبارات سريعة", btn_entrada: "تسجيل الوصول",
-  ip_t: "مترجم لغة الإشارة على الخط", ip_d: "في النسخة النهائية، يظهر المترجم هنا عبر الفيديو، متصلًا بخدمة ترجمة، كما في مراكز Loja do Cidadão.",
-  selfcam: "الكاميرا الخاصة بك", ip_name: "مترجم لغة الإشارة", call_d: "استخدم الإشارة أمام الكاميرا. يتحدث المترجم مع الاستقبال نيابةً عنك ويمكنه تسجيل وصولك معك.", endcall: "إنهاء المكالمة",
+  ip_t: "مترجم لغة الإشارة العربية على الخط", ip_d: "في النسخة النهائية، يظهر المترجم هنا عبر الفيديو، متصلًا بخدمة ترجمة، كما في مراكز Loja do Cidadão.",
+  selfcam: "الكاميرا الخاصة بك", ip_name: "مترجم لغة الإشارة العربية", call_d: "استخدم الإشارة أمام الكاميرا. يتحدث المترجم مع الاستقبال نيابةً عنك ويمكنه تسجيل وصولك معك.", endcall: "إنهاء المكالمة",
   s0: "1. الاسم", s1: "2. رقم المستخدم", s2: "3. الهاتف المحمول", s3: "4. التأكيد",
   q_nome: "ما اسمك؟", h_nome: "اكتب الاسم الأول واسم العائلة بالأحرف اللاتينية.",
   q_ut: "ما رقم المستخدم الخاص بك في SNS؟", h_ut: "يتكون من 9 أرقام، وتجده على بطاقة المواطن أو بطاقة SNS.",
   q_tel: "هل تريد تلقي رسالة قصيرة عندما يكون الطبيب جاهزًا؟", h_tel: "اكتب رقم هاتفك المحمول. إذا كنت لا تريد ذلك، اضغط «لا أريد رسالة».",
   q_conf: "تأكد من بياناتك", dt_nome: "الاسم", dt_ut: "رقم المستخدم", dt_sms: "رسالة قصيرة", reg: "تم تسجيل الوصول", st_prev: "→ الخطوة السابقة", st_skip: "لا أريد رسالة",
-  sc_inicio: "الرئيسية", sc_lgp: "لغة الإشارة", sc_chat: "الكتابة إلى الاستقبال", sc_interp: "المترجم", sc_entrada: "تسجيل الوصول",
-  slow_off: "أبطأ", slow_on: "السرعة العادية", mk_video: "مترجم لغة الإشارة", mk_prev: "معاينة · فيديو المترجم غير متوفر",
+  sc_inicio: "الرئيسية", sc_lgp: "لغة الإشارة العربية", sc_chat: "الكتابة إلى الاستقبال", sc_interp: "المترجم", sc_entrada: "تسجيل الوصول",
+  slow_off: "أبطأ", slow_on: "السرعة العادية", mk_video: "مترجم لغة الإشارة العربية", mk_prev: "معاينة · فيديو لغة الإشارة العربية غير متوفر (الشخصية المتحركة تستخدم لغة الإشارة البرتغالية)", mk_lgp: "فيديو بلغة الإشارة البرتغالية (LGP) · فيديو لغة الإشارة العربية غير متوفر",
   k_space: "مسافة", k_send: "إرسال", k_clear: "مسح",
   nx_confirm: "تأكيد الوصول ✓", nx_end: "إنهاء", nx_nosms: "متابعة بدون رسالة ←", nx_cont: "متابعة ←", no_sms: "لا يريد رسالة",
   done_sms: "يمكنك الجلوس في غرفة الانتظار. ستصلك رسالة قصيرة على الرقم {tel} عندما يكون الطبيب جاهزًا.",
@@ -1639,14 +1647,17 @@ function sendPresence() {
 
 /* ================= LGP: vídeo do intérprete ================= */
 let videos = {}, localVideos = {}, assets = null, dbDoc = null, slowOn = false, lastPhrase = SAUDACAO;
+/* Vídeo de cada frase na língua gestual da língua escolhida: videos/<frase>.mp4 (LGP) ou videos/<frase>-en.mp4, -es, -ar */
+const vkey = (id, l) => l === "pt" ? id : id + "-" + l;
+function videoSrc(id, l) { const k = vkey(id, l); return videos[k] ? "/_blob/" + encodeURIComponent(videos[k]) : localVideos[k] || null; }
 function setSubs(text) { const s = $("#subs-main"); s.textContent = ""; return text.split(/\s+/).filter(Boolean).map((w, i, a) => { const sp = el("span", "w", w + (i < a.length - 1 ? " " : "")); s.appendChild(sp); return sp; }); }
 function playPhrase(f) {
   lastPhrase = f;
   const vid = $("#video-main"), svg = $("#avatar-main");
-  const src = videos[f.id] ? "/_blob/" + encodeURIComponent(videos[f.id]) : localVideos[f.id];
+  const own = videoSrc(f.id, lang), lgp = lang !== "pt" ? videoSrc(f.id, "pt") : null, src = own || lgp;
   if (src) {
     signerMain.stop(); svg.hidden = true; vid.hidden = false; $("#params-main").hidden = true;
-    $("#media-kind").textContent = t("mk_video");
+    $("#media-kind").textContent = t(own ? "mk_video" : "mk_lgp");
     vid.src = src; vid.playbackRate = slowOn ? .75 : 1;
     const spans = setSubs(phraseText(f));
     vid.ontimeupdate = () => { const p = vid.duration ? vid.currentTime / vid.duration : 0; const n = Math.ceil(spans.length * p); spans.forEach((s, j) => s.classList.toggle("on", j < n)); };
@@ -1789,12 +1800,12 @@ let callStart = 0, callTick = null, callTimer = null;
 function startCall() {
   setCallState("call_ring"); $("#call-ring").hidden = false; $("#video-interp").hidden = true; $("#interp-placeholder").hidden = true; $("#call-timer").textContent = "00:00";
   const id = uid(); mine.add(id);
-  mutate(() => store.reqs.push({id, tipo: "interprete", origem: "Ecrã tátil", detalhe: "Pessoa com dificuldade auditiva em videochamada com intérprete", status: "pendente", t: Date.now()}));
+  mutate(() => store.reqs.push({id, tipo: "interprete", origem: "Ecrã tátil", detalhe: `Pessoa com dificuldade auditiva pede intérprete de ${SIGN[lang].nome} (${SIGN[lang].sigla})`, status: "pendente", t: Date.now()}));
   clearTimeout(callTimer);
   callTimer = setTimeout(() => {
     if (curScr() !== "interp") return;
     setCallState("call_on"); $("#call-ring").hidden = true;
-    const src = videos.interprete ? "/_blob/" + encodeURIComponent(videos.interprete) : localVideos.interprete;
+    const src = videoSrc("interprete", lang) || videoSrc("interprete", "pt");
     if (src) { const v = $("#video-interp"); v.hidden = false; v.src = src; v.play().catch(() => {}); } else $("#interp-placeholder").hidden = false;
     callStart = Date.now(); clearInterval(callTick);
     callTick = setInterval(() => { const s = Math.floor((Date.now() - callStart) / 1000); $("#call-timer").textContent = String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0"); }, 1000);
@@ -2005,7 +2016,7 @@ function renderDesk() {
   if (!store.reqs.length) rl.appendChild(el("p", "muted", "Sem chamadas nem pedidos."));
   store.reqs.slice().reverse().slice(0, 8).forEach(r => {
     const it = el("div", "item" + (r.status === "pendente" ? " new" : "")), l = el("div");
-    l.appendChild(el("span", "tag", r.tipo === "interprete" ? "Ecrã tátil · LGP" : "Telefone"));
+    l.appendChild(el("span", "tag", r.tipo === "interprete" ? "Ecrã tátil · língua gestual" : "Telefone"));
     l.appendChild(el("b", null, REQ_TXT[r.tipo])); l.appendChild(document.createElement("br"));
     l.appendChild(el("span", "muted", (r.detalhe || r.origem) + " · " + hhmm(r.t))); it.appendChild(l);
     if (r.status === "pendente") { const b = el("button", "btn signal small", r.tipo === "interprete" ? "Visto" : "Atender chamada"); b.addEventListener("click", () => mutate(() => { const x = store.reqs.find(z => z.id === r.id); if (x) x.status = "atendido"; })); it.appendChild(b); }
@@ -2017,7 +2028,7 @@ function renderDesk() {
   if (!waiting.length) cl.appendChild(el("p", "muted", "Ninguém à espera."));
   waiting.slice().reverse().forEach(c => {
     const it = el("div", "item"), l = el("div");
-    l.appendChild(el("span", "tag", ORIGEM_TXT[c.origem]));
+    l.appendChild(el("span", "tag", c.origem === "lgp" ? "Ecrã tátil · " + SIGN[c.lingua || "pt"].sigla : ORIGEM_TXT[c.origem]));
     if (c.lingua && c.lingua !== "pt") l.appendChild(el("span", "langtag", "Fala " + LANG_PT[c.lingua]));
     l.appendChild(el("span", "who", c.code + " · " + (c.nome || "Nome por confirmar") + (c.exemplo ? " (exemplo)" : ""))); l.appendChild(document.createElement("br"));
     l.appendChild(el("span", "muted", "N.º utente " + (c.utente || "—") + (c.phone ? " · SMS " + maskPhone(c.phone) : " · sem SMS") + " · " + hhmm(c.t)));
@@ -2033,12 +2044,12 @@ function renderDesk() {
   renderPosto(); renderVideos();
 }
 let typingUntil = 0;
-function ecraTxt(p) { const base = ecraTxtBase(p); return p.ecra !== "inicio" && p.lingua && p.lingua !== "pt" && LANG_PT[p.lingua] ? base + " (em " + LANG_PT[p.lingua] + ")" : base; }
+function ecraTxt(p) { const base = ecraTxtBase(p); if (p.ecra === "inicio" || !LANG_PT[p.lingua]) return base; const gest = p.ecra === "lgp" || p.ecra === "interp"; return p.lingua !== "pt" ? base + " (em " + LANG_PT[p.lingua] + (gest ? " · " + SIGN[p.lingua].sigla : "") + ")" : gest ? base + " (LGP)" : base; }
 function ecraTxtBase(p) {
   if (p.ecra === "inicio") return "No ecrã inicial, à espera";
   if (p.ecra === "voz") return "Em uso: atendimento por voz (telefone)";
   if (String(p.ecra).startsWith("info:")) return "Em uso: " + (p.atividade || "a consultar informação");
-  return {lgp: "Em uso: menu de LGP", chat: "Em uso: a escrever ao secretariado", interp: "Em uso: videochamada com intérprete", entrada: "Em uso: a dar entrada na consulta"}[p.ecra] || "Ligado";
+  return {lgp: "Em uso: menu de língua gestual", chat: "Em uso: a escrever ao secretariado", interp: "Em uso: videochamada com intérprete", entrada: "Em uso: a dar entrada na consulta"}[p.ecra] || "Ligado";
 }
 function renderPosto() {
   const fresh = posto && (room || Date.now() - postoSeen < 70000);
@@ -2055,9 +2066,18 @@ function renderPosto() {
   tp.className = "pill " + (on ? "warn" : "ok"); tp.textContent = on ? "Em chamada" : "Pousado";
   $("#st-tel").textContent = on ? (posto.telAtividade || V_STATE[posto.telefone] || "Em chamada") : "Ninguém ao telefone.";
 }
+let videoLang = "pt";
 function renderVideos() {
   const vl = $("#video-list"); vl.innerHTML = "";
-  [SAUDACAO, ...FRASES, {id: "interprete", titulo: "Vídeo da videochamada (opcional)"}].forEach(f => {
+  const vls = $("#video-langs"); vls.innerHTML = "";
+  ["pt", "en", "es", "ar"].forEach(l => {
+    const b = el("button", null, SIGN[l].sigla + " · " + LANG_PT[l]); b.type = "button"; b.setAttribute("aria-pressed", l === videoLang);
+    if (l === videoLang) { b.style.background = "var(--azul)"; b.style.color = "#fff"; }
+    b.addEventListener("click", () => { videoLang = l; renderVideos(); }); vls.appendChild(b);
+  });
+  vl.appendChild(el("p", "muted", SIGN[videoLang].nome));
+  [SAUDACAO, ...FRASES, {id: "interprete", titulo: "Vídeo da videochamada (opcional)"}].forEach(f0 => {
+    const f = Object.assign({}, f0, {id: vkey(f0.id, videoLang)});
     const it = el("div", "item"), l = el("div");
     l.appendChild(el("b", null, f.titulo)); l.appendChild(document.createElement("br"));
     const has = videos[f.id] || localVideos[f.id];
@@ -2069,7 +2089,7 @@ function renderVideos() {
       const lab = el("label", "btn small", videos[f.id] ? "Substituir" : "Carregar vídeo"); lab.setAttribute("for", inp.id); lab.tabIndex = 0;
       inp.addEventListener("change", async () => {
         const file = inp.files && inp.files[0]; if (!file) return; lab.textContent = "A carregar…";
-        try { const a = await assets.upload(file); const v = {...videos, [f.id]: a.id}; await dbDoc.set(v); videos = v; toast("Vídeo guardado", f.titulo); }
+        try { const a = await assets.upload(file); const v = {...videos, [f.id]: a.id}; await dbDoc.set(v); videos = v; toast("Vídeo guardado", f.titulo + " · " + SIGN[videoLang].sigla); }
         catch (e) { toast("Não foi possível carregar", "Confirme que é um vídeo com menos de 20 MB."); }
         renderVideos();
       });
@@ -2113,9 +2133,10 @@ renderPhone();
 showScr();
 route();
 if (bc) { try { bc.postMessage({type: "hello"}); } catch (e) {} setInterval(() => { if (!room && role === "ecra") sendPresence(); if (!room && role === "secretariado") renderPosto(); }, 20000); }
-["saudacao", "checkin", "docs", "consultorios", "horario", "interprete"].forEach(id => {
-  try { fetch(`videos/${id}.mp4`, {method: "HEAD"}).then(r => { if (r.ok) { localVideos[id] = `videos/${id}.mp4`; renderVideos(); } }).catch(() => {}); } catch (e) {}
-});
+["saudacao", "checkin", "docs", "consultorios", "horario", "interprete"].forEach(id => ["pt", "en", "es", "ar"].forEach(l => {
+  const k = vkey(id, l);
+  try { fetch(`videos/${k}.mp4`, {method: "HEAD"}).then(r => { if (r.ok) { localVideos[k] = `videos/${k}.mp4`; renderVideos(); } }).catch(() => {}); } catch (e) {}
+}));
 
 /* ================= Mudar a língua do ecrã tátil ================= */
 ["en", "es", "ar"].forEach(l => QP[l].forEach((q, i) => { TR[l]["qp" + i] = q; }));
