@@ -10,27 +10,31 @@ Projeto desenvolvido no âmbito do estágio em Saúde Digital e Inovação Biom�
 
 Ao abrir, escolhe-se o que o computador vai ser:
 
-### Ecrã tátil (posto na entrada da USF)
+### Ecrã tátil dos utentes (na entrada da USF)
 
-**Pessoas surdas.** No ecrã inicial há um botão: *Não oiço ou oiço com dificuldade*. A partir daí, cada ecrã tem os botões **← Voltar** e **⌂ Início** e um indicador de onde a pessoa está.
+Segue a estrutura e as cores do site [usf-covelo.github.io](https://usf-covelo.github.io): barra com horário, telefone e e-mail, logótipo e acesso rápido.
 
-1. **Língua Gestual**: o vídeo do intérprete (ou a pré-visualização) e as perguntas frequentes:
-   - Como fazer o check-in na consulta
-   - Que documentos tenho de trazer
-   - Onde ficam os consultórios
-   - Horário da USF
-2. **Falar com alguém**, três opções:
-   - **Escrever ao secretariado**: conversa escrita em tempo real, com teclado grande, sugestões de palavras e frases rápidas.
-   - **Falar com um intérprete**: videochamada em LGP.
-   - **Dar entrada na consulta**: passo a passo (nome, número de utente, telemóvel para SMS opcional, confirmar).
+**Informação para todas as pessoas** (aba «Informação»), em resumo:
 
-**Pessoas cegas.** O telefone com teclado Braille, ao lado do ecrã, funciona à parte. Ao atender:
+- O que trazer para a consulta
+- Como dar entrada na consulta (com a opção de dar entrada no próprio ecrã)
+- Horário e onde ser atendido quando a USF está fechada
+- Contactos telefónicos e eletrónicos
+- O que oferecemos
+- Marcar consulta e renovar medicação
 
-- Ouve-se a mensagem de boas-vindas da USF.
-- **1, 2, 3**: como fazer o check-in, que documentos trazer, onde fica a sala da consulta.
-- **4**: dar entrada na consulta. O assistente pede o nome (dito em voz alta), repete-o para confirmar, pede o número de utente (marcado no teclado), repete o nome e o número, pergunta se quer SMS (telemóvel opcional) e transfere a chamada para o secretariado, que já recebe o nome e o número de utente.
-- **Ajuda**: passa a chamada para o secretariado em qualquer momento.
-- **\*** repete, **#** confirma.
+Todos os ecrãs têm **← Voltar** e **⌂ Início**.
+
+**Pessoas com dificuldade auditiva** (botão «Tenho dificuldade em ouvir» ou aba «Dificuldade auditiva · LGP»):
+
+1. Vídeo do intérprete (ou pré-visualização) com legendas e 4 perguntas frequentes: como dar entrada, o que trazer, onde ficam os consultórios, horário.
+2. **Escrever ao secretariado** em tempo real, **Falar com um intérprete** por videochamada e **Dar entrada na consulta** (nome, n.º de utente, telemóvel para SMS).
+
+**Pessoas cegas ou com dificuldade motora.** Não há botão no ecrã: o atendimento por voz é ativado ao **pegar no telefone** ao lado do ecrã. O ecrã mostra então, em letra grande, o que o assistente está a dizer. Ao pousar o telefone, o ecrã volta ao que estava.
+
+- Mensagem de boas-vindas da USF; teclas **1, 2, 3** com as respostas pré-definidas.
+- **4**: dar entrada na consulta. O assistente pede o nome (dito em voz alta), repete-o, pede o n.º de utente (teclado), repete o nome e o número, pergunta pelo telemóvel para SMS e transfere a chamada para o secretariado com estes dados.
+- **Ajuda** passa a chamada ao secretariado; **\*** repete; **#** confirma.
 
 ### Secretariado (computador do balcão)
 
@@ -45,7 +49,7 @@ Mostra a senha chamada em grande.
 
 ## Experimentar num só computador
 
-Abra o link em dois separadores do mesmo navegador (Chrome ou Edge): num escolha **Ecrã tátil**, no outro **Secretariado**. Os dois comunicam entre si.
+Abra o link em dois separadores do mesmo navegador (Chrome ou Edge): num escolha **Ecrã tátil dos utentes**, no outro **Secretariado**. Os dois comunicam entre si.
 
 No telefone, para o nome é preciso microfone. Sem microfone, abra «Testar sem microfone» e escreva o nome. A voz usa a do sistema: instale uma voz de português de Portugal no Windows para ouvir com o sotaque certo.
 
