@@ -595,7 +595,7 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
           <summary>Testar sem microfone (escrever o que a pessoa diz)</summary>
           <form id="form-sim" class="row" style="margin-top:8px;flex-wrap:nowrap">
             <label class="sr" for="sim-input">O que a pessoa diz</label>
-            <input class="field" id="sim-input" style="font-size:1em" placeholder="Ex.: Maria Silva">
+            <input class="field" id="sim-input" style="font-size:1em" placeholder="Escreva o que a pessoa diz">
             <button class="btn small">Dizer</button>
           </form>
         </details>
@@ -612,6 +612,7 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
     <div class="card stack" style="gap:8px;justify-content:center">
       <button class="btn ghost small" id="btn-notif">Ativar notificações</button>
       <button class="btn ghost small" id="btn-sound" aria-pressed="true">Som: ligado</button>
+      <button class="btn ghost small" id="btn-reset" title="Apaga mensagens, pedidos, entradas e senhas, e volta à senha A001">Recomeçar</button>
     </div>
   </div>
   <div class="console">
@@ -1401,10 +1402,10 @@ const signerMain = makeSigner($("#avatar-main"), $("#subs-main"), $("#gloss-main
 
 /* ================= Estado partilhado em tempo real ================= */
 const store = {
-  rev: 0, next: 13,
+  rev: 0, next: 1,
   chats: [],
   reqs: [],
-  entradas: [{id: "ex1", code: "A011", origem: "lgp", nome: "Maria Silva", utente: "123456789", phone: "912345678", status: "espera", t: Date.now() - 600000, exemplo: true}],
+  entradas: [],
   calls: []
 };
 let room = null, peers = [], posto = null, postoSeen = 0;
@@ -1417,7 +1418,7 @@ function clean(d) {
     rev: Number(d.rev) || 0, next: Number(d.next) || store.next,
     chats: arr(d.chats).map(c => ({id: s(c.id, 20), from: c.from === "utente" ? "utente" : "secretariado", text: s(c.text, 600), shown: s(c.shown, 600), lang: ["en", "es", "ar"].includes(c.lang) ? c.lang : "pt", t: Number(c.t) || 0, lida: !!c.lida})),
     reqs: arr(d.reqs).map(r => ({id: s(r.id, 20), tipo: ["interprete", "chamada", "transferencia", "entrada"].includes(r.tipo) ? r.tipo : "chamada", ref: s(r.ref, 20), origem: s(r.origem, 60), detalhe: s(r.detalhe, 200), status: r.status === "atendido" ? "atendido" : "pendente", t: Number(r.t) || 0})),
-    entradas: arr(d.entradas).map(k => ({id: s(k.id, 20), code: s(k.code, 8), origem: ["voz", "lgp", "ecra"].includes(k.origem) ? k.origem : "ecra", nome: s(k.nome, 80), utente: digits(k.utente, 9), phone: digits(k.phone, 9), consent: !!k.consent, status: k.status === "chamado" ? "chamado" : "espera", gabinete: s(k.gabinete, 24), lingua: ["en", "es", "ar"].includes(k.lingua) ? k.lingua : "pt", t: Number(k.t) || 0, exemplo: !!k.exemplo})),
+    entradas: arr(d.entradas).map(k => ({id: s(k.id, 20), code: s(k.code, 8), origem: ["voz", "lgp", "ecra"].includes(k.origem) ? k.origem : "ecra", nome: s(k.nome, 80), utente: digits(k.utente, 9), phone: digits(k.phone, 9), consent: !!k.consent, status: k.status === "chamado" ? "chamado" : "espera", gabinete: s(k.gabinete, 24), lingua: ["en", "es", "ar"].includes(k.lingua) ? k.lingua : "pt", t: Number(k.t) || 0})),
     calls: arr(d.calls).map(c => ({code: s(c.code, 8), gabinete: s(c.gabinete, 24), t: Number(c.t) || 0}))
   };
 }
@@ -1593,6 +1594,15 @@ $("#btn-notif").addEventListener("click", async () => {
   chime();
   try { if (!window.Notification) throw 0; const p = await Notification.requestPermission(); $("#btn-notif").textContent = p === "granted" ? "Notificações ativas" : "Avisos no ecrã e som"; }
   catch (e) { $("#btn-notif").textContent = "Avisos no ecrã e som"; }
+});
+/* Recomeçar: apaga tudo (útil entre ensaios e antes de apresentar). Pede um segundo toque para confirmar. */
+let resetArmed = null;
+$("#btn-reset").addEventListener("click", e => {
+  const b = e.currentTarget;
+  if (!resetArmed) { b.textContent = "Tocar de novo para apagar tudo"; b.classList.add("signal"); resetArmed = setTimeout(() => { resetArmed = null; b.textContent = "Recomeçar"; b.classList.remove("signal"); }, 4000); return; }
+  clearTimeout(resetArmed); resetArmed = null; b.textContent = "Recomeçar"; b.classList.remove("signal");
+  mutate(() => { store.next = 1; store.chats = []; store.reqs = []; store.entradas = []; store.calls = []; });
+  toast("Tudo apagado", "As senhas voltam a começar em A001.");
 });
 $("#btn-sound").addEventListener("click", e => { soundOn = !soundOn; e.currentTarget.setAttribute("aria-pressed", soundOn); e.currentTarget.textContent = "Som: " + (soundOn ? "ligado" : "desligado"); if (soundOn) chime(); });
 
@@ -2073,7 +2083,7 @@ function renderDesk() {
     const it = el("div", "item"), l = el("div");
     l.appendChild(el("span", "tag", c.origem === "lgp" ? "Ecrã tátil · " + SIGN[c.lingua || "pt"].sigla : ORIGEM_TXT[c.origem]));
     if (c.lingua && c.lingua !== "pt") l.appendChild(el("span", "langtag", "Fala " + LANG_PT[c.lingua]));
-    l.appendChild(el("span", "who", c.code + " · " + (c.nome || "Nome por confirmar") + (c.exemplo ? " (exemplo)" : ""))); l.appendChild(document.createElement("br"));
+    l.appendChild(el("span", "who", c.code + " · " + (c.nome || "Nome por confirmar"))); l.appendChild(document.createElement("br"));
     l.appendChild(el("span", "muted", "N.º utente " + (c.utente || "—") + (c.phone ? " · SMS autorizada " + maskPhone(c.phone) : " · sem SMS") + " · " + hhmm(c.t)));
     const r = el("div", "row"), sel = el("select", "sel"); sel.setAttribute("aria-label", "Gabinete para " + c.code);
     GABINETES.forEach(g => sel.appendChild(el("option", null, g)));

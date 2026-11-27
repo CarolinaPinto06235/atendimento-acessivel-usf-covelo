@@ -112,3 +112,8 @@ O ecrã tátil tem um seletor de língua no topo: **Português** (por omissão),
 - Quando o secretariado carrega em «Médico pronto», os dados pessoais da entrada são apagados; fica só a senha e o gabinete.
 - **Mensagem ao secretariado:** cada entrada no ecrã tátil envia uma mensagem para «Mensagens, chamadas e pedidos», com a senha, o nome, o número de utente, se autorizou SMS e a língua. As entradas pelo telefone já chegam com a transferência da chamada.
 - O que a ULS tem de fazer (Encarregado de Proteção de Dados, avaliação de impacto, prazos) está no `PLANO.md`, secção «Proteção de dados (RGPD)».
+
+## Antes de apresentar
+
+A aplicação começa vazia: não há casos de exemplo e a primeira senha é A001. Os casos são criados por quem apresenta, no ecrã tátil e no telefone.
+No secretariado, o botão **Recomeçar** (tocar duas vezes) apaga mensagens, pedidos, entradas e senhas, para recomeçar entre ensaios.
