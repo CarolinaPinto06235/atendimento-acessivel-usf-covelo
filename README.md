@@ -91,3 +91,13 @@ python3 -c "import hashlib;print(hashlib.sha256(b'usf-covelo-atendimento:secreta
 ```
 
 > Limite: o site é estático e o repositório é público, por isso estes códigos impedem que os utentes saiam do ecrã ou abram o secretariado, mas não são um login seguro. Na versão para a ULS, o secretariado deve usar contas reais (por exemplo o Firebase Authentication que o site da USF já tem) e o ecrã tátil deve correr em modo quiosque do sistema (Chrome `--kiosk` ou «Acesso guiado» no tablet), para que também não se possa fechar o navegador.
+
+## Línguas do ecrã tátil
+
+O ecrã tátil tem um seletor de língua no topo: **Português** (por omissão), **English**, **Español** e **العربية** (em árabe o ecrã passa a ler-se da direita para a esquerda).
+
+- Tudo o que o utente lê no ecrã é traduzido: informação, aba de dificuldade auditiva (legendas das frases em LGP), conversa escrita, videochamada e dar entrada na consulta. Os gestos do avatar continuam a ser LGP.
+- Ao fim de 3 minutos sem uso, e quando um funcionário desbloqueia o ecrã, volta ao português.
+- **Secretariado:** fica sempre em português. Vê a língua do utente no estado do ecrã, nas mensagens («escreveu em inglês») e nas entradas («Fala inglês»). As frases rápidas do utente chegam já em português; as respostas rápidas do secretariado seguem também traduzidas para a língua do utente; o texto escrito à mão segue como está. A SMS simulada vai na língua do utente.
+- O telefone para pessoas cegas continua só em português de Portugal.
+- Os textos estão em `TR`, `QP`, `DQ` e `INFO_TR` no `index.html`. As traduções devem ser revistas por um falante nativo antes de usar com utentes.

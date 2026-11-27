@@ -308,6 +308,14 @@ details.sim summary{cursor:pointer;font-size:.85em;color:var(--muted)}
 .overlay{position:fixed;inset:0;background:rgba(10,18,50,.72);display:none;align-items:center;justify-content:center;z-index:70;padding:16px}
 .overlay.show{display:flex}
 .overlay .card{max-width:440px;width:100%}
+.langs{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+.langs button{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-weight:600;color:var(--azul);font-size:.88em}
+.langs button[aria-pressed="true"]{background:var(--azul);border-color:var(--azul);color:#fff}
+.screen[dir="rtl"]{font-family:var(--font),"Noto Naskh Arabic","Segoe UI",Tahoma,"DejaVu Sans",sans-serif}
+.screen[dir="rtl"] .a11y-card,.screen[dir="rtl"] .bigact,.screen[dir="rtl"] .topic{text-align:right}
+.screen[dir="rtl"] .keypad,.screen[dir="rtl"] .kbd,.screen[dir="rtl"] .numfield,.screen[dir="rtl"] input,.screen[dir="rtl"] .summary dd{direction:ltr}
+.screen[dir="rtl"] .summary dd{text-align:right}
+.langtag{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;background:var(--azul-claro);color:var(--azul);font-size:.8em;font-weight:700}
 footer.site{background:var(--azul);color:#c9d0e6;padding:26px 0;font-size:.92em;position:relative;margin-top:30px}
 footer.site:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--verde-vivo),var(--verde) 40%,var(--terra))}
 footer.site b{color:#fff}
@@ -381,42 +389,43 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
       <div class="screen-label">Ecrã tátil</div>
       <div class="screen">
         <div class="kh">
-          <a class="brand" href="#" id="k-home"><img src="logo-usf-covelo.png" alt=""><span><b>USF Covelo</b><small>Informação ao utente</small></span></a>
+          <a class="brand" href="#" id="k-home"><img src="logo-usf-covelo.png" alt=""><span><b>USF Covelo</b><small data-i18n="k_sub">Informação ao utente</small></span></a>
           <div class="tabs" role="tablist" aria-label="Secções do ecrã">
-            <button class="tab" role="tab" id="tab-info" aria-selected="true"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>Informação</button>
-            <button class="tab tablgp" role="tab" id="tab-lgp" aria-selected="false"><svg class="ico" viewBox="0 0 24 24"><path d="M7 11V6a1.5 1.5 0 0 1 3 0v4V4.5a1.5 1.5 0 0 1 3 0V10V5.5a1.5 1.5 0 0 1 3 0V12v-3a1.5 1.5 0 0 1 3 0v5a7 7 0 0 1-7 7h-1a6 6 0 0 1-5-2.7L4 14.5a1.5 1.5 0 0 1 2.4-1.8z"/></svg>Dificuldade auditiva · LGP</button>
+            <button class="tab" role="tab" id="tab-info" aria-selected="true"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg><span data-i18n="tab_info">Informação</span></button>
+            <button class="tab tablgp" role="tab" id="tab-lgp" aria-selected="false"><svg class="ico" viewBox="0 0 24 24"><path d="M7 11V6a1.5 1.5 0 0 1 3 0v4V4.5a1.5 1.5 0 0 1 3 0V10V5.5a1.5 1.5 0 0 1 3 0V12v-3a1.5 1.5 0 0 1 3 0v5a7 7 0 0 1-7 7h-1a6 6 0 0 1-5-2.7L4 14.5a1.5 1.5 0 0 1 2.4-1.8z"/></svg><span data-i18n="tab_lgp">Dificuldade auditiva · LGP</span></button>
           </div>
+          <div class="langs" id="langs" role="group" aria-label="Língua · Language · Idioma · اللغة"></div>
         </div>
         <div class="navbar" id="navbar" hidden>
           <div class="crumbs" id="crumbs"></div>
           <div class="navbtns">
-            <button class="btn ghost" id="nav-back">← Voltar</button>
-            <button class="btn ghost" id="nav-home">⌂ Início</button>
+            <button class="btn ghost" id="nav-back" data-i18n="nav_back">← Voltar</button>
+            <button class="btn ghost" id="nav-home" data-i18n="nav_home">⌂ Início</button>
           </div>
         </div>
 
         <!-- Início: informação para todos -->
         <div class="scr active" data-scr="inicio">
-          <div class="boas"><b>Olá, seja bem-vindo(a)!</b> Na USF Covelo cuidamos de si e da sua família, em todas as fases da vida.</div>
+          <div class="boas" data-i18n-html="boas"><b>Olá, seja bem-vindo(a)!</b> Na USF Covelo cuidamos de si e da sua família, em todas as fases da vida.</div>
           <div class="scrbody">
             <div class="a11y-row">
               <button class="a11y-card ouvir" id="go-lgp">
                 <svg class="ico" viewBox="0 0 24 24"><path d="M7 11V6a1.5 1.5 0 0 1 3 0v4V4.5a1.5 1.5 0 0 1 3 0V10V5.5a1.5 1.5 0 0 1 3 0V12v-3a1.5 1.5 0 0 1 3 0v5a7 7 0 0 1-7 7h-1a6 6 0 0 1-5-2.7L4 14.5a1.5 1.5 0 0 1 2.4-1.8z"/></svg>
-                <span><b>Tenho dificuldade em ouvir</b><span>Atendimento em Língua Gestual Portuguesa, com legendas e mensagens escritas</span></span>
+                <span><b data-i18n="ouvir_t">Tenho dificuldade em ouvir</b><span data-i18n="ouvir_d">Atendimento em Língua Gestual Portuguesa, com legendas e mensagens escritas</span></span>
               </button>
               <div class="a11y-card ver">
                 <svg class="ico" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
-                <span><b>Não vê ou tem dificuldade em usar o ecrã?</b><span>Pegue no telefone à direita. O atendimento por voz começa logo.</span></span>
+                <span><b data-i18n="ver_t">Não vê ou tem dificuldade em usar o ecrã?</b><span data-i18n="ver_d">Pegue no telefone à direita. O atendimento por voz começa logo.</span></span>
               </div>
             </div>
             <nav class="acesso" aria-label="Acesso rápido" id="acesso"></nav>
             <div class="aviso">
-              <h3>Quando estamos fechados</h3>
+              <h3 data-i18n="fech">Quando estamos fechados</h3>
               <div class="cols">
-                <div><b>AC Porto Oriental</b><p>Sábados, domingos e feriados, 8h – 14h, na mesma morada</p></div>
-                <div><b>Serviços de urgência</b><p>Centro Hospitalar de S. João · Centro Hospitalar do Porto</p></div>
+                <div><b>AC Porto Oriental</b><p data-i18n="ac_p">Sábados, domingos e feriados, 8h – 14h, na mesma morada</p></div>
+                <div><b data-i18n="urg_b">Serviços de urgência</b><p>Centro Hospitalar de S. João · Centro Hospitalar do Porto</p></div>
               </div>
-              <p class="urgente">Antes de sair de casa, ligue para o <b>SNS 24 (808 24 24 24)</b>. Em caso de emergência, ligue <b>112</b>.</p>
+              <p class="urgente" data-i18n-html="urgente">Antes de sair de casa, ligue para o <b>SNS 24 (808 24 24 24)</b>. Em caso de emergência, ligue <b>112</b>.</p>
             </div>
           </div>
         </div>
@@ -430,7 +439,7 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
             <div class="stage">
               <div class="stagehead">
                 <div class="row" style="gap:6px">
-                  <button class="btn small" id="btn-replay">↺ Ver de novo</button>
+                  <button class="btn small" id="btn-replay" data-i18n="replay">↺ Ver de novo</button>
                   <button class="btn ghost small" id="btn-slow" aria-pressed="false">Mais devagar</button>
                 </div>
                 <span class="hint" id="media-kind"></span>
@@ -444,21 +453,21 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
               <div class="subs" id="subs-main" aria-live="polite"></div>
             </div>
             <div class="stack">
-              <div class="sectitle">Perguntas frequentes</div>
+              <div class="sectitle" data-i18n="faq">Perguntas frequentes</div>
               <div class="topics" id="topics"></div>
-              <div class="sectitle" style="margin-top:8px">Falar com alguém</div>
+              <div class="sectitle" style="margin-top:8px" data-i18n="falar">Falar com alguém</div>
               <div class="bigacts">
                 <button class="bigact a" id="go-chat">
                   <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="3"/><path d="M8 17l-3 4 6-4"/></svg>
-                  <span>Escrever ao secretariado <span class="badge" id="chat-badge" hidden>nova</span><small>Conversa por escrito, em tempo real</small></span>
+                  <span><span data-i18n="chat_t">Escrever ao secretariado</span> <span class="badge" id="chat-badge" hidden data-i18n="badge">nova</span><small data-i18n="chat_s">Conversa por escrito, em tempo real</small></span>
                 </button>
                 <button class="bigact b" id="go-interp">
                   <svg class="ico" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3z"/></svg>
-                  <span>Falar com um intérprete<small>Videochamada em LGP</small></span>
+                  <span><span data-i18n="interp_t">Falar com um intérprete</span><small data-i18n="interp_s">Videochamada em LGP</small></span>
                 </button>
                 <button class="bigact c" id="go-entrada-lgp">
                   <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
-                  <span>Dar entrada na consulta<small>Nome, número de utente e telemóvel para SMS</small></span>
+                  <span><span data-i18n="ent_t">Dar entrada na consulta</span><small data-i18n="ent_s">Nome, número de utente e telemóvel para SMS</small></span>
                 </button>
               </div>
             </div>
@@ -469,19 +478,19 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
         <div class="scr" data-scr="chat"><div class="scrbody">
           <div class="chat">
             <div>
-              <div class="row" style="justify-content:space-between;margin-bottom:8px"><h2>Conversa com o secretariado</h2><span class="live" id="live-chat"><i></i><span>Um funcionário responde aqui</span></span></div>
+              <div class="row" style="justify-content:space-between;margin-bottom:8px"><h2 data-i18n="chat_h2">Conversa com o secretariado</h2><span class="live" id="live-chat"><i></i><span data-i18n="live_chat">Um funcionário responde aqui</span></span></div>
               <div class="thread" id="thread-user" aria-live="polite"></div>
               <div class="composer">
                 <label class="sr" for="chat-input">A sua mensagem</label>
-                <input class="field" id="chat-input" autocomplete="off" placeholder="Escreva a sua mensagem…">
+                <input class="field" id="chat-input" autocomplete="off" placeholder="Escreva a sua mensagem…" data-i18n-ph="chat_ph">
               </div>
               <div class="sugg" id="sugg" aria-label="Sugestões de palavras"></div>
               <div class="kbd" id="kbd-chat"></div>
             </div>
             <div class="stack">
-              <div class="sectitle">Frases rápidas</div>
+              <div class="sectitle" data-i18n="frases">Frases rápidas</div>
               <div class="phr" id="phrases"></div>
-              <button class="btn signal" id="chat-entrada" style="margin-top:6px">Dar entrada na consulta</button>
+              <button class="btn signal" id="chat-entrada" style="margin-top:6px" data-i18n="btn_entrada">Dar entrada na consulta</button>
             </div>
           </div>
         </div></div>
@@ -494,59 +503,59 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
               <div class="ring" id="call-ring"><svg class="ico" viewBox="0 0 24 24" width="52" height="52" style="color:#62b92f"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3z"/></svg></div>
               <video id="video-interp" playsinline loop muted hidden style="width:100%;height:100%;object-fit:cover"></video>
               <div id="interp-placeholder" hidden style="text-align:center;padding:30px">
-                <div style="font-size:1.3em;font-weight:700">Intérprete de LGP em linha</div>
-                <p style="opacity:.8;margin-top:8px;max-width:40ch">Na versão final, aqui aparece o intérprete em vídeo, ligado a um serviço de interpretação, como nas Lojas do Cidadão.</p>
+                <div style="font-size:1.3em;font-weight:700" data-i18n="ip_t">Intérprete de LGP em linha</div>
+                <p style="opacity:.8;margin-top:8px;max-width:40ch" data-i18n="ip_d">Na versão final, aqui aparece o intérprete em vídeo, ligado a um serviço de interpretação, como nas Lojas do Cidadão.</p>
               </div>
-              <div class="selfcam">A sua câmara</div>
+              <div class="selfcam" data-i18n="selfcam">A sua câmara</div>
             </div>
             <div class="side">
-              <div class="row" style="justify-content:space-between"><b style="font-size:1.2em">Intérprete de LGP</b><span id="call-timer" style="font-variant-numeric:tabular-nums">00:00</span></div>
-              <p style="opacity:.85">Gestue para a câmara. O intérprete fala com o secretariado por si e pode dar entrada na consulta consigo.</p>
-              <button class="btn signal big" id="call-entrada">Dar entrada na consulta</button>
-              <button class="btn ghost big" id="btn-endcall">Terminar chamada</button>
+              <div class="row" style="justify-content:space-between"><b style="font-size:1.2em" data-i18n="ip_name">Intérprete de LGP</b><span id="call-timer" style="font-variant-numeric:tabular-nums">00:00</span></div>
+              <p style="opacity:.85" data-i18n="call_d">Gestue para a câmara. O intérprete fala com o secretariado por si e pode dar entrada na consulta consigo.</p>
+              <button class="btn signal big" id="call-entrada" data-i18n="btn_entrada">Dar entrada na consulta</button>
+              <button class="btn ghost big" id="btn-endcall" data-i18n="endcall">Terminar chamada</button>
             </div>
           </div>
         </div></div>
 
         <!-- Dar entrada na consulta (passo a passo) -->
         <div class="scr" data-scr="entrada"><div class="scrbody">
-          <div class="steps" id="steps"><span data-s="0">1. Nome</span><span data-s="1">2. Número de utente</span><span data-s="2">3. Telemóvel</span><span data-s="3">4. Confirmar</span></div>
+          <div class="steps" id="steps"><span data-s="0" data-i18n="s0">1. Nome</span><span data-s="1" data-i18n="s1">2. Número de utente</span><span data-s="2" data-i18n="s2">3. Telemóvel</span><span data-s="3" data-i18n="s3">4. Confirmar</span></div>
           <div class="step" data-step="0">
-            <div class="steptitle">Qual é o seu nome?</div>
-            <p class="muted">Escreva o primeiro e o último nome.</p>
+            <div class="steptitle" data-i18n="q_nome">Qual é o seu nome?</div>
+            <p class="muted" data-i18n="h_nome">Escreva o primeiro e o último nome.</p>
             <input class="field" id="en-nome" autocomplete="off" style="margin-top:12px;font-size:1.4em" aria-label="Nome">
             <div class="kbd" id="kbd-nome"></div>
           </div>
           <div class="step" data-step="1">
-            <div class="steptitle">Qual é o seu número de utente?</div>
-            <p class="muted">São 9 algarismos. Estão no cartão de cidadão.</p>
+            <div class="steptitle" data-i18n="q_ut">Qual é o seu número de utente?</div>
+            <p class="muted" data-i18n="h_ut">São 9 algarismos. Estão no cartão de cidadão.</p>
             <div class="numfield" id="en-utente" style="margin:12px 0" aria-live="polite"></div>
             <div class="keypad" id="kp-utente"></div>
           </div>
           <div class="step" data-step="2">
-            <div class="steptitle">Quer receber uma SMS quando o médico estiver pronto?</div>
-            <p class="muted">Escreva o seu telemóvel. Se não quiser, toque em «Não quero SMS».</p>
+            <div class="steptitle" data-i18n="q_tel">Quer receber uma SMS quando o médico estiver pronto?</div>
+            <p class="muted" data-i18n="h_tel">Escreva o seu telemóvel. Se não quiser, toque em «Não quero SMS».</p>
             <div class="numfield" id="en-tel" style="margin:12px 0" aria-live="polite"></div>
             <div class="keypad" id="kp-tel"></div>
           </div>
           <div class="step" data-step="3">
-            <div class="steptitle">Confirme os seus dados</div>
-            <dl class="summary"><dt>Nome</dt><dd id="sum-nome"></dd><dt>N.º de utente</dt><dd id="sum-utente"></dd><dt>SMS</dt><dd id="sum-tel"></dd></dl>
+            <div class="steptitle" data-i18n="q_conf">Confirme os seus dados</div>
+            <dl class="summary"><dt data-i18n="dt_nome">Nome</dt><dd id="sum-nome"></dd><dt data-i18n="dt_ut">N.º de utente</dt><dd id="sum-utente"></dd><dt data-i18n="dt_sms">SMS</dt><dd id="sum-tel"></dd></dl>
           </div>
           <div class="step" data-step="4">
-            <span class="pill ok">Entrada registada</span>
+            <span class="pill ok" data-i18n="reg">Entrada registada</span>
             <div class="ticket" id="en-ticket" style="margin-top:10px">A000</div>
             <p id="en-msg" style="font-size:1.2em;margin-top:6px"></p>
           </div>
           <div class="stepnav">
-            <button class="btn ghost big" id="st-prev">← Passo anterior</button>
-            <button class="btn ghost big" id="st-skip" hidden>Não quero SMS</button>
+            <button class="btn ghost big" id="st-prev" data-i18n="st_prev">← Passo anterior</button>
+            <button class="btn ghost big" id="st-skip" hidden data-i18n="st_skip">Não quero SMS</button>
             <button class="btn big" id="st-next">Continuar →</button>
           </div>
         </div></div>
 
         <!-- Modo voz: aparece quando alguém pega no telefone -->
-        <div class="voz" id="voz" hidden aria-live="polite">
+        <div class="voz" id="voz" hidden aria-live="polite" dir="ltr" lang="pt-PT">
           <h2><svg class="ico" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Atendimento por voz</h2>
           <div class="now" id="voz-now"></div>
           <div class="vnum" id="voz-num" hidden></div>
@@ -603,6 +612,7 @@ footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px
         <p class="hint">Mensagens escritas no ecrã tátil por pessoas com dificuldade auditiva.</p>
         <div class="thread desk" id="thread-desk" style="margin-top:10px"></div>
         <div class="quick" id="quick-desk" style="margin-top:10px"></div>
+        <p class="hint" id="desk-lang" hidden style="margin-top:8px"></p>
         <form id="form-desk" class="row" style="margin-top:10px;flex-wrap:nowrap">
           <label class="sr" for="desk-input">Responder</label>
           <input class="field" id="desk-input" autocomplete="off" placeholder="Responder…" style="font-size:1em">
@@ -747,6 +757,307 @@ const INFO = {
 };
 const ACESSO = ["trazer", "entrada", "horario", "contactos", "oferecemos", "marcar"];
 const ACESSO_LABEL = {trazer: "O que trazer", entrada: "Como dar entrada", horario: "Horário", contactos: "Contactos", oferecemos: "O que oferecemos", marcar: "Marcar consulta"};
+/* ================= Línguas do ecrã tátil (português por omissão) ================= */
+const LANGS = [["pt", "Português"], ["en", "English"], ["es", "Español"], ["ar", "العربية"]];
+const LANG_PT = {pt: "português", en: "inglês", es: "espanhol", ar: "árabe"};
+let lang = "pt";
+/* Textos em português usados pelo código (os do HTML são lidos do próprio ecrã ao arrancar) */
+const PT = {
+  sc_inicio: "Início", sc_lgp: "Língua Gestual", sc_chat: "Escrever ao secretariado", sc_interp: "Intérprete", sc_entrada: "Dar entrada na consulta",
+  slow_off: "Mais devagar", slow_on: "Velocidade normal", mk_video: "Intérprete de LGP", mk_prev: "Pré-visualização · falta o vídeo do intérprete",
+  k_space: "Espaço", k_send: "Enviar ➜", k_clear: "Limpar",
+  nx_confirm: "Confirmar entrada ✓", nx_end: "Terminar", nx_nosms: "Continuar sem SMS →", nx_cont: "Continuar →", no_sms: "Não quer SMS",
+  done_sms: "Pode sentar-se na sala de espera. Vai receber uma SMS no {tel} quando o médico estiver pronto.",
+  done_nosms: "Pode sentar-se na sala de espera. A sua senha aparece no ecrã da sala quando o médico estiver pronto.",
+  call_ring: "A ligar ao intérprete…", call_on: "Em chamada",
+  th_empty: "Escreva a sua mensagem em baixo. Um funcionário do secretariado responde aqui.", th_me: "Utente", th_desk: "Secretariado",
+  toast_interp: "O secretariado está a acompanhar a sua videochamada.",
+  lang_label: "Língua",
+  sms: "USF Covelo: o médico está pronto. Dirija-se ao {g}."
+};
+/* Frases rápidas do utente e respostas rápidas do secretariado (a ordem tem de ser a mesma em todas as línguas) */
+const QP = {
+  pt: ["Cheguei para a minha consulta.", "Tenho consulta marcada para hoje.", "Quero marcar uma consulta.", "Preciso de renovar a receita.", "Quanto tempo falta?", "Não percebi. Pode escrever de outra forma?", "Obrigado."],
+  en: ["I've arrived for my appointment.", "I have an appointment today.", "I'd like to book an appointment.", "I need to renew my prescription.", "How much longer do I have to wait?", "I didn't understand. Could you write it another way?", "Thank you."],
+  es: ["He llegado para mi consulta.", "Tengo cita para hoy.", "Quiero pedir una cita.", "Necesito renovar la receta.", "¿Cuánto falta?", "No lo he entendido. ¿Puede escribirlo de otra forma?", "Gracias."],
+  ar: ["وصلت إلى موعدي.", "لدي موعد اليوم.", "أريد حجز موعد.", "أحتاج إلى تجديد الوصفة الطبية.", "كم من الوقت بقي؟", "لم أفهم. هل يمكنك الكتابة بطريقة أخرى؟", "شكرًا."]
+};
+const DQ = {
+  pt: ["Bom dia! Em que posso ajudar?", "Um momento, por favor.", "Para dar entrada na consulta deverá carregar na opção correspondente.", "A sua entrada está registada.", "Dirija-se ao balcão do secretariado.", "O médico está com algum atraso.", "Vamos ter consigo."],
+  en: ["Good morning! How can I help you?", "One moment, please.", "To register your arrival for your appointment, tap the corresponding option.", "Your arrival has been registered.", "Please come to the reception desk.", "The doctor is running a little late.", "We'll come to you."],
+  es: ["¡Buenos días! ¿En qué puedo ayudarle?", "Un momento, por favor.", "Para registrar su llegada a la consulta, pulse la opción correspondiente.", "Su llegada está registrada.", "Diríjase al mostrador de la secretaría.", "El médico lleva algo de retraso.", "Vamos a buscarle."],
+  ar: ["صباح الخير! كيف يمكنني مساعدتك؟", "لحظة من فضلك.", "لتسجيل وصولك إلى الموعد، اضغط على الخيار المناسب.", "تم تسجيل وصولك.", "يرجى التوجه إلى مكتب الاستقبال.", "الطبيب متأخر قليلًا.", "سنأتي إليك."]
+};
+
+const TR = {
+en: {
+  k_sub: "Patient information", tab_info: "Information", tab_lgp: "Hearing difficulty · LGP", nav_back: "← Back", nav_home: "⌂ Home",
+  boas: "<b>Hello, welcome!</b> At USF Covelo we care for you and your family at every stage of life.",
+  ouvir_t: "I have difficulty hearing", ouvir_d: "Service in Portuguese Sign Language (LGP), with subtitles and written messages",
+  ver_t: "Can't see well or find the screen hard to use?", ver_d: "Pick up the phone on the right. Voice assistance starts straight away (in Portuguese).",
+  fech: "When we are closed", ac_p: "Saturdays, Sundays and public holidays, 8 am – 2 pm, at the same address", urg_b: "Emergency services",
+  urgente: "Before leaving home, call <b>SNS 24 (808 24 24 24)</b>. In an emergency, call <b>112</b>.",
+  replay: "↺ Watch again", faq: "Frequently asked questions", falar: "Talk to someone",
+  chat_t: "Write to the reception desk", badge: "new", chat_s: "Written conversation, in real time",
+  interp_t: "Talk to an interpreter", interp_s: "Video call in LGP",
+  ent_t: "Register your arrival", ent_s: "Name, SNS number and mobile for SMS",
+  chat_h2: "Conversation with the reception desk", live_chat: "A staff member replies here", chat_ph: "Type your message…", frases: "Quick phrases", btn_entrada: "Register your arrival",
+  ip_t: "LGP interpreter on the line", ip_d: "In the final version, the interpreter appears here on video, connected to an interpreting service, as in the Lojas do Cidadão (citizen service centres).",
+  selfcam: "Your camera", ip_name: "LGP interpreter", call_d: "Sign to the camera. The interpreter talks to the reception desk for you and can register your arrival with you.", endcall: "End call",
+  s0: "1. Name", s1: "2. SNS number", s2: "3. Mobile", s3: "4. Confirm",
+  q_nome: "What is your name?", h_nome: "Type your first and last name.",
+  q_ut: "What is your SNS number?", h_ut: "It has 9 digits. You can find it on your citizen card or SNS card.",
+  q_tel: "Would you like an SMS when the doctor is ready?", h_tel: "Type your mobile number. If you don't want one, tap “No SMS”.",
+  q_conf: "Check your details", dt_nome: "Name", dt_ut: "SNS number", dt_sms: "SMS", reg: "Arrival registered", st_prev: "← Previous step", st_skip: "No SMS",
+  sc_inicio: "Home", sc_lgp: "Sign language", sc_chat: "Write to reception", sc_interp: "Interpreter", sc_entrada: "Register your arrival",
+  slow_off: "Slower", slow_on: "Normal speed", mk_video: "LGP interpreter", mk_prev: "Preview · interpreter video missing",
+  k_space: "Space", k_send: "Send ➜", k_clear: "Clear",
+  nx_confirm: "Confirm arrival ✓", nx_end: "Finish", nx_nosms: "Continue without SMS →", nx_cont: "Continue →", no_sms: "No SMS",
+  done_sms: "Please take a seat in the waiting room. You will get an SMS on {tel} when the doctor is ready.",
+  done_nosms: "Please take a seat in the waiting room. Your ticket number will appear on the waiting-room screen when the doctor is ready.",
+  call_ring: "Calling the interpreter…", call_on: "In call",
+  th_empty: "Type your message below. A member of the reception staff will reply here.", th_me: "You", th_desk: "Reception",
+  toast_interp: "The reception desk is following your video call.", lang_label: "Language",
+  sms: "USF Covelo: the doctor is ready. Please go to {g}.",
+  acc_trazer: "What to bring", acc_entrada: "How to register your arrival", acc_horario: "Opening hours", acc_contactos: "Contacts", acc_oferecemos: "Our services", acc_marcar: "Book an appointment",
+  f_saudacao_x: "Hello! Welcome to USF Covelo. Choose what you need.",
+  f_checkin_t: "How to register your arrival", f_checkin_x: "To register your arrival, show your citizen card and confirm your appointment.",
+  f_docs_t: "What to bring", f_docs_x: "For your appointment you need your citizen card, to register your arrival, and any tests requested by your doctor.",
+  f_consultorios_t: "Where the consulting rooms are", f_consultorios_x: "To find out which room your appointment is in, please ask at the reception desk.",
+  f_horario_t: "Opening hours", f_horario_x: "USF Covelo is open Monday to Friday, from 8 am to 8 pm. It is closed at weekends and on public holidays."
+},
+es: {
+  k_sub: "Información al usuario", tab_info: "Información", tab_lgp: "Dificultad auditiva · LGP", nav_back: "← Volver", nav_home: "⌂ Inicio",
+  boas: "<b>¡Hola, bienvenido/a!</b> En la USF Covelo cuidamos de usted y de su familia en todas las etapas de la vida.",
+  ouvir_t: "Tengo dificultad para oír", ouvir_d: "Atención en Lengua de Signos Portuguesa (LGP), con subtítulos y mensajes escritos",
+  ver_t: "¿No ve o le cuesta usar la pantalla?", ver_d: "Descuelgue el teléfono de la derecha. La atención por voz empieza enseguida (en portugués).",
+  fech: "Cuando estamos cerrados", ac_p: "Sábados, domingos y festivos, de 8 a 14 h, en la misma dirección", urg_b: "Servicios de urgencias",
+  urgente: "Antes de salir de casa, llame al <b>SNS 24 (808 24 24 24)</b>. En caso de emergencia, llame al <b>112</b>.",
+  replay: "↺ Ver de nuevo", faq: "Preguntas frecuentes", falar: "Hablar con alguien",
+  chat_t: "Escribir a la secretaría", badge: "nuevo", chat_s: "Conversación por escrito, en tiempo real",
+  interp_t: "Hablar con un intérprete", interp_s: "Videollamada en LGP",
+  ent_t: "Registrar su llegada a la consulta", ent_s: "Nombre, número de usuario y móvil para SMS",
+  chat_h2: "Conversación con la secretaría", live_chat: "Un empleado responde aquí", chat_ph: "Escriba su mensaje…", frases: "Frases rápidas", btn_entrada: "Registrar su llegada",
+  ip_t: "Intérprete de LGP en línea", ip_d: "En la versión final, aquí aparecerá el intérprete en vídeo, conectado a un servicio de interpretación, como en las Lojas do Cidadão.",
+  selfcam: "Su cámara", ip_name: "Intérprete de LGP", call_d: "Haga los signos hacia la cámara. El intérprete habla con la secretaría por usted y puede registrar su llegada con usted.", endcall: "Finalizar llamada",
+  s0: "1. Nombre", s1: "2. Número de usuario", s2: "3. Móvil", s3: "4. Confirmar",
+  q_nome: "¿Cómo se llama?", h_nome: "Escriba el nombre y el apellido.",
+  q_ut: "¿Cuál es su número de usuario del SNS?", h_ut: "Tiene 9 dígitos. Figura en la tarjeta de ciudadano o en la tarjeta del SNS.",
+  q_tel: "¿Quiere recibir un SMS cuando el médico esté listo?", h_tel: "Escriba su número de móvil. Si no lo desea, toque «No quiero SMS».",
+  q_conf: "Confirme sus datos", dt_nome: "Nombre", dt_ut: "N.º de usuario", dt_sms: "SMS", reg: "Llegada registrada", st_prev: "← Paso anterior", st_skip: "No quiero SMS",
+  sc_inicio: "Inicio", sc_lgp: "Lengua de signos", sc_chat: "Escribir a la secretaría", sc_interp: "Intérprete", sc_entrada: "Registrar su llegada",
+  slow_off: "Más despacio", slow_on: "Velocidad normal", mk_video: "Intérprete de LGP", mk_prev: "Vista previa · falta el vídeo del intérprete",
+  k_space: "Espacio", k_send: "Enviar ➜", k_clear: "Borrar",
+  nx_confirm: "Confirmar llegada ✓", nx_end: "Terminar", nx_nosms: "Continuar sin SMS →", nx_cont: "Continuar →", no_sms: "No quiere SMS",
+  done_sms: "Puede sentarse en la sala de espera. Recibirá un SMS en el {tel} cuando el médico esté listo.",
+  done_nosms: "Puede sentarse en la sala de espera. Su número aparecerá en la pantalla de la sala cuando el médico esté listo.",
+  call_ring: "Llamando al intérprete…", call_on: "En llamada",
+  th_empty: "Escriba su mensaje abajo. Un empleado de la secretaría responderá aquí.", th_me: "Usted", th_desk: "Secretaría",
+  toast_interp: "La secretaría está siguiendo su videollamada.", lang_label: "Idioma",
+  sms: "USF Covelo: el médico está listo. Diríjase al {g}.",
+  acc_trazer: "Qué traer", acc_entrada: "Cómo registrar su llegada", acc_horario: "Horario", acc_contactos: "Contactos", acc_oferecemos: "Qué ofrecemos", acc_marcar: "Pedir cita",
+  f_saudacao_x: "¡Hola! Bienvenido/a a la USF Covelo. Elija lo que necesita.",
+  f_checkin_t: "Cómo registrar su llegada", f_checkin_x: "Para registrar su llegada a la consulta, presente su tarjeta de ciudadano y confirme la cita.",
+  f_docs_t: "Qué traer a la consulta", f_docs_x: "Para la consulta necesita la tarjeta de ciudadano, para registrar su llegada, y las pruebas que le haya pedido el médico.",
+  f_consultorios_t: "Dónde están las consultas", f_consultorios_x: "Para saber en qué sala será su consulta, pregunte en la secretaría.",
+  f_horario_t: "Horario de la USF", f_horario_x: "La USF Covelo abre de lunes a viernes, de 8:00 a 20:00. Los fines de semana y festivos está cerrada."
+},
+ar: {
+  k_sub: "معلومات للمرضى", tab_info: "معلومات", tab_lgp: "صعوبة في السمع · لغة الإشارة", nav_back: "→ رجوع", nav_home: "⌂ الرئيسية",
+  boas: "<b>مرحبًا بكم!</b> في USF Covelo نعتني بك وبعائلتك في جميع مراحل الحياة.",
+  ouvir_t: "أجد صعوبة في السمع", ouvir_d: "خدمة بلغة الإشارة البرتغالية (LGP)، مع ترجمة نصية ورسائل مكتوبة",
+  ver_t: "هل لا ترى جيدًا أو تجد صعوبة في استخدام الشاشة؟", ver_d: "ارفع سماعة الهاتف الموجود على اليمين. تبدأ الخدمة الصوتية فورًا (باللغة البرتغالية).",
+  fech: "عندما نكون مغلقين", ac_p: "أيام السبت والأحد والعطل الرسمية، من 8 صباحًا حتى 2 ظهرًا، في العنوان نفسه", urg_b: "خدمات الطوارئ",
+  urgente: "قبل مغادرة المنزل، اتصل بـ <b>SNS 24 (808 24 24 24)</b>. في حالات الطوارئ، اتصل بالرقم <b>112</b>.",
+  replay: "↺ شاهد مرة أخرى", faq: "أسئلة شائعة", falar: "التحدث مع شخص",
+  chat_t: "الكتابة إلى الاستقبال", badge: "جديد", chat_s: "محادثة مكتوبة في الوقت الفعلي",
+  interp_t: "التحدث مع مترجم", interp_s: "مكالمة فيديو بلغة الإشارة",
+  ent_t: "تسجيل الوصول إلى الموعد", ent_s: "الاسم ورقم المستخدم والهاتف المحمول للرسائل القصيرة",
+  chat_h2: "محادثة مع الاستقبال", live_chat: "يرد أحد الموظفين هنا", chat_ph: "اكتب رسالتك…", frases: "عبارات سريعة", btn_entrada: "تسجيل الوصول",
+  ip_t: "مترجم لغة الإشارة على الخط", ip_d: "في النسخة النهائية، يظهر المترجم هنا عبر الفيديو، متصلًا بخدمة ترجمة، كما في مراكز Loja do Cidadão.",
+  selfcam: "الكاميرا الخاصة بك", ip_name: "مترجم لغة الإشارة", call_d: "استخدم الإشارة أمام الكاميرا. يتحدث المترجم مع الاستقبال نيابةً عنك ويمكنه تسجيل وصولك معك.", endcall: "إنهاء المكالمة",
+  s0: "1. الاسم", s1: "2. رقم المستخدم", s2: "3. الهاتف المحمول", s3: "4. التأكيد",
+  q_nome: "ما اسمك؟", h_nome: "اكتب الاسم الأول واسم العائلة بالأحرف اللاتينية.",
+  q_ut: "ما رقم المستخدم الخاص بك في SNS؟", h_ut: "يتكون من 9 أرقام، وتجده على بطاقة المواطن أو بطاقة SNS.",
+  q_tel: "هل تريد تلقي رسالة قصيرة عندما يكون الطبيب جاهزًا؟", h_tel: "اكتب رقم هاتفك المحمول. إذا كنت لا تريد ذلك، اضغط «لا أريد رسالة».",
+  q_conf: "تأكد من بياناتك", dt_nome: "الاسم", dt_ut: "رقم المستخدم", dt_sms: "رسالة قصيرة", reg: "تم تسجيل الوصول", st_prev: "→ الخطوة السابقة", st_skip: "لا أريد رسالة",
+  sc_inicio: "الرئيسية", sc_lgp: "لغة الإشارة", sc_chat: "الكتابة إلى الاستقبال", sc_interp: "المترجم", sc_entrada: "تسجيل الوصول",
+  slow_off: "أبطأ", slow_on: "السرعة العادية", mk_video: "مترجم لغة الإشارة", mk_prev: "معاينة · فيديو المترجم غير متوفر",
+  k_space: "مسافة", k_send: "إرسال", k_clear: "مسح",
+  nx_confirm: "تأكيد الوصول ✓", nx_end: "إنهاء", nx_nosms: "متابعة بدون رسالة ←", nx_cont: "متابعة ←", no_sms: "لا يريد رسالة",
+  done_sms: "يمكنك الجلوس في غرفة الانتظار. ستصلك رسالة قصيرة على الرقم {tel} عندما يكون الطبيب جاهزًا.",
+  done_nosms: "يمكنك الجلوس في غرفة الانتظار. سيظهر رقمك على شاشة غرفة الانتظار عندما يكون الطبيب جاهزًا.",
+  call_ring: "جارٍ الاتصال بالمترجم…", call_on: "المكالمة جارية",
+  th_empty: "اكتب رسالتك في الأسفل. سيرد عليك أحد موظفي الاستقبال هنا.", th_me: "أنت", th_desk: "الاستقبال",
+  toast_interp: "يتابع موظفو الاستقبال مكالمة الفيديو الخاصة بك.", lang_label: "اللغة",
+  sms: "USF Covelo: الطبيب جاهز. يرجى التوجه إلى {g}.",
+  acc_trazer: "ماذا تحضر", acc_entrada: "كيفية تسجيل الوصول", acc_horario: "مواعيد العمل", acc_contactos: "الاتصال بنا", acc_oferecemos: "خدماتنا", acc_marcar: "حجز موعد",
+  f_saudacao_x: "مرحبًا! أهلًا بك في USF Covelo. اختر ما تحتاج إليه.",
+  f_checkin_t: "كيفية تسجيل الوصول", f_checkin_x: "لتسجيل وصولك إلى الموعد، قدّم بطاقة المواطن وأكّد موعدك.",
+  f_docs_t: "ماذا تحضر إلى الموعد", f_docs_x: "تحتاج في الموعد إلى بطاقة المواطن لتسجيل وصولك، وإلى الفحوصات التي طلبها الطبيب.",
+  f_consultorios_t: "أين تقع غرف الفحص", f_consultorios_x: "لمعرفة الغرفة التي سيكون فيها موعدك، يرجى السؤال في الاستقبال.",
+  f_horario_t: "مواعيد عمل الوحدة", f_horario_x: "تفتح USF Covelo من الاثنين إلى الجمعة، من الساعة 8:00 حتى 20:00، وتكون مغلقة في عطلة نهاية الأسبوع والعطل الرسمية."
+}
+};
+
+/* Páginas de informação traduzidas (a versão portuguesa é o objeto INFO) */
+const INFO_TR = {
+en: {
+  trazer: {titulo: "What to bring to your appointment", html: `
+    <p class="lead">Always bring your citizen card. Some appointments need specific documents.</p>
+    <div class="grid">
+      <div class="box"><h3>For every appointment</h3><ul><li>Citizen card (it has your SNS number)</li><li>Tests and analyses requested by the doctor</li><li>The list of medicines you take</li></ul></div>
+      <div class="box"><h3>Children and young people</h3><ul><li>Child and youth health booklet</li><li>Vaccination booklet</li></ul></div>
+      <div class="box"><h3>Pregnancy</h3><ul><li>Pregnancy health booklet</li><li>Vaccination booklet, if you need to be vaccinated</li></ul></div>
+      <div class="box"><h3>Vaccination</h3><ul><li>Vaccination booklet</li></ul></div>
+      <div class="box"><h3>Medical certificate for a driving licence</h3><ul><li>Eye test (optometrist or ophthalmologist) less than 6 months old</li><li>If you have a chronic illness followed at hospital, a report from that specialty</li></ul></div>
+    </div>`},
+  entrada: {titulo: "How to register your arrival", html: `
+    <p class="lead">Registering your arrival means letting the reception desk know you have arrived for your appointment.</p>
+    <ol class="steps-list">
+      <li>Go to the reception desk with your citizen card.</li>
+      <li>Confirm your appointment: the name of the doctor or nurse and the time.</li>
+      <li>Wait in the waiting room. You will be called when the doctor is ready.</li>
+    </ol>
+    <div class="note">For Consulta Aberta (same-day appointments), arrive 30 minutes before the scheduled time.</div>
+    <div class="actions"><button class="btn big" data-go="entrada">Register your arrival here on the screen</button></div>`},
+  horario: {titulo: "Opening hours", html: `
+    <p class="lead">USF Covelo is open Monday to Friday.</p>
+    <table class="tbl"><tr><td>Monday to Friday</td><td>08:00 – 20:00</td></tr><tr><td>Saturdays, Sundays and public holidays</td><td>Closed</td></tr></table>
+    <h3 style="margin-top:20px">When we are closed</h3>
+    <table class="tbl"><tr><td>AC Porto Oriental</td><td>Saturdays, Sundays and public holidays, 8 am – 2 pm, at the same address</td></tr><tr><td>Emergency departments</td><td>Centro Hospitalar de S. João · Centro Hospitalar do Porto</td></tr><tr><td>SNS 24 (health line)</td><td>808 24 24 24</td></tr><tr><td>Emergency</td><td>112</td></tr></table>`},
+  contactos: {titulo: "Contacts", html: `
+    <div class="grid">
+      <div class="box"><h3>Telephone</h3><p class="big">22 557 4810</p><p>Appointments and Consulta Aberta</p></div>
+      <div class="box"><h3>Email</h3><p class="big" style="font-size:1.15em;overflow-wrap:anywhere">usf.covelo@ulssjoao.min-saude.pt</p></div>
+      <div class="box"><h3>Address</h3><p class="big" style="font-size:1.15em">Rua Faria Guimarães, 915/931</p><p>4200-292 Porto</p></div>
+      <div class="box"><h3>Website</h3><p class="big" style="font-size:1.15em">usf-covelo.github.io</p><p>Online booking and renewal of long-term medication</p></div>
+    </div>`},
+  oferecemos: {titulo: "Our services", html: `
+    <p class="lead">Appointments are organised by stage of life.</p>
+    <div class="grid">
+      <div class="box"><h3>Children and young people</h3><p>Child and youth health: growth and development, from newborns to 18 years.</p></div>
+      <div class="box"><h3>Women and pregnancy</h3><p>Family planning, women's screening and pregnancy follow-up.</p></div>
+      <div class="box"><h3>Adults</h3><p>Adult health, diabetes and high blood pressure, cancer screening.</p></div>
+      <div class="box"><h3>Same day and at home</h3><p>Consulta Aberta for acute problems (call 22 557 4810) and home visits.</p></div>
+      <div class="box"><h3>Nursing</h3><p>Wound care, vaccination and general nursing appointments.</p></div>
+      <div class="box"><h3>Medical certificates</h3><p>Driving licence, booked at the clinical reception desk.</p></div>
+    </div>
+    <div class="note"><b>What we don't do:</b> emergencies (call 112), insurance and private forms, certificates for hunting, sailing or firearms.</div>`},
+  marcar: {titulo: "Book an appointment and renew medication", html: `
+    <div class="grid">
+      <div class="box"><h3>By phone</h3><p class="big">22 557 4810</p></div>
+      <div class="box"><h3>Online</h3><p>Booking request on the website usf-covelo.github.io</p></div>
+      <div class="box"><h3>In person</h3><p>At the clinical reception desk</p></div>
+      <div class="box"><h3>Renew long-term medication</h3><p>Make the request online on the USF website.</p></div>
+    </div>`}
+},
+es: {
+  trazer: {titulo: "Qué traer a la consulta", html: `
+    <p class="lead">Traiga siempre la tarjeta de ciudadano. Para algunas consultas se necesitan documentos específicos.</p>
+    <div class="grid">
+      <div class="box"><h3>En todas las consultas</h3><ul><li>Tarjeta de ciudadano (con el número de usuario)</li><li>Pruebas y análisis pedidos por el médico</li><li>La lista de los medicamentos que toma</li></ul></div>
+      <div class="box"><h3>Niños y jóvenes</h3><ul><li>Cartilla de salud infantil y juvenil</li><li>Cartilla de vacunación</li></ul></div>
+      <div class="box"><h3>Embarazo</h3><ul><li>Cartilla de salud de la embarazada</li><li>Cartilla de vacunación, si necesita vacunarse</li></ul></div>
+      <div class="box"><h3>Vacunación</h3><ul><li>Cartilla de vacunación</li></ul></div>
+      <div class="box"><h3>Certificado para el carné de conducir</h3><ul><li>Revisión de la vista (óptico-optometrista u oftalmólogo) de menos de 6 meses</li><li>Si tiene una enfermedad crónica seguida en el hospital, el informe de esa especialidad</li></ul></div>
+    </div>`},
+  entrada: {titulo: "Cómo registrar su llegada", html: `
+    <p class="lead">Registrar su llegada es avisar a la secretaría de que ha llegado para su consulta.</p>
+    <ol class="steps-list">
+      <li>Diríjase al mostrador de la secretaría con la tarjeta de ciudadano.</li>
+      <li>Confirme su consulta: el nombre del médico o del enfermero y la hora.</li>
+      <li>Espere en la sala de espera. Le llamarán cuando el médico esté listo.</li>
+    </ol>
+    <div class="note">En la Consulta Aberta (citas para el mismo día), llegue 30 minutos antes de la hora indicada.</div>
+    <div class="actions"><button class="btn big" data-go="entrada">Registrar su llegada aquí en la pantalla</button></div>`},
+  horario: {titulo: "Horario", html: `
+    <p class="lead">La USF Covelo abre de lunes a viernes.</p>
+    <table class="tbl"><tr><td>De lunes a viernes</td><td>08:00 – 20:00</td></tr><tr><td>Sábados, domingos y festivos</td><td>Cerrado</td></tr></table>
+    <h3 style="margin-top:20px">Cuando estamos cerrados</h3>
+    <table class="tbl"><tr><td>AC Porto Oriental</td><td>Sábados, domingos y festivos, de 8 a 14 h, en la misma dirección</td></tr><tr><td>Urgencias</td><td>Centro Hospitalar de S. João · Centro Hospitalar do Porto</td></tr><tr><td>SNS 24 (línea de salud)</td><td>808 24 24 24</td></tr><tr><td>Emergencias</td><td>112</td></tr></table>`},
+  contactos: {titulo: "Contactos", html: `
+    <div class="grid">
+      <div class="box"><h3>Teléfono</h3><p class="big">22 557 4810</p><p>Citas y Consulta Aberta</p></div>
+      <div class="box"><h3>Correo electrónico</h3><p class="big" style="font-size:1.15em;overflow-wrap:anywhere">usf.covelo@ulssjoao.min-saude.pt</p></div>
+      <div class="box"><h3>Dirección</h3><p class="big" style="font-size:1.15em">Rua Faria Guimarães, 915/931</p><p>4200-292 Porto</p></div>
+      <div class="box"><h3>Sitio web</h3><p class="big" style="font-size:1.15em">usf-covelo.github.io</p><p>Citas en línea y renovación de la medicación crónica</p></div>
+    </div>`},
+  oferecemos: {titulo: "Qué ofrecemos", html: `
+    <p class="lead">Las consultas se organizan por etapa de la vida.</p>
+    <div class="grid">
+      <div class="box"><h3>Niños y jóvenes</h3><p>Salud infantil y juvenil: crecimiento y desarrollo, del recién nacido a los 18 años.</p></div>
+      <div class="box"><h3>Mujer y embarazo</h3><p>Planificación familiar, cribados de la mujer y seguimiento del embarazo.</p></div>
+      <div class="box"><h3>Adultos</h3><p>Salud del adulto, diabetes e hipertensión, cribados de cáncer.</p></div>
+      <div class="box"><h3>El mismo día y a domicilio</h3><p>Consulta Aberta para problemas agudos (llame al 22 557 4810) y visitas a domicilio.</p></div>
+      <div class="box"><h3>Enfermería</h3><p>Curas de heridas, vacunación y consultas generales de enfermería.</p></div>
+      <div class="box"><h3>Certificados</h3><p>Carné de conducir, con cita en la secretaría clínica.</p></div>
+    </div>
+    <div class="note"><b>Lo que no hacemos:</b> urgencias (llame al 112), formularios de aseguradoras y privados, certificados para caza, navegación o armas.</div>`},
+  marcar: {titulo: "Pedir cita y renovar la medicación", html: `
+    <div class="grid">
+      <div class="box"><h3>Por teléfono</h3><p class="big">22 557 4810</p></div>
+      <div class="box"><h3>En línea</h3><p>Solicitud de cita en el sitio usf-covelo.github.io</p></div>
+      <div class="box"><h3>En persona</h3><p>En el mostrador de la secretaría clínica</p></div>
+      <div class="box"><h3>Renovar la medicación crónica</h3><p>Haga la solicitud en línea en el sitio web de la USF.</p></div>
+    </div>`}
+},
+ar: {
+  trazer: {titulo: "ماذا تحضر إلى الموعد", html: `
+    <p class="lead">أحضر دائمًا بطاقة المواطن. بعض المواعيد تتطلب وثائق خاصة.</p>
+    <div class="grid">
+      <div class="box"><h3>في جميع المواعيد</h3><ul><li>بطاقة المواطن (وعليها رقم المستخدم)</li><li>الفحوصات والتحاليل التي طلبها الطبيب</li><li>قائمة الأدوية التي تتناولها</li></ul></div>
+      <div class="box"><h3>الأطفال والشباب</h3><ul><li>دفتر صحة الطفل والشاب</li><li>دفتر التطعيمات</li></ul></div>
+      <div class="box"><h3>الحمل</h3><ul><li>دفتر صحة الحامل</li><li>دفتر التطعيمات، إذا كنتِ بحاجة إلى التطعيم</li></ul></div>
+      <div class="box"><h3>التطعيم</h3><ul><li>دفتر التطعيمات</li></ul></div>
+      <div class="box"><h3>شهادة طبية لرخصة القيادة</h3><ul><li>فحص للنظر (أخصائي بصريات أو طبيب عيون) لم يمضِ عليه أكثر من 6 أشهر</li><li>إذا كان لديك مرض مزمن تتابعه في المستشفى، تقرير من ذلك التخصص</li></ul></div>
+    </div>`},
+  entrada: {titulo: "كيفية تسجيل الوصول", html: `
+    <p class="lead">تسجيل الوصول يعني إبلاغ الاستقبال بأنك وصلت إلى موعدك.</p>
+    <ol class="steps-list">
+      <li>توجه إلى مكتب الاستقبال ومعك بطاقة المواطن.</li>
+      <li>أكّد موعدك: اسم الطبيب أو الممرض والساعة.</li>
+      <li>انتظر في غرفة الانتظار. سيتم استدعاؤك عندما يكون الطبيب جاهزًا.</li>
+    </ol>
+    <div class="note">في Consulta Aberta (مواعيد اليوم نفسه)، احضر قبل 30 دقيقة من الموعد المحدد.</div>
+    <div class="actions"><button class="btn big" data-go="entrada">سجّل وصولك هنا على الشاشة</button></div>`},
+  horario: {titulo: "مواعيد العمل", html: `
+    <p class="lead">تفتح USF Covelo من الاثنين إلى الجمعة.</p>
+    <table class="tbl"><tr><td>من الاثنين إلى الجمعة</td><td>08:00 – 20:00</td></tr><tr><td>السبت والأحد والعطل الرسمية</td><td>مغلق</td></tr></table>
+    <h3 style="margin-top:20px">عندما نكون مغلقين</h3>
+    <table class="tbl"><tr><td>AC Porto Oriental</td><td>أيام السبت والأحد والعطل الرسمية، من 8 صباحًا حتى 2 ظهرًا، في العنوان نفسه</td></tr><tr><td>الطوارئ</td><td>Centro Hospitalar de S. João · Centro Hospitalar do Porto</td></tr><tr><td>SNS 24 (خط الصحة)</td><td>808 24 24 24</td></tr><tr><td>حالات الطوارئ</td><td>112</td></tr></table>`},
+  contactos: {titulo: "الاتصال بنا", html: `
+    <div class="grid">
+      <div class="box"><h3>الهاتف</h3><p class="big">22 557 4810</p><p>المواعيد و Consulta Aberta</p></div>
+      <div class="box"><h3>البريد الإلكتروني</h3><p class="big" style="font-size:1.15em;overflow-wrap:anywhere">usf.covelo@ulssjoao.min-saude.pt</p></div>
+      <div class="box"><h3>العنوان</h3><p class="big" style="font-size:1.15em">Rua Faria Guimarães, 915/931</p><p>4200-292 Porto</p></div>
+      <div class="box"><h3>الموقع الإلكتروني</h3><p class="big" style="font-size:1.15em">usf-covelo.github.io</p><p>حجز المواعيد عبر الإنترنت وتجديد أدوية الأمراض المزمنة</p></div>
+    </div>`},
+  oferecemos: {titulo: "خدماتنا", html: `
+    <p class="lead">المواعيد منظمة حسب مراحل الحياة.</p>
+    <div class="grid">
+      <div class="box"><h3>الأطفال والشباب</h3><p>صحة الأطفال والشباب: النمو والتطور، من حديثي الولادة حتى سن 18 عامًا.</p></div>
+      <div class="box"><h3>المرأة والحمل</h3><p>تنظيم الأسرة، فحوصات الكشف المبكر للمرأة، ومتابعة الحمل.</p></div>
+      <div class="box"><h3>البالغون</h3><p>صحة البالغين، السكري وارتفاع ضغط الدم، فحوصات الكشف عن السرطان.</p></div>
+      <div class="box"><h3>في اليوم نفسه وفي المنزل</h3><p>Consulta Aberta للحالات الحادة (اتصل بالرقم 22 557 4810) والزيارات المنزلية.</p></div>
+      <div class="box"><h3>التمريض</h3><p>العناية بالجروح، التطعيم، ومواعيد التمريض العامة.</p></div>
+      <div class="box"><h3>الشهادات الطبية</h3><p>رخصة القيادة، بموعد في مكتب الاستقبال.</p></div>
+    </div>
+    <div class="note"><b>ما لا نقدمه:</b> حالات الطوارئ (اتصل بالرقم 112)، استمارات شركات التأمين والجهات الخاصة، شهادات الصيد أو الملاحة أو الأسلحة.</div>`},
+  marcar: {titulo: "حجز موعد وتجديد الأدوية", html: `
+    <div class="grid">
+      <div class="box"><h3>عبر الهاتف</h3><p class="big">22 557 4810</p></div>
+      <div class="box"><h3>عبر الإنترنت</h3><p>طلب موعد على الموقع usf-covelo.github.io</p></div>
+      <div class="box"><h3>حضوريًا</h3><p>في مكتب الاستقبال</p></div>
+      <div class="box"><h3>تجديد أدوية الأمراض المزمنة</h3><p>قدّم الطلب عبر الإنترنت على موقع الوحدة.</p></div>
+    </div>`}
+}
+};
+
+function t(k) { const v = lang !== "pt" && TR[lang] ? TR[lang][k] : undefined; return v != null ? v : (PT[k] != null ? PT[k] : k); }
+function infoOf(id, pt) { return (!pt && lang !== "pt" && INFO_TR[lang] && INFO_TR[lang][id]) || INFO[id]; }
+function phraseText(f) { const v = lang !== "pt" && TR[lang] ? TR[lang]["f_" + f.id + "_x"] : null; return v || f.texto; }
+
 
 /* ================= LGP: perguntas frequentes ================= */
 const SAUDACAO = {id: "saudacao", titulo: "Saudação inicial", texto: "Olá! Bem-vindo à USF Covelo. Escolha o que precisa.", glosas: ["OLÁ", "BEM-VINDO", "USF", "ESCOLHER"]};
@@ -1078,9 +1389,9 @@ function clean(d) {
   const arr = v => Array.isArray(v) ? v.slice(-80) : [];
   return {
     rev: Number(d.rev) || 0, next: Number(d.next) || store.next,
-    chats: arr(d.chats).map(c => ({id: s(c.id, 20), from: c.from === "utente" ? "utente" : "secretariado", text: s(c.text, 600), t: Number(c.t) || 0, lida: !!c.lida})),
+    chats: arr(d.chats).map(c => ({id: s(c.id, 20), from: c.from === "utente" ? "utente" : "secretariado", text: s(c.text, 600), shown: s(c.shown, 600), lang: ["en", "es", "ar"].includes(c.lang) ? c.lang : "pt", t: Number(c.t) || 0, lida: !!c.lida})),
     reqs: arr(d.reqs).map(r => ({id: s(r.id, 20), tipo: ["interprete", "chamada", "transferencia"].includes(r.tipo) ? r.tipo : "chamada", origem: s(r.origem, 60), detalhe: s(r.detalhe, 200), status: r.status === "atendido" ? "atendido" : "pendente", t: Number(r.t) || 0})),
-    entradas: arr(d.entradas).map(k => ({id: s(k.id, 20), code: s(k.code, 8), origem: ["voz", "lgp", "ecra"].includes(k.origem) ? k.origem : "ecra", nome: s(k.nome, 80), utente: digits(k.utente, 9), phone: digits(k.phone, 9), status: k.status === "chamado" ? "chamado" : "espera", gabinete: s(k.gabinete, 24), t: Number(k.t) || 0, exemplo: !!k.exemplo})),
+    entradas: arr(d.entradas).map(k => ({id: s(k.id, 20), code: s(k.code, 8), origem: ["voz", "lgp", "ecra"].includes(k.origem) ? k.origem : "ecra", nome: s(k.nome, 80), utente: digits(k.utente, 9), phone: digits(k.phone, 9), status: k.status === "chamado" ? "chamado" : "espera", gabinete: s(k.gabinete, 24), lingua: ["en", "es", "ar"].includes(k.lingua) ? k.lingua : "pt", t: Number(k.t) || 0, exemplo: !!k.exemplo})),
     calls: arr(d.calls).map(c => ({code: s(c.code, 8), gabinete: s(c.gabinete, 24), t: Number(c.t) || 0}))
   };
 }
@@ -1107,13 +1418,13 @@ function afterChange(prev, local) {
     newEnt.forEach(c => notify("Entrada na consulta " + c.code, (c.nome || "Sem nome") + " · n.º utente " + (c.utente || "—")));
   }
   if (role === "ecra" && newDesk.length) {
-    if (curScr() === "chat") { const m = newDesk[newDesk.length - 1]; toast("Secretariado", m.text); }
+    if (curScr() === "chat") { const m = newDesk[newDesk.length - 1]; toast(t("th_desk"), m.shown || m.text); }
     else $("#chat-badge").hidden = false;
   }
   const answered = store.reqs.filter(r => r.status === "atendido" && mine.has(r.id) && prev.reqs.some(p => p.id === r.id && p.status !== "atendido"));
   if (answered.length && role === "ecra") {
     const r = answered[0];
-    if (r.tipo === "interprete") toast("Secretariado", "O secretariado está a acompanhar a sua videochamada.");
+    if (r.tipo === "interprete") toast(t("th_desk"), t("toast_interp"));
     else if (voice.offHook) { setVState("secretariado"); say("O secretariado atendeu. Está agora a falar com um funcionário."); }
   }
   if (store.calls.length > prev.calls.length) boardFlash = true;
@@ -1223,7 +1534,7 @@ codePad($("#unlock-keypad"), $("#unlock-code"));
 $("#unlock-cancel").addEventListener("click", () => $("#ov-unlock").classList.remove("show"));
 $("#form-unlock").addEventListener("submit", async e => {
   e.preventDefault();
-  if (await tryCode("ecra", $("#unlock-code"), $("#unlock-err"))) { $("#ov-unlock").classList.remove("show"); hangUp(); goHome(); setSession(null); goHash("inicio"); }
+  if (await tryCode("ecra", $("#unlock-code"), $("#unlock-err"))) { $("#ov-unlock").classList.remove("show"); hangUp(); goHome(); setLang("pt"); setSession(null); goHash("inicio"); }
 });
 $("#clock").addEventListener("click", secretTap);
 $("#brand").addEventListener("click", e => { e.preventDefault(); if (role === "ecra") goHome(); });
@@ -1262,7 +1573,8 @@ $("#btn-sound").addEventListener("click", e => { soundOn = !soundOn; e.currentTa
 /* ================= Ecrã tátil: navegação ================= */
 let stack = ["inicio"], idleTimer = null, lastActivity = "", entradaOrigem = "ecra";
 const curScr = () => stack[stack.length - 1];
-function scrName(k) { return k === "inicio" ? "Início" : k === "lgp" ? "Língua Gestual" : k === "chat" ? "Escrever ao secretariado" : k === "interp" ? "Intérprete" : k === "entrada" ? "Dar entrada na consulta" : k.startsWith("info:") ? INFO[k.slice(5)].titulo : k; }
+const SCR_KEY = {inicio: "sc_inicio", lgp: "sc_lgp", chat: "sc_chat", interp: "sc_interp", entrada: "sc_entrada"};
+function scrName(k, pt) { return k.startsWith("info:") ? infoOf(k.slice(5), pt).titulo : SCR_KEY[k] ? (pt ? PT[SCR_KEY[k]] : t(SCR_KEY[k])) : k; }
 function showScr() {
   const k = curScr(), base = k.startsWith("info:") ? "info" : k;
   $$(".scr").forEach(d => d.classList.toggle("active", d.dataset.scr === base));
@@ -1274,7 +1586,7 @@ function showScr() {
   $("#tab-info").setAttribute("aria-selected", !inLgp); $("#tab-lgp").setAttribute("aria-selected", inLgp);
   if (k !== "lgp") { signerMain.stop(); $("#video-main").pause(); }
   if (k === "chat") { $("#chat-badge").hidden = true; scrollThreads(); }
-  activity(k === "inicio" ? "" : k.startsWith("info:") ? "A consultar: " + scrName(k).toLowerCase() : {lgp: "No menu de LGP", chat: "A escrever ao secretariado", interp: "Em videochamada com intérprete", entrada: "A dar entrada na consulta"}[k]);
+  activity(k === "inicio" ? "" : k.startsWith("info:") ? "A consultar: " + scrName(k, true).toLowerCase() : {lgp: "No menu de LGP", chat: "A escrever ao secretariado", interp: "Em videochamada com intérprete", entrada: "A dar entrada na consulta"}[k]);
   $(".screen").scrollTop = 0;
   bumpIdle();
 }
@@ -1302,16 +1614,16 @@ $("#go-entrada-lgp").addEventListener("click", () => go("entrada"));
 $("#chat-entrada").addEventListener("click", () => go("entrada"));
 $("#call-entrada").addEventListener("click", () => go("entrada"));
 $("#btn-endcall").addEventListener("click", () => { endCall(); back(); });
-function bumpIdle() { clearTimeout(idleTimer); if (curScr() !== "inicio") idleTimer = setTimeout(() => { if (curScr() !== "interp" && !voice.offHook) goHome(); }, 180000); }
+function bumpIdle() { clearTimeout(idleTimer); if (curScr() !== "inicio" || lang !== "pt") idleTimer = setTimeout(() => { if (curScr() !== "interp" && !voice.offHook) { goHome(); setLang("pt"); } }, 180000); }
 document.addEventListener("pointerdown", bumpIdle);
 
 /* Acesso rápido e páginas de informação */
 ACESSO.forEach(id => {
-  const b = el("button"); b.type = "button"; b.innerHTML = I[id]; b.appendChild(el("span", null, ACESSO_LABEL[id]));
+  const b = el("button"); b.type = "button"; b.innerHTML = I[id]; const sp = el("span", null, ACESSO_LABEL[id]); sp.dataset.i18n = "acc_" + id; b.appendChild(sp);
   b.addEventListener("click", () => go("info:" + id)); $("#acesso").appendChild(b);
 });
 function renderInfo(id) {
-  const box = $("#info-body"), d = INFO[id];
+  const box = $("#info-body"), d = infoOf(id);
   box.innerHTML = `<h2>${I[id]}<span></span></h2>` + d.html;
   box.querySelector("h2 span").textContent = d.titulo;
   box.querySelectorAll("[data-go]").forEach(b => b.addEventListener("click", () => go(b.dataset.go)));
@@ -1320,7 +1632,7 @@ function renderInfo(id) {
 function activity(txt) { lastActivity = txt || ""; sendPresence(); }
 function sendPresence() {
   const p = {funcao: role || "inicio", t: Date.now()};
-  if (role === "ecra") { p.ecra = voice.offHook ? "voz" : curScr(); p.atividade = lastActivity; p.telefone = voice.offHook ? voice.state : "pousado"; p.telAtividade = voice.activity; }
+  if (role === "ecra") { p.ecra = voice.offHook ? "voz" : curScr(); p.atividade = lastActivity; p.telefone = voice.offHook ? voice.state : "pousado"; p.telAtividade = voice.activity; p.lingua = lang; }
   if (room) { try { room.presence(p); } catch (e) {} }
   else if (bc && role === "ecra") { try { bc.postMessage({type: "presence", p}); } catch (e) {} }
 }
@@ -1334,28 +1646,28 @@ function playPhrase(f) {
   const src = videos[f.id] ? "/_blob/" + encodeURIComponent(videos[f.id]) : localVideos[f.id];
   if (src) {
     signerMain.stop(); svg.hidden = true; vid.hidden = false; $("#params-main").hidden = true;
-    $("#media-kind").textContent = "Intérprete de LGP";
+    $("#media-kind").textContent = t("mk_video");
     vid.src = src; vid.playbackRate = slowOn ? .75 : 1;
-    const spans = setSubs(f.texto);
+    const spans = setSubs(phraseText(f));
     vid.ontimeupdate = () => { const p = vid.duration ? vid.currentTime / vid.duration : 0; const n = Math.ceil(spans.length * p); spans.forEach((s, j) => s.classList.toggle("on", j < n)); };
     vid.onended = () => spans.forEach(s => s.classList.add("on"));
     vid.play().catch(() => {});
   } else {
     vid.pause(); vid.hidden = true; svg.hidden = false; $("#params-main").hidden = false;
-    $("#media-kind").textContent = "Pré-visualização · falta o vídeo do intérprete";
-    signerMain.play(f.texto, f.glosas);
+    $("#media-kind").textContent = t("mk_prev");
+    signerMain.play(phraseText(f), f.glosas);
   }
 }
 FRASES.forEach(f => {
   const b = el("button", "topic"); b.type = "button";
-  b.innerHTML = I[f.icon] + "<span></span>"; b.lastChild.textContent = f.titulo;
+  b.innerHTML = I[f.icon] + "<span></span>"; b.lastChild.textContent = f.titulo; b.lastChild.dataset.i18n = "f_" + f.id + "_t";
   b.addEventListener("click", () => { $$(".topic").forEach(t => t.classList.remove("on")); b.classList.add("on"); playPhrase(f); activity("LGP: " + f.titulo.toLowerCase()); });
   $("#topics").appendChild(b);
 });
 $("#btn-replay").addEventListener("click", () => playPhrase(lastPhrase));
 $("#btn-slow").addEventListener("click", e => {
   slowOn = !slowOn; e.currentTarget.setAttribute("aria-pressed", slowOn);
-  e.currentTarget.textContent = slowOn ? "Velocidade normal" : "Mais devagar";
+  e.currentTarget.textContent = t(slowOn ? "slow_on" : "slow_off");
   signerMain.setSlow(slowOn); $("#video-main").playbackRate = slowOn ? .75 : 1;
 });
 
@@ -1376,9 +1688,9 @@ function makeKeyboard(box, input, opts) {
     const mk = (label, cls, fn, pressed) => { const b = el("button", cls, label); b.type = "button"; if (pressed != null) b.setAttribute("aria-pressed", pressed); b.addEventListener("click", fn); last.appendChild(b); };
     mk("⇧", "w2", () => { shift = !shift; build(); }, shift);
     mk("á é ã", "w2", () => { accents = !accents; build(); }, accents);
-    mk("Espaço", "w5", () => type(" "));
+    mk(t("k_space"), "w5", () => type(" "));
     mk("⌫", "w2", () => { input.value = input.value.slice(0, -1); changed(); });
-    if (opts.send) mk(opts.send, "go", opts.onSend);
+    if (opts.sendKey) mk(t(opts.sendKey), "go", opts.onSend);
     box.appendChild(last);
   }
   function type(ch) { input.value += ch; if (shift && ch.trim()) { shift = false; build(); } changed(); }
@@ -1394,7 +1706,7 @@ function makeKeyboard(box, input, opts) {
 function renderSugg() {
   const box = $("#sugg"); box.innerHTML = "";
   const i = $("#chat-input"), m = i.value.match(/([\p{L}-]+)$/u), part = m ? m[1].toLowerCase() : "";
-  if (!part) return;
+  if (!part || lang !== "pt") return;
   const norm = s => s.normalize("NFD").replace(/\p{M}/gu, "");
   VOCAB.filter(w => norm(w).startsWith(norm(part)) && w !== part).slice(0, 5).forEach(w => {
     const b = el("button", null, w); b.type = "button";
@@ -1402,17 +1714,20 @@ function renderSugg() {
     box.appendChild(b);
   });
 }
-makeKeyboard($("#kbd-chat"), $("#chat-input"), {send: "Enviar ➜", sentence: true, onSend: () => sendUserChat(), onChange: () => { renderSugg(); typingPing(); }});
-["Cheguei para a minha consulta.", "Tenho consulta marcada para hoje.", "Quero marcar uma consulta.", "Preciso de renovar a receita.", "Quanto tempo falta?", "Não percebi. Pode escrever de outra forma?", "Obrigado."].forEach(p => {
-  const b = el("button", null, p); b.type = "button"; b.addEventListener("click", () => sendUserChat(p)); $("#phrases").appendChild(b);
+const chatKbd = makeKeyboard($("#kbd-chat"), $("#chat-input"), {sendKey: "k_send", sentence: true, onSend: () => sendUserChat(), onChange: () => { renderSugg(); typingPing(); }});
+QP.pt.forEach((p, i) => {
+  const b = el("button", null, p); b.type = "button"; b.dataset.i18n = "qp" + i;
+  b.addEventListener("click", () => sendUserChat(t("qp" + i), p)); $("#phrases").appendChild(b);
 });
 $("#chat-input").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); sendUserChat(); } });
 let lastTyping = 0;
 function typingPing() { if (Date.now() - lastTyping < 1500) return; lastTyping = Date.now(); if (room) { try { room.emit("typing", {}); } catch (e) {} } else if (bc) { try { bc.postMessage({type: "typing"}); } catch (e) {} } }
-function sendUserChat(text) {
+function sendUserChat(text, ptText) {
   const v = (text ?? $("#chat-input").value).trim(); if (!v) return;
   if (text == null) $("#chat-input").value = "";
-  mutate(() => store.chats.push({id: uid(), from: "utente", text: v, t: Date.now()}));
+  /* Frase rápida noutra língua: o secretariado lê-a em português e o utente vê-a na sua língua */
+  const msg = ptText && lang !== "pt" ? {text: ptText, shown: v} : {text: v};
+  mutate(() => store.chats.push(Object.assign({id: uid(), from: "utente", lang, t: Date.now()}, msg)));
   renderSugg();
 }
 
@@ -1422,7 +1737,7 @@ const ent = {utente: "", tel: ""};
 const nomeKbd = makeKeyboard($("#kbd-nome"), $("#en-nome"), {letters: true, onChange: () => updateStepNav()});
 function makeKeypad(box, key) {
   ["1","2","3","4","5","6","7","8","9","⌫","0","Limpar"].forEach(k => {
-    const b = el("button", null, k); b.type = "button"; if (k === "Limpar") b.style.fontSize = ".85em";
+    const b = el("button", null, k); b.type = "button"; if (k === "Limpar") { b.style.fontSize = ".85em"; b.dataset.i18n = "k_clear"; }
     b.addEventListener("click", () => { if (k === "⌫") ent[key] = ent[key].slice(0, -1); else if (k === "Limpar") ent[key] = ""; else if (ent[key].length < 9) ent[key] += k; renderEntrada(); });
     box.appendChild(b);
   });
@@ -1438,7 +1753,7 @@ function renderEntrada() {
   $("#en-tel").textContent = ent.tel || " ";
   $("#sum-nome").textContent = $("#en-nome").value.trim();
   $("#sum-utente").textContent = ent.utente;
-  $("#sum-tel").textContent = ent.tel ? ent.tel : "Não quer SMS";
+  $("#sum-tel").textContent = ent.tel ? ent.tel : t("no_sms");
   updateStepNav();
 }
 function updateStepNav() {
@@ -1447,7 +1762,7 @@ function updateStepNav() {
   $("#st-skip").hidden = n !== 2;
   const ok = n === 0 ? $("#en-nome").value.trim().length >= 2 : n === 1 ? /^\d{9}$/.test(ent.utente) : n === 2 ? (ent.tel === "" || /^9\d{8}$/.test(ent.tel)) : true;
   $("#st-next").disabled = !ok;
-  $("#st-next").textContent = n === 3 ? "Confirmar entrada ✓" : n === 4 ? "Terminar" : n === 2 && !ent.tel ? "Continuar sem SMS →" : "Continuar →";
+  $("#st-next").textContent = t(n === 3 ? "nx_confirm" : n === 4 ? "nx_end" : n === 2 && !ent.tel ? "nx_nosms" : "nx_cont");
 }
 $("#st-prev").addEventListener("click", () => setStep(Math.max(0, entradaStep - 1)));
 $("#st-skip").addEventListener("click", () => { ent.tel = ""; setStep(3); });
@@ -1456,33 +1771,36 @@ $("#st-next").addEventListener("click", () => {
   if (entradaStep === 3) {
     const r = registarEntrada({origem: entradaOrigem, nome: $("#en-nome").value.trim(), utente: ent.utente, phone: ent.tel});
     $("#en-ticket").textContent = r.code;
-    $("#en-msg").textContent = ent.tel ? `Pode sentar-se na sala de espera. Vai receber uma SMS no ${maskPhone(ent.tel)} quando o médico estiver pronto.` : "Pode sentar-se na sala de espera. A sua senha aparece no ecrã da sala quando o médico estiver pronto.";
+    lastTel = ent.tel; renderDoneMsg();
     return setStep(4);
   }
   goHome();
 });
+let lastTel = "";
+function renderDoneMsg() { $("#en-msg").textContent = lastTel ? t("done_sms").replace("{tel}", maskPhone(lastTel)) : t("done_nosms"); }
 function registarEntrada(d) {
   let code; const id = uid();
-  mutate(() => { code = "A" + String(store.next).padStart(3, "0"); store.next++; store.entradas.push({id, code, origem: d.origem, nome: d.nome || "", utente: d.utente || "", phone: d.phone || "", status: "espera", t: Date.now()}); });
+  mutate(() => { code = "A" + String(store.next).padStart(3, "0"); store.next++; store.entradas.push({id, code, origem: d.origem, nome: d.nome || "", utente: d.utente || "", phone: d.phone || "", status: "espera", lingua: lang, t: Date.now()}); });
   return {code, id};
 }
 
 /* ================= Videochamada com intérprete (simulada) ================= */
 let callStart = 0, callTick = null, callTimer = null;
 function startCall() {
-  $("#call-state").textContent = "A ligar ao intérprete…"; $("#call-ring").hidden = false; $("#video-interp").hidden = true; $("#interp-placeholder").hidden = true; $("#call-timer").textContent = "00:00";
+  setCallState("call_ring"); $("#call-ring").hidden = false; $("#video-interp").hidden = true; $("#interp-placeholder").hidden = true; $("#call-timer").textContent = "00:00";
   const id = uid(); mine.add(id);
   mutate(() => store.reqs.push({id, tipo: "interprete", origem: "Ecrã tátil", detalhe: "Pessoa com dificuldade auditiva em videochamada com intérprete", status: "pendente", t: Date.now()}));
   clearTimeout(callTimer);
   callTimer = setTimeout(() => {
     if (curScr() !== "interp") return;
-    $("#call-state").textContent = "Em chamada"; $("#call-ring").hidden = true;
+    setCallState("call_on"); $("#call-ring").hidden = true;
     const src = videos.interprete ? "/_blob/" + encodeURIComponent(videos.interprete) : localVideos.interprete;
     if (src) { const v = $("#video-interp"); v.hidden = false; v.src = src; v.play().catch(() => {}); } else $("#interp-placeholder").hidden = false;
     callStart = Date.now(); clearInterval(callTick);
     callTick = setInterval(() => { const s = Math.floor((Date.now() - callStart) / 1000); $("#call-timer").textContent = String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0"); }, 1000);
   }, 2500);
 }
+function setCallState(k) { const c = $("#call-state"); c.dataset.i18n = k; c.textContent = t(k); }
 function endCall() { clearTimeout(callTimer); clearInterval(callTick); $("#video-interp").pause(); }
 
 /* ================= Telefone: ao pegar, ativa o atendimento por voz ================= */
@@ -1645,20 +1963,31 @@ document.addEventListener("keydown", e => {
 });
 
 /* ================= Secretariado ================= */
-["Bom dia! Em que posso ajudar?", "Um momento, por favor.", "Para dar entrada na consulta deverá carregar na opção correspondente.", "A sua entrada está registada.", "Dirija-se ao balcão do secretariado.", "O médico está com algum atraso.", "Vamos ter consigo."].forEach(q => {
+DQ.pt.forEach(q => {
   const b = el("button", null, q); b.type = "button"; b.addEventListener("click", () => { $("#desk-input").value = q; $("#desk-input").focus(); }); $("#quick-desk").appendChild(b);
 });
 $("#form-desk").addEventListener("submit", e => {
   e.preventDefault(); const v = $("#desk-input").value.trim(); if (!v) return; $("#desk-input").value = "";
-  mutate(() => { store.chats.forEach(c => { if (c.from === "utente") c.lida = true; }); store.chats.push({id: uid(), from: "secretariado", text: v, t: Date.now()}); });
+  /* Resposta rápida a um utente que usa outra língua: segue também traduzida */
+  const cl = convLang(), qi = DQ.pt.indexOf(v), shown = cl !== "pt" && qi >= 0 ? DQ[cl][qi] : "";
+  mutate(() => { store.chats.forEach(c => { if (c.from === "utente") c.lida = true; }); store.chats.push({id: uid(), from: "secretariado", text: v, shown, lang: shown ? cl : "pt", t: Date.now()}); });
 });
+function convLang() { const u = store.chats.filter(c => c.from === "utente"); return u.length ? (u[u.length - 1].lang || "pt") : "pt"; }
 function renderThread(box, me) {
   box.innerHTML = "";
-  if (!store.chats.length) { box.appendChild(el("p", "muted", me === "utente" ? "Escreva a sua mensagem em baixo. Um funcionário do secretariado responde aqui." : "Ainda sem mensagens.")); return; }
+  const isUser = me === "utente";
+  if (!store.chats.length) { box.appendChild(el("p", "muted", isUser ? t("th_empty") : "Ainda sem mensagens.")); return; }
   store.chats.forEach(c => {
     const d = el("div", "msg" + (c.from === me ? " me" : ""));
-    d.appendChild(el("small", null, (c.from === "utente" ? "Utente" : "Secretariado") + " · " + hhmm(c.t)));
-    d.appendChild(document.createTextNode(c.text)); box.appendChild(d);
+    let head;
+    if (isUser) head = t(c.from === "utente" ? "th_me" : "th_desk") + " · " + hhmm(c.t);
+    else {
+      head = (c.from === "utente" ? "Utente" : "Secretariado") + " · " + hhmm(c.t);
+      if (c.from === "utente" && c.lang && c.lang !== "pt") head += c.shown ? ` · frase rápida traduzida do ${LANG_PT[c.lang]}` : ` · escreveu em ${LANG_PT[c.lang]}`;
+      if (c.from === "secretariado" && c.shown) head += ` · enviada também em ${LANG_PT[c.lang]}`;
+    }
+    d.appendChild(el("small", null, head));
+    d.appendChild(document.createTextNode(isUser ? (c.shown || c.text) : c.text)); box.appendChild(d);
   });
 }
 function scrollThreads() { ["#thread-user", "#thread-desk"].forEach(s => { $(s).scrollTop = 1e6; }); }
@@ -1666,6 +1995,8 @@ const REQ_TXT = {interprete: "Videochamada com intérprete", chamada: "Chamada d
 const GABINETES = ["Gabinete 1", "Gabinete 2", "Gabinete 3", "Gabinete 4", "Sala de enfermagem"];
 function renderDesk() {
   renderThread($("#thread-desk"), "secretariado");
+  const conv = convLang(), dl = $("#desk-lang"); dl.hidden = conv === "pt" || !store.chats.length;
+  dl.textContent = `O utente está a usar o ecrã em ${LANG_PT[conv]}. As respostas rápidas seguem também em ${LANG_PT[conv]}; o que escrever à mão segue como está.`;
   const unreadMsgs = store.chats.filter(c => c.from === "utente" && !c.lida).length;
   $("#msg-count").hidden = !unreadMsgs; $("#msg-count").textContent = unreadMsgs;
   const rl = $("#req-list"); rl.innerHTML = "";
@@ -1687,6 +2018,7 @@ function renderDesk() {
   waiting.slice().reverse().forEach(c => {
     const it = el("div", "item"), l = el("div");
     l.appendChild(el("span", "tag", ORIGEM_TXT[c.origem]));
+    if (c.lingua && c.lingua !== "pt") l.appendChild(el("span", "langtag", "Fala " + LANG_PT[c.lingua]));
     l.appendChild(el("span", "who", c.code + " · " + (c.nome || "Nome por confirmar") + (c.exemplo ? " (exemplo)" : ""))); l.appendChild(document.createElement("br"));
     l.appendChild(el("span", "muted", "N.º utente " + (c.utente || "—") + (c.phone ? " · SMS " + maskPhone(c.phone) : " · sem SMS") + " · " + hhmm(c.t)));
     const r = el("div", "row"), sel = el("select", "sel"); sel.setAttribute("aria-label", "Gabinete para " + c.code);
@@ -1694,14 +2026,15 @@ function renderDesk() {
     const btn = el("button", "btn small", c.phone ? "Médico pronto: enviar SMS" : c.origem === "voz" ? "Médico pronto: ir buscar" : "Médico pronto: chamar");
     btn.addEventListener("click", () => {
       mutate(() => { const x = store.entradas.find(z => z.id === c.id); if (!x) return; x.status = "chamado"; x.gabinete = sel.value; store.calls.push({code: x.code, gabinete: sel.value, t: Date.now()}); });
-      toast(c.phone ? "SMS enviada (simulação)" : "Chamada registada", c.phone ? `Para ${maskPhone(c.phone)}: «USF Covelo: o médico está pronto. Dirija-se ao ${sel.value}.»` : `${c.code} · ${sel.value}`);
+      toast(c.phone ? "SMS enviada (simulação)" : "Chamada registada", c.phone ? `Para ${maskPhone(c.phone)}: «${((TR[c.lingua] && TR[c.lingua].sms) || PT.sms).replace("{g}", sel.value)}»` : `${c.code} · ${sel.value}`);
     });
     r.appendChild(sel); r.appendChild(btn); it.appendChild(l); it.appendChild(r); cl.appendChild(it);
   });
   renderPosto(); renderVideos();
 }
 let typingUntil = 0;
-function ecraTxt(p) {
+function ecraTxt(p) { const base = ecraTxtBase(p); return p.ecra !== "inicio" && p.lingua && p.lingua !== "pt" && LANG_PT[p.lingua] ? base + " (em " + LANG_PT[p.lingua] + ")" : base; }
+function ecraTxtBase(p) {
   if (p.ecra === "inicio") return "No ecrã inicial, à espera";
   if (p.ecra === "voz") return "Em uso: atendimento por voz (telefone)";
   if (String(p.ecra).startsWith("info:")) return "Em uso: " + (p.atividade || "a consultar informação");
@@ -1783,6 +2116,32 @@ if (bc) { try { bc.postMessage({type: "hello"}); } catch (e) {} setInterval(() =
 ["saudacao", "checkin", "docs", "consultorios", "horario", "interprete"].forEach(id => {
   try { fetch(`videos/${id}.mp4`, {method: "HEAD"}).then(r => { if (r.ok) { localVideos[id] = `videos/${id}.mp4`; renderVideos(); } }).catch(() => {}); } catch (e) {}
 });
+
+/* ================= Mudar a língua do ecrã tátil ================= */
+["en", "es", "ar"].forEach(l => QP[l].forEach((q, i) => { TR[l]["qp" + i] = q; }));
+$$(".screen [data-i18n]").forEach(e => { if (PT[e.dataset.i18n] == null) PT[e.dataset.i18n] = e.textContent; });
+$$(".screen [data-i18n-html]").forEach(e => { PT[e.dataset.i18nHtml] = e.innerHTML; });
+$$(".screen [data-i18n-ph]").forEach(e => { PT[e.dataset.i18nPh] = e.getAttribute("placeholder"); });
+LANGS.forEach(([code, nome]) => {
+  const b = el("button", null, nome); b.type = "button"; b.lang = code; b.dataset.lang = code; b.setAttribute("aria-pressed", code === lang);
+  b.addEventListener("click", () => { setLang(code); bumpIdle(); });
+  $("#langs").appendChild(b);
+});
+function setLang(code) {
+  if (!LANG_PT[code]) code = "pt";
+  lang = code;
+  const scr = $(".screen");
+  scr.setAttribute("lang", code === "pt" ? "pt-PT" : code); scr.setAttribute("dir", code === "ar" ? "rtl" : "ltr");
+  $$("#langs button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === code));
+  $$(".screen [data-i18n]").forEach(e => { e.textContent = t(e.dataset.i18n); });
+  $$(".screen [data-i18n-html]").forEach(e => { e.innerHTML = t(e.dataset.i18nHtml); });
+  $$(".screen [data-i18n-ph]").forEach(e => { e.setAttribute("placeholder", t(e.dataset.i18nPh)); });
+  $("#btn-slow").textContent = t(slowOn ? "slow_on" : "slow_off");
+  chatKbd.reset(); nomeKbd.reset(); renderSugg();
+  showScr(); renderEntrada(); renderDoneMsg(); renderThread($("#thread-user"), "utente");
+  if (curScr() === "lgp") playPhrase(lastPhrase);
+  sendPresence();
+}
 
 /* ================= Capacidades da plataforma Claude (quando aberta no claude.ai) ================= */
 (async () => {
