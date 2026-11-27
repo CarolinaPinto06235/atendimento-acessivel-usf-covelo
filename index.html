@@ -706,7 +706,7 @@ const INFO = {
       <div class="box"><h3>Atestado para a carta de condução</h3><ul><li>Avaliação dos olhos (optometrista ou oftalmologista) com menos de 6 meses</li><li>Se tem doença crónica seguida no hospital, o parecer dessa especialidade</li></ul></div>
     </div>`},
   entrada: {titulo: "Como dar entrada na consulta", html: `
-    <p class="lead">Dar entrada (fazer o check-in) é avisar o secretariado de que chegou para a sua consulta.</p>
+    <p class="lead">Dar entrada na consulta é avisar o secretariado de que chegou para a sua consulta.</p>
     <ol class="steps-list">
       <li>Dirija-se ao balcão do secretariado com o cartão de cidadão.</li>
       <li>Confirme a sua consulta: o nome do médico ou enfermeiro e a hora.</li>
@@ -752,11 +752,11 @@ const ACESSO_LABEL = {trazer: "O que trazer", entrada: "Como dar entrada", horar
 const SAUDACAO = {id: "saudacao", titulo: "Saudação inicial", texto: "Olá! Bem-vindo à USF Covelo. Escolha o que precisa.", glosas: ["OLÁ", "BEM-VINDO", "USF", "ESCOLHER"]};
 const FRASES = [
   {id: "checkin", titulo: "Como dar entrada na consulta", icon: "entrada",
-   texto: "A realização do check-in envolve fornecer o seu cartão de cidadão e a confirmação da consulta.",
-   glosas: ["CHECK-IN", "FAZER", "CARTÃO DE CIDADÃO", "DAR", "CONSULTA", "CONFIRMAR"]},
+   texto: "Dar entrada na consulta envolve fornecer o seu cartão de cidadão e a confirmação da consulta.",
+   glosas: ["DAR ENTRADA", "FAZER", "CARTÃO DE CIDADÃO", "DAR", "CONSULTA", "CONFIRMAR"]},
   {id: "docs", titulo: "O que trazer para a consulta", icon: "trazer",
-   texto: "Os documentos necessários para a consulta são o cartão de cidadão para dar início ao check-in e os exames requisitados pelo médico.",
-   glosas: ["CONSULTA", "PRECISAR", "CARTÃO DE CIDADÃO", "CHECK-IN", "EXAMES", "MÉDICO", "PEDIR"]},
+   texto: "Os documentos necessários para a consulta são o cartão de cidadão para dar entrada na consulta e os exames requisitados pelo médico.",
+   glosas: ["CONSULTA", "PRECISAR", "CARTÃO DE CIDADÃO", "DAR ENTRADA", "EXAMES", "MÉDICO", "PEDIR"]},
   {id: "consultorios", titulo: "Onde ficam os consultórios", icon: "consultorios",
    texto: "Para ter informações sobre onde fica a sala onde irá ter a sua consulta, consulte o secretariado.",
    glosas: ["SALA", "CONSULTA", "ONDE?", "SECRETARIADO", "PERGUNTAR"]},
@@ -765,7 +765,7 @@ const FRASES = [
    glosas: ["USF", "ABERTA", "SEGUNDA", "SEXTA", "HORAS", "FIM DE SEMANA", "FECHADA"]}
 ];
 /* Mensagem do telefone, tal como definida pela USF */
-const BOAS_VINDAS = "Olá, bem-vindo à USF Covelo. Está a falar com o assistente de atendimento. Use as teclas de 1 a 4 do comando. Prima 1 para saber como fazer o check-in. Prima 2 para saber que documentos trazer. Prima 3 para saber onde fica a sala da consulta. Prima 4 para dar entrada na consulta. Para chamar o secretariado, prima o botão Ajuda, em baixo no comando.";
+const BOAS_VINDAS = "Olá, bem-vindo à USF Covelo. Está a falar com o assistente de atendimento. Use as teclas de 1 a 4 do comando. Prima 1 para saber como dar entrada na consulta. Prima 2 para saber que documentos trazer. Prima 3 para saber onde fica a sala da consulta. Prima 4 para dar entrada na consulta. Para chamar o secretariado, prima o botão Ajuda, em baixo no comando.";
 const MENU_CURTO = "Prima 1, 2, 3 ou 4 para outra opção, asterisco para repetir, ou o botão Ajuda para falar com o secretariado.";
 
 /* ================= Avatar realista ================= */
@@ -822,7 +822,7 @@ const SIGNS = {
   "BEM-VINDO": {a: {x: 140, y: 300, s: "B", r: -75}, b: {x: 260, y: 300, s: "B", r: 75}, m: "toward"},
   "USF": {a: {x: 196, y: 280, s: "5", r: -95}, m: "tap"},
   "ESCOLHER": {a: {x: 175, y: 255, s: "O", r: 10}, b: {x: 245, y: 305, s: "5", r: 15}, m: "tap"},
-  "CHECK-IN": {a: {x: 150, y: 310, s: "B", r: -90}, b: {x: 250, y: 320, s: "B", r: 90}, m: "toward"},
+  "DAR ENTRADA": {a: {x: 150, y: 310, s: "B", r: -90}, b: {x: 250, y: 320, s: "B", r: 90}, m: "toward"},
   "FAZER": {a: {x: 168, y: 300, s: "S", r: 0}, b: {x: 232, y: 300, s: "S", r: 0}, m: "circle"},
   "CARTÃO DE CIDADÃO": {a: {x: 165, y: 285, s: "L", r: -35}, b: {x: 235, y: 285, s: "L", r: 35}, m: "pull"},
   "DAR": {a: {x: 190, y: 300, s: "B", r: -100}, m: "away"},
@@ -852,10 +852,10 @@ const SIGNS = {
   "MOMENTO": {a: {x: 165, y: 260, s: "1", r: 0}, m: "none"}
 };
 const PALMS = {"OLÁ": "frente", "CARTÃO DE CIDADÃO": "frente", "ESPERAR": "frente", "NÃO": "frente", "SEGUNDA": "frente", "SEXTA": "frente", "ABERTA": "frente", "EXAMES": "frente", "FIM DE SEMANA": "frente",
-  "DAR": "lado", "BEM-VINDO": "lado", "CHECK-IN": "lado", "SALA": "lado", "SECRETARIADO": "lado", "PEDIR": "lado", "FECHADA": "lado", "PERGUNTAR": "lado", "TELEFONE": "lado", "MÉDICO": "lado", "ESCOLHER": "lado"};
+  "DAR": "lado", "BEM-VINDO": "lado", "DAR ENTRADA": "lado", "SALA": "lado", "SECRETARIADO": "lado", "PEDIR": "lado", "FECHADA": "lado", "PERGUNTAR": "lado", "TELEFONE": "lado", "MÉDICO": "lado", "ESCOLHER": "lado"};
 Object.keys(PALMS).forEach(g => { if (SIGNS[g]) { SIGNS[g].a.p = PALMS[g]; if (SIGNS[g].b) SIGNS[g].b.p = PALMS[g]; } });
 const KEYWORDS = [
-  [/check/i, "CHECK-IN"], [/cart[ãa]o/i, "CARTÃO DE CIDADÃO"], [/consulta/i, "CONSULTA"], [/m[ée]dic/i, "MÉDICO"],
+  [/entrada|check/i, "DAR ENTRADA"], [/cart[ãa]o/i, "CARTÃO DE CIDADÃO"], [/consulta/i, "CONSULTA"], [/m[ée]dic/i, "MÉDICO"],
   [/exame/i, "EXAMES"], [/\bsala|gabinete/i, "SALA"], [/\bonde\b/i, "ONDE?"], [/secretari|balc[ãa]o/i, "SECRETARIADO"],
   [/hor[áa]|\bh\b|\d+h/i, "HORAS"], [/abert/i, "ABERTA"], [/fechad|encerrad/i, "FECHADA"], [/telefon|ligar/i, "TELEFONE"],
   [/ajud/i, "AJUDA"], [/obrigad/i, "OBRIGADO"], [/\bol[áa]\b|bom dia|boa tarde/i, "OLÁ"], [/escrev/i, "ESCREVER"],
@@ -1531,7 +1531,7 @@ const PAD_LABEL = {"*": "Repetir", "#": "Confirmar"};
 
 const V_STATE = {pousado: "Telefone pousado", menu: "Em linha", nome: "À espera do nome", "conf-nome": "A confirmar o nome", utente: "A marcar o n.º de utente", "conf-utente": "A confirmar os dados", tel: "A marcar o telemóvel", transferir: "A transferir para o secretariado", secretariado: "Em chamada com o secretariado"};
 const V_MENU = {
-  menu: [["1", "Como fazer o check-in"], ["2", "Que documentos trazer"], ["3", "Onde fica a sala da consulta"], ["4", "Dar entrada na consulta"], ["*", "Repetir"]],
+  menu: [["1", "Como dar entrada na consulta"], ["2", "Que documentos trazer"], ["3", "Onde fica a sala da consulta"], ["4", "Dar entrada na consulta"], ["*", "Repetir"]],
   "conf-nome": [["1", "Confirmar o nome"], ["2", "Dizer de novo"]],
   utente: [["0–9", "Marcar o n.º de utente"], ["#", "Confirmar"], ["*", "Apagar"]],
   "conf-utente": [["1", "Confirmar os dados"], ["2", "Corrigir o n.º de utente"]],
@@ -1645,7 +1645,7 @@ document.addEventListener("keydown", e => {
 });
 
 /* ================= Secretariado ================= */
-["Bom dia! Em que posso ajudar?", "Um momento, por favor.", "A sua entrada está registada.", "Dirija-se ao balcão do secretariado.", "O médico está com algum atraso.", "Vamos ter consigo."].forEach(q => {
+["Bom dia! Em que posso ajudar?", "Um momento, por favor.", "Para dar entrada na consulta deverá carregar na opção correspondente.", "A sua entrada está registada.", "Dirija-se ao balcão do secretariado.", "O médico está com algum atraso.", "Vamos ter consigo."].forEach(q => {
   const b = el("button", null, q); b.type = "button"; b.addEventListener("click", () => { $("#desk-input").value = q; $("#desk-input").focus(); }); $("#quick-desk").appendChild(b);
 });
 $("#form-desk").addEventListener("submit", e => {

@@ -60,7 +60,7 @@ As respostas devem ser gravadas por um intérprete de LGP fluente e validadas pe
 | Ficheiro | Conteúdo |
 | --- | --- |
 | `videos/saudacao.mp4` | Saudação inicial |
-| `videos/checkin.mp4` | Como fazer o check-in na consulta |
+| `videos/checkin.mp4` | Como dar entrada na consulta |
 | `videos/docs.mp4` | Que documentos tenho de trazer |
 | `videos/consultorios.mp4` | Onde ficam os consultórios |
 | `videos/horario.mp4` | Horário da USF |

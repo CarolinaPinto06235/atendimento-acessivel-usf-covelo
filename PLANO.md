@@ -11,7 +11,7 @@ Propõe-se um piloto de 6 meses na USF Covelo: um posto de atendimento acessíve
 **A solução:**
 
 - **Uma aplicação, duas funções.** Ao abrir, escolhe-se se o computador é o ecrã tátil ou o do secretariado. O secretariado vê em separado o estado do ecrã tátil e do telefone, e recebe notificação com som de cada mensagem, chamada e entrada na consulta.
-- **Pessoas surdas ou com dificuldades auditivas.** Botão «Não oiço ou oiço com dificuldade»; depois, o vídeo do intérprete em LGP com legendas e quatro perguntas frequentes (check-in, documentos, consultórios, horário). Navegação com Voltar e Início em todos os ecrãs.
+- **Pessoas surdas ou com dificuldades auditivas.** Botão «Não oiço ou oiço com dificuldade»; depois, o vídeo do intérprete em LGP com legendas e quatro perguntas frequentes (como dar entrada na consulta, documentos, consultórios, horário). Navegação com Voltar e Início em todos os ecrãs.
 - **Falar com alguém, três opções.** Escrever ao secretariado em tempo real (teclado grande, sugestões de palavras, frases rápidas); videochamada com um intérprete de LGP, como nas Lojas do Cidadão; dar entrada na consulta passo a passo (nome, número de utente e telemóvel opcional para SMS).
 - **Pessoas cegas ou com baixa visão.** Piso podotátil até um telefone com teclado Braille de 0 a 9 e botão Ajuda, independente do ecrã. Ao atender, ouve-se a mensagem de boas-vindas da USF; as teclas 1 a 3 dão as respostas pré-definidas; a 4 dá entrada na consulta: o assistente pede o nome e o número de utente, repete-os para confirmar, pergunta pelo telemóvel para SMS e transfere a chamada para o secretariado, que já recebe estes dados.
 
